@@ -1,15 +1,19 @@
 # app-store-scraper [![Build Status](https://secure.travis-ci.org/facundoolano/app-store-scraper.png)](http://travis-ci.org/facundoolano/app-store-scraper)
+
 A Node.js module to scrape application data from the iTunes/Mac App Store.
 The goal is to provide an interface as close as possible to the
 [google-play-scraper](https://github.com/facundoolano/google-play-scraper) module.
 
 ## Installation
+
 ```
 npm install app-store-scraper
 ```
 
 ## Usage
+
 Available methods:
+
 - [app](#app): Retrieves the full details of an application.
 - [list](#list): Retrieves a list of applications from one of the collections at iTunes.
 - [search](#search): Retrieves a list of apps that result from searching by a given term.
@@ -30,20 +34,22 @@ The module now includes enhanced caching capabilities:
 - [clearCache](#clearCache): Clears cache entries.
 
 ### app
+
 Retrieves the full details of an application. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
-* `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
-* `country`: the two letter country code to get the app details from. Defaults to `us`. Note this also affects the language of the data.
-* `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
-+ `ratings`: load additional ratings information like `ratings` number and `histogram`
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
+- `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
+- `country`: the two letter country code to get the app details from. Defaults to `us`. Note this also affects the language of the data.
+- `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
+
+* `ratings`: load additional ratings information like `ratings` number and `histogram`
 
 Example:
 
 ```javascript
 import appStore from 'app-store-scraper';
 
-appStore.app({id: 553834731}).then(console.log).catch(console.log);
+appStore.app({ id: 553834731 }).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -96,7 +102,7 @@ Example with `ratings` option:
 ```javascript
 import appStore from 'app-store-scraper';
 
-appStore.app({id: 553834731, ratings: true}).then(console.log).catch(console.log);
+appStore.app({ id: 553834731, ratings: true }).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -122,13 +128,13 @@ Results:
 
 Retrieves a list of applications from one of the collections at iTunes. Options:
 
-* `collection`: the collection to look up. Defaults to `collection.TOP_FREE_IOS`, available options can be found [here](https://github.com/facundoolano/app-store-scraper/blob/master/lib/constants.js#L3).
-* `category`: the category to look up. This is a number associated with the genre for the application. Defaults to no specific category. Available options can be found [here](https://github.com/facundoolano/app-store-scraper/blob/master/lib/constants.js#L19).
-* `country`: the two letter country code to get the list from. Defaults to `us`.
-* `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
-* `num`: the amount of elements to retrieve. Defaults to `50`, maximum
+- `collection`: the collection to look up. Defaults to `collection.TOP_FREE_IOS`, available options can be found [here](https://github.com/facundoolano/app-store-scraper/blob/master/lib/constants.js#L3).
+- `category`: the category to look up. This is a number associated with the genre for the application. Defaults to no specific category. Available options can be found [here](https://github.com/facundoolano/app-store-scraper/blob/master/lib/constants.js#L19).
+- `country`: the two letter country code to get the list from. Defaults to `us`.
+- `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
+- `num`: the amount of elements to retrieve. Defaults to `50`, maximum
   allowed is `200`.
-* `fullDetail`: If this is set to `true`, an extra request will be
+- `fullDetail`: If this is set to `true`, an extra request will be
   made to get extra attributes of the resulting applications (like
   those returned by the `app` method).
 
@@ -137,19 +143,22 @@ Example:
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.list({
-  collection: appStore.collection.TOP_FREE_IPAD,
-  category: appStore.category.GAMES_ACTION,
-  num: 2
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .list({
+    collection: appStore.collection.TOP_FREE_IPAD,
+    category: appStore.category.GAMES_ACTION,
+    num: 2
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Returns:
 
 ```js
-[ { id: '1091944550',
+[
+  {
+    id: '1091944550',
     appId: 'com.hypah.io.slither',
     title: 'slither.io',
     icon: 'http://is4.mzstatic.com/image/thumb/Purple30/v4/68/d7/4d/68d74df4-f4e7-d4a4-a8ea-dbab686e5554/mzl.ujmngosn.png/100x100bb-85.png',
@@ -163,8 +172,10 @@ Returns:
     developerId: '867992583',
     genre: 'Games',
     genreId: '6014',
-    released: '2016-03-25T10:01:46-07:00' },
-  { id: '1046846443',
+    released: '2016-03-25T10:01:46-07:00'
+  },
+  {
+    id: '1046846443',
     appId: 'com.ubisoft.hungrysharkworld',
     title: 'Hungry Shark World',
     icon: 'http://is5.mzstatic.com/image/thumb/Purple60/v4/08/1a/8d/081a8d06-b4d5-528b-fa8e-f53646b6f797/mzl.ehtjvlft.png/100x100bb-85.png',
@@ -178,35 +189,38 @@ Returns:
     developerId: '317644720',
     genre: 'Games',
     genreId: '6014',
-    released: '2016-05-04T09:43:06-07:00' } ]
+    released: '2016-05-04T09:43:06-07:00'
+  }
+];
 ```
 
 ### search
 
 Retrieves a list of apps that results of searching by the given term. Options:
 
-* `term`: the term to search for (required).
-* `num`: the amount of elements to retrieve. Defaults to `50`.
-* `page`: page of results to retrieve. Defaults to to `1`.
-* `country`: the two letter country code to get the similar apps
+- `term`: the term to search for (required).
+- `num`: the amount of elements to retrieve. Defaults to `50`.
+- `page`: page of results to retrieve. Defaults to to `1`.
+- `country`: the two letter country code to get the similar apps
   from. Defaults to `us`.
-* `lang`: language code for the result text. Defaults to `en-us`.
-* `idsOnly`: (optional, defaults to `false`): skip extra lookup request. Search results will contain array of application ids.
+- `lang`: language code for the result text. Defaults to `en-us`.
+- `idsOnly`: (optional, defaults to `false`): skip extra lookup request. Search results will contain array of application ids.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.search({
-  term: 'panda',
-  num: 2,
-  page: 3,
-  country : 'us',
-  lang: 'lang'
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .search({
+    term: 'panda',
+    num: 2,
+    page: 3,
+    country: 'us',
+    lang: 'lang'
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Results:
@@ -228,18 +242,19 @@ Results:
 ```
 
 ### developer
+
 Retrieves a list of applications by the give developer id. Options:
 
-* `devId`: the iTunes "artistId" of the developer, for example `284882218` for Facebook.
-* `country`: the two letter country code to get the app details from. Defaults to `us`. Note this also affects the language of the data.
-* `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
+- `devId`: the iTunes "artistId" of the developer, for example `284882218` for Facebook.
+- `country`: the two letter country code to get the app details from. Defaults to `us`. Note this also affects the language of the data.
+- `lang`: language code for the result text. Defaults to undefined, so country specific language should be used automatically.
 
 Example:
 
 ```javascript
 import appStore from 'app-store-scraper';
 
-appStore.developer({devId: 284882218}).then(console.log).catch(console.log);
+appStore.developer({ devId: 284882218 }).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -264,18 +279,19 @@ Results:
 
 Retrieves the ratings for the app. Currently only for US App Store. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga.
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.privacy({
-  id: 324684580,
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .privacy({
+    id: 324684580
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Returns:
@@ -317,7 +333,7 @@ Example:
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.suggest({term: 'panda'}).then(console.log).catch(console.log);
+appStore.suggest({ term: 'panda' }).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -335,17 +351,18 @@ Results:
 ```
 
 ### similar
+
 Returns the list of "customers also bought" apps shown in the app's detail page. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
-* `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
+- `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.similar({id: 553834731}).then(console.log).catch(console.log);
+appStore.similar({ id: 553834731 }).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -372,24 +389,25 @@ Results:
 
 Retrieves a page of reviews for the app. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
-* `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
-* `country`: the two letter country code to get the reviews from. Defaults to `us`.
-* `page`: the review page number to retrieve. Defaults to `1`, maximum allowed is `10`.
-* `sort`: the review sort order. Defaults to `store.sort.RECENT`, available options are `store.sort.RECENT` and `store.sort.HELPFUL`.
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
+- `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
+- `country`: the two letter country code to get the reviews from. Defaults to `us`.
+- `page`: the review page number to retrieve. Defaults to `1`, maximum allowed is `10`.
+- `sort`: the review sort order. Defaults to `store.sort.RECENT`, available options are `store.sort.RECENT` and `store.sort.HELPFUL`.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.reviews({
-  appId: 'com.midasplayer.apps.candycrushsaga',
-  sort: appStore.sort.HELPFUL,
-  page: 2
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .reviews({
+    appId: 'com.midasplayer.apps.candycrushsaga',
+    sort: appStore.sort.HELPFUL,
+    page: 2
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Returns:
@@ -421,20 +439,21 @@ Returns:
 
 Retrieves the ratings for the app. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
-* `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
-* `country`: the two letter country code to get the reviews from. Defaults to `us`.
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
+- `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.
+- `country`: the two letter country code to get the reviews from. Defaults to `us`.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.ratings({
-  appId: 'com.midasplayer.apps.candycrushsaga',
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .ratings({
+    appId: 'com.midasplayer.apps.candycrushsaga'
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Returns:
@@ -456,18 +475,19 @@ Returns:
 
 Retrieves the version history for the app. Options:
 
-* `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga.
+- `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga.
 
 Example:
 
 ```js
 import appStore from 'app-store-scraper';
 
-appStore.versionHistory({
-  id: 324684580,
-})
-.then(console.log)
-.catch(console.log);
+appStore
+  .versionHistory({
+    id: 324684580
+  })
+  .then(console.log)
+  .catch(console.log);
 ```
 
 Returns:
@@ -475,12 +495,12 @@ Returns:
 ```js
 [
   {
-    "versionDisplay": "3.416.0",
-    "releaseNotes": "• Minor UI enhancements and bug fixes",
-    "releaseDate": "2024-08-14",
-    "releaseTimestamp": "2024-08-14T14:52:32Z"
+    versionDisplay: '3.416.0',
+    releaseNotes: '• Minor UI enhancements and bug fixes',
+    releaseDate: '2024-08-14',
+    releaseTimestamp: '2024-08-14T14:52:32Z'
   }
-]
+];
 ```
 
 ### Memoization
@@ -490,13 +510,14 @@ an iTunes API or web page, sometimes it can be useful to cache the results
 to avoid requesting the same data twice. The `memoized` function returns the
 store object that caches its results:
 
-``` javascript
+```javascript
 import appStore from 'app-store-scraper'; // regular non caching version
 var memoized = appStore.memoized(); // cache with default options
 var memoizedCustom = appStore.memoized({ maxAge: 1000 * 60 }); // cache with default options
 
-memoized.app({id: 553834731}) // will make a request
-  .then(() => memoized.app({id: 553834731})); // will resolve to the cached value without requesting
+memoized
+  .app({ id: 553834731 }) // will make a request
+  .then(() => memoized.app({ id: 553834731 })); // will resolve to the cached value without requesting
 ```
 
 The options available are those supported by the [memoizee](https://github.com/medikoo/memoizee) module.
@@ -518,9 +539,7 @@ const memoizedApi = appStore.memoized({
 });
 
 // Use like the normal API but with caching
-memoizedApi.app({id: 553834731})
-  .then(console.log)
-  .catch(console.log);
+memoizedApi.app({ id: 553834731 }).then(console.log).catch(console.log);
 ```
 
 ### configureCaching
@@ -531,20 +550,23 @@ Configures different cache settings for specific endpoints:
 import appStore from 'app-store-scraper';
 
 // Create an API with different cache settings for each endpoint
-const customCachedApi = appStore.configureCaching({
-  // Search results cache for only 2 minutes
-  search: { maxAge: 1000 * 60 * 2 },
-  
-  // App details cache for 1 hour
-  app: { maxAge: 1000 * 60 * 60 },
-  
-  // Reviews cache for 30 minutes
-  reviews: { maxAge: 1000 * 60 * 30 }
-}, {
-  // Default settings for all other endpoints
-  maxAge: 1000 * 60 * 5, // 5 minutes
-  max: 1000
-});
+const customCachedApi = appStore.configureCaching(
+  {
+    // Search results cache for only 2 minutes
+    search: { maxAge: 1000 * 60 * 2 },
+
+    // App details cache for 1 hour
+    app: { maxAge: 1000 * 60 * 60 },
+
+    // Reviews cache for 30 minutes
+    reviews: { maxAge: 1000 * 60 * 30 }
+  },
+  {
+    // Default settings for all other endpoints
+    maxAge: 1000 * 60 * 5, // 5 minutes
+    max: 1000
+  }
+);
 ```
 
 ### clearCache

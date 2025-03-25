@@ -13,6 +13,7 @@ The app-store-scraper project follows these testing principles:
 ## Test Framework
 
 We use Mocha as our test runner with these supporting libraries:
+
 - **Chai**: For assertions and expectations
 - **Sinon**: For mocks, stubs, and spies
 
@@ -27,7 +28,7 @@ Our modules are designed to accept dependencies as parameters, making them easie
 function createEndpoint({ fetch, validate, transform }, dependencies = {}) {
   // Use provided dependencies or fall back to defaults
   const requestFn = dependencies.requestFunction || common.request;
-  
+
   return function endpoint(opts) {
     // Implementation using injected dependencies
   };
@@ -63,7 +64,7 @@ Some tests may be skipped with `it.skip()` when they require mocking ES module e
 
 We are following a phased approach to improve testing:
 
-1. **Current**: Add dependency injection and test utilities 
+1. **Current**: Add dependency injection and test utilities
 2. **Planned**: Refactor more components to use dependency injection
 3. **Future**: Consider migrating to Jest or Vitest for better ESM support
 
@@ -97,4 +98,4 @@ When adding new features, please:
 1. Write unit tests for new modules
 2. Update existing tests for modified modules
 3. Follow the dependency injection pattern
-4. Use test helpers for common mocking needs 
+4. Use test helpers for common mocking needs

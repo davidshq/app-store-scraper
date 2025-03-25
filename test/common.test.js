@@ -100,11 +100,23 @@ describe('Common utilities', () => {
       assert.equal(cleanedApp.id, mockAppData.trackId, 'id should match trackId');
       assert.equal(cleanedApp.appId, mockAppData.bundleId, 'appId should match bundleId');
       assert.equal(cleanedApp.title, mockAppData.trackName, 'title should match trackName');
-      assert.equal(cleanedApp.icon, mockAppData.artworkUrl512, 'icon should use highest resolution available');
+      assert.equal(
+        cleanedApp.icon,
+        mockAppData.artworkUrl512,
+        'icon should use highest resolution available'
+      );
       assert.equal(cleanedApp.price, mockAppData.price, 'price should match');
       assert.equal(cleanedApp.free, false, 'app should not be marked as free since price > 0');
-      assert.equal(cleanedApp.score, mockAppData.averageUserRating, 'score should match averageUserRating');
-      assert.equal(cleanedApp.developer, mockAppData.artistName, 'developer should match artistName');
+      assert.equal(
+        cleanedApp.score,
+        mockAppData.averageUserRating,
+        'score should match averageUserRating'
+      );
+      assert.equal(
+        cleanedApp.developer,
+        mockAppData.artistName,
+        'developer should match artistName'
+      );
       assert.deepEqual(cleanedApp.genres, mockAppData.genres, 'genres should match');
     });
 
@@ -130,7 +142,11 @@ describe('Common utilities', () => {
       };
 
       const cleanedApp = common.cleanApp(mockAppData);
-      assert.equal(cleanedApp.icon, mockAppData.artworkUrl100, 'icon should fall back to artworkUrl100');
+      assert.equal(
+        cleanedApp.icon,
+        mockAppData.artworkUrl100,
+        'icon should fall back to artworkUrl100'
+      );
 
       const mockAppDataNoArtwork = {
         trackId: 123456789,
@@ -141,7 +157,11 @@ describe('Common utilities', () => {
       };
 
       const cleanedAppNoArtwork = common.cleanApp(mockAppDataNoArtwork);
-      assert.equal(cleanedAppNoArtwork.icon, mockAppDataNoArtwork.artworkUrl60, 'icon should fall back to artworkUrl60');
+      assert.equal(
+        cleanedAppNoArtwork.icon,
+        mockAppDataNoArtwork.artworkUrl60,
+        'icon should fall back to artworkUrl60'
+      );
     });
   });
 

@@ -78,8 +78,8 @@ describe('Endpoint Builder', () => {
 });
 
 // Helper function to parse string templates with variables
-function parseString (template) {
-  return (vars) => {
+function parseString(template) {
+  return vars => {
     return template.replace(/\{([^}]+)\}/g, (match, key) => {
       return vars[key] !== undefined ? vars[key] : match;
     });

@@ -1,52 +1,62 @@
 Based on my analysis of the codebase, here are my recommendations for updating and improving the app-store-scraper:
+
 # Recommendations for Improvement
 
 ## Modernize the JavaScript Code Base:
+
 - Replace var declarations with const and let where appropriate for better scoping.
 - Use more modern JavaScript features like destructuring, arrow functions, and async/await consistently throughout the codebase.
 
 ## Error Handling Improvements:
+
 - Implement more robust error handling throughout the codebase, especially for network requests.
 - Use more specific error types/codes to help users identify problems more easily.
 - Add better retry mechanisms for handling transient network failures.
 
 ## API Design Improvements:
+
 - Make the API more consistent by standardizing parameter names and types across different methods.
 - Consider adding TypeScript typings to provide better developer experience for TypeScript users.
 - Make input validation more consistent and provide clearer error messages.
 
 ## Performance Optimization:
+
 - Improve the caching mechanism with more configurable options.
 - Consider implementing more intelligent rate limiting to prevent IP blocking.
 - Optimize the request flow to reduce the number of requests needed for complex operations.
 
 ## Testing Improvements:
+
 - Add more test coverage, especially for edge cases and error scenarios.
 - Consider adding integration tests against the actual App Store API.
 - Implement mock responses to avoid hitting the actual API during tests.
-- ✅ Renamed test files to follow standard naming convention with "*.test.js" suffix.
+- ✅ Renamed test files to follow standard naming convention with "\*.test.js" suffix.
 - Add specific tests for rate limiting, retry logic, and error handling in the doRequest function.
 
 ## Security Enhancements:
+
 - Implement better handling of sensitive data.
 - Add protection against potential rate limiting or IP blocking.
 
 ## Code Organization:
+
 - Consider refactoring the common functionality into utility modules.
 - Organize the code more logically by separating API client code from data processing logic.
 
 ## Additional Features:
+
 - Add support for more App Store endpoints.
 - Implement better support for different countries and languages.
 - Add the ability to fetch more detailed information about apps (e.g., in-app purchases).
 
 ## CI/CD Improvements:
+
 - Add more automated checks for code quality, dependencies, etc.
 
 These improvements would make the library more maintainable, robust, and easier to use while preserving its core functionality.
 
-
 ## Tests
+
 Based on my analysis of the codebase, I can identify several critical components that may not have adequate test coverage:
 Common.js utility functions:
 The doRequest function in lib/common.js is a crucial component for making HTTP requests. While there are tests for various endpoints, there's no specific test for rate limiting, retry logic, or error handling in this function.
@@ -68,6 +78,7 @@ These areas represent critical functionality where additional test coverage woul
 ## Testing Improvements Progress
 
 ### Completed
+
 - ✅ Enhanced the test setup with latest Mocha and better ESM support
 - ✅ Created a dependency injection pattern for easier testing of module dependencies
 - ✅ Added test helpers to create mock functions without module mocking
@@ -77,10 +88,12 @@ These areas represent critical functionality where additional test coverage woul
 - ✅ Added documentation on testing approach in TESTING.md
 
 ### In Progress
+
 - 🟡 Refactoring more modules to use dependency injection
 - 🟡 Improving test coverage for critical components
 
 ### Planned
+
 - 🔄 Refactor remaining endpoint modules to use dependency injection
 - 🔄 Add tests for memoization and caching behavior
 - 🔄 Add specific tests for error handling and rate limiting

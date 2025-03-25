@@ -52,7 +52,7 @@ const DEFAULT_CACHE_OPTIONS = {
  * @param {Object} [opts.profileName] - Name of cache profile for debugging
  * @returns {Object} Memoized API methods with the same interface as the original API
  */
-function memoized (opts = {}) {
+function memoized(opts = {}) {
   const cacheOpts = Object.assign({}, DEFAULT_CACHE_OPTIONS, opts);
 
   // Create a function that applies memoization to any API function
@@ -82,7 +82,7 @@ function memoized (opts = {}) {
  * @param {Object} [defaultOpts] - Default options for all methods
  * @returns {Object} API with method-specific cache configurations
  */
-function configureCaching (methodConfigs, defaultOpts = {}) {
+function configureCaching(methodConfigs, defaultOpts = {}) {
   const baseOpts = Object.assign({}, DEFAULT_CACHE_OPTIONS, defaultOpts);
   const api = {};
 
@@ -109,7 +109,7 @@ function configureCaching (methodConfigs, defaultOpts = {}) {
  * @param {Object} memoizedApi - A memoized API instance
  * @param {string} [methodName] - Specific method to clear cache for, or all if not specified
  */
-function clearCache (memoizedApi, methodName) {
+function clearCache(memoizedApi, methodName) {
   if (methodName && memoizedApi[methodName] && memoizedApi[methodName].clear) {
     memoizedApi[methodName].clear();
     return;

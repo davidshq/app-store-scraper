@@ -16,7 +16,7 @@ import { createMockStoreIdFunction } from './helpers/test-utils.js';
  * @param {Object} rules - Rules for transformation
  * @returns {Object} Transformed parameters
  */
-function processParams (params = {}, rules = {}) {
+function processParams(params = {}, rules = {}) {
   if (!params) return {};
 
   const result = { ...params };
@@ -36,7 +36,7 @@ function processParams (params = {}, rules = {}) {
  * @param {Object} rules - Validation rules
  * @returns {boolean} True if valid, false otherwise
  */
-function isValid (params = {}, rules = {}) {
+function isValid(params = {}, rules = {}) {
   if (Object.keys(rules).length === 0) return true;
 
   return Object.keys(rules).every(key => {
@@ -226,8 +226,8 @@ describe('Parameter Utilities', () => {
       };
 
       const rules = {
-        name: (value) => value.toUpperCase(),
-        age: (value) => value * 2
+        name: value => value.toUpperCase(),
+        age: value => value * 2
         // no rule for active
       };
 
@@ -247,8 +247,8 @@ describe('Parameter Utilities', () => {
 
     it('should ignore rules for missing parameters', () => {
       const rules = {
-        name: (value) => value.toUpperCase(),
-        age: (value) => value * 2
+        name: value => value.toUpperCase(),
+        age: value => value * 2
       };
 
       expect(processParams({}, rules)).to.deep.equal({});
@@ -278,8 +278,8 @@ describe('Parameter Utilities', () => {
       };
 
       const rules = {
-        name: (value) => value.length > 0,
-        age: (value) => value > 0
+        name: value => value.length > 0,
+        age: value => value > 0
       };
 
       expect(isValid(validParams, rules)).to.be.true;
@@ -293,8 +293,8 @@ describe('Parameter Utilities', () => {
       };
 
       const rules = {
-        name: (value) => value.length > 0,
-        age: (value) => value > 0
+        name: value => value.length > 0,
+        age: value => value > 0
       };
 
       expect(isValid(params, rules)).to.be.false;

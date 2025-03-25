@@ -4,7 +4,8 @@ console.log('Testing app store scraper with ESM imports:');
 
 // Test app details
 console.log('\n1. Testing app lookup:');
-appStore.app({ id: 553834731 })
+appStore
+  .app({ id: 553834731 })
   .then(result => {
     console.log(`Successfully retrieved details for ${result.title}`);
   })
@@ -12,7 +13,8 @@ appStore.app({ id: 553834731 })
 
 // Test search
 console.log('\n2. Testing search:');
-appStore.search({ term: 'candy crush', num: 1 })
+appStore
+  .search({ term: 'candy crush', num: 1 })
   .then(results => {
     console.log(`Search returned ${results.length} results`);
     if (results.length > 0) {
@@ -23,10 +25,11 @@ appStore.search({ term: 'candy crush', num: 1 })
 
 // Test list
 console.log('\n3. Testing list:');
-appStore.list({
-  collection: appStore.collection.TOP_FREE_IOS,
-  num: 2
-})
+appStore
+  .list({
+    collection: appStore.collection.TOP_FREE_IOS,
+    num: 2
+  })
   .then(results => {
     console.log(`List returned ${results.length} results`);
     results.forEach((app, i) => {

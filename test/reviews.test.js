@@ -4,11 +4,12 @@ import c from '../lib/constants.js';
 
 describe('Reviews method', () => {
   it('should retrieve the reviews of an app', () => {
-    return store.reviews({
-      id: '553834731',
-      country: 'us'
-    })
-      .then((reviews) => {
+    return store
+      .reviews({
+        id: '553834731',
+        country: 'us'
+      })
+      .then(reviews => {
         expect(reviews.length).to.be.at.least(1);
         expect(reviews[0].id).to.exist;
         expect(reviews[0].text).to.exist;
@@ -37,11 +38,12 @@ describe('Reviews method', () => {
   });
 
   it('should fetch reviews with newer version of store', () => {
-    return store.reviews({
-      id: '553834731',
-      sort: c.sort.HELPFUL
-    })
-      .then((reviews) => {
+    return store
+      .reviews({
+        id: '553834731',
+        sort: c.sort.HELPFUL
+      })
+      .then(reviews => {
         expect(reviews.length).to.be.at.least(1);
       });
   });
@@ -60,15 +62,16 @@ describe('Reviews method', () => {
     }
   });
 
-  it('should be able to set requestOptions', (done) => {
-    store.reviews({
-      id: '553834731',
-      requestOptions: {
-        method: 'DELETE'
-      }
-    })
+  it('should be able to set requestOptions', done => {
+    store
+      .reviews({
+        id: '553834731',
+        requestOptions: {
+          method: 'DELETE'
+        }
+      })
       .then(() => done('should not resolve'))
-      .catch((err) => {
+      .catch(err => {
         expect(err.response.statusCode).to.equal(501);
         done();
       })

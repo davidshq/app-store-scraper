@@ -4,16 +4,21 @@
     "mocha": true,
     "node": true
   },
-  "extends": "semistandard",
+  "extends": [
+    "semistandard",
+    "prettier"
+  ],
   "plugins": [
-    "standard"
+    "standard",
+    "prettier"
   ],
   "rules": {
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
     "no-var": "error",
     "prefer-const": "error",
     "no-else-return": "error",
-    "object-shorthand": ["error", "properties"]
+    "object-shorthand": ["error", "properties"],
+    "prettier/prettier": "error"
   },
   "overrides": [
     {

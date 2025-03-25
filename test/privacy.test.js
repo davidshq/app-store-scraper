@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import store from '../index.js';
 
-function assertValid (privacyType) {
+function assertValid(privacyType) {
   assert.isString(privacyType.privacyType);
   assert.isString(privacyType.identifier);
   assert.isString(privacyType.description);
@@ -10,11 +10,10 @@ function assertValid (privacyType) {
 
 describe('Privacy method', () => {
   it('should retrieve the privacy details of an app', () => {
-    return store.privacy({ id: '324684580' })
-      .then((privacy) => {
-        assert(privacy.privacyTypes);
-        assert(privacy.privacyTypes.length > 0);
-        privacy.privacyTypes.map(assertValid);
-      });
+    return store.privacy({ id: '324684580' }).then(privacy => {
+      assert(privacy.privacyTypes);
+      assert(privacy.privacyTypes.length > 0);
+      privacy.privacyTypes.map(assertValid);
+    });
   });
 });

@@ -4,13 +4,14 @@ import store from '../index.js';
 
 describe('List method', () => {
   it('should fetch a valid application list for the given category and collection', () => {
-    return store.list({
-      category: store.category.GAMES_ACTION,
-      collection: store.collection.TOP_FREE_IOS
-    })
-      .then((apps) => {
+    return store
+      .list({
+        category: store.category.GAMES_ACTION,
+        collection: store.collection.TOP_FREE_IOS
+      })
+      .then(apps => {
         apps.forEach(assertValidApp);
-        apps.forEach((app) => expect(app.free).to.be.true);
+        apps.forEach(app => expect(app.free).to.be.true);
       });
   });
 
@@ -55,14 +56,15 @@ describe('List method', () => {
   });
 
   it('should fetch apps with fullDetail', () => {
-    return store.list({
-      collection: store.collection.TOP_FREE_GAMES_IOS,
-      fullDetail: true,
-      num: 3
-    })
-      .then((apps) => {
+    return store
+      .list({
+        collection: store.collection.TOP_FREE_GAMES_IOS,
+        fullDetail: true,
+        num: 3
+      })
+      .then(apps => {
         apps.forEach(assertValidApp);
-        apps.forEach((app) => {
+        apps.forEach(app => {
           expect(app.description).to.be.a('string');
 
           // getting some entertainment apps here, skipping the check
@@ -84,16 +86,17 @@ describe('List method', () => {
       });
   });
 
-  it('should be able to set requestOptions', (done) => {
-    store.list({
-      collection: store.collection.TOP_FREE_GAMES_IOS,
-      num: 5,
-      requestOptions: {
-        method: 'DELETE'
-      }
-    })
+  it('should be able to set requestOptions', done => {
+    store
+      .list({
+        collection: store.collection.TOP_FREE_GAMES_IOS,
+        num: 5,
+        requestOptions: {
+          method: 'DELETE'
+        }
+      })
       .then(() => done('should not resolve'))
-      .catch((err) => {
+      .catch(err => {
         expect(err.response.statusCode).to.equal(501);
         done();
       })
