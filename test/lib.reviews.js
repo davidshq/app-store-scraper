@@ -1,8 +1,8 @@
 'use strict';
 
-const store = require('../index');
-const assert = require('chai').assert;
-const assertValidUrl = require('./common').assertValidUrl;
+import { assert } from 'chai';
+import { assertValidUrl } from './common.js';
+import store from '../index.js';
 
 function assertValid (review) {
   assert.isString(review.id);
@@ -35,6 +35,24 @@ describe('Reviews method', () => {
     })
       .then(assert.fail)
       .catch((e) => assert.equal(e.message, 'Invalid sort invalid'));
+  });
+
+  it('should fetch reviews with newer version of store', () => {
+    return store.reviews({id: '950812012', country: 'gb'})
+      .then((reviews) => {
+        assert.isArray(reviews);
+        assert(reviews.length > 0, 'should have some reviews');
+        const first = reviews[0];
+
+        assert.isString(first.id);
+        assert.isString(first.userName);
+        assert.isString(first.title);
+        assert.isString(first.text);
+        assert.isNumber(first.score);
+        assert(first.score > 0);
+        assert(first.score <= 5);
+        assertValidUrl(first.url);
+      });
   });
 
   it('should validate the page', () => {

@@ -1,0 +1,2 @@
+# 2025-24-03:
+- The app-store-scraper library is now using ESM modules instead of CommonJS. All the API functionality remains the same, but the module system has been updated to use modern JavaScript module syntax.

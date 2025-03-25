@@ -1,8 +1,8 @@
 'use strict';
 
-const assert = require('chai').assert;
-const assertValidUrl = require('./common').assertValidUrl;
-const store = require('../index');
+import { assert } from 'chai';
+import { assertValidUrl } from './common.js';
+import store from '../index.js';
 
 describe('App method', () => {
   it('should fetch valid application data', () => {

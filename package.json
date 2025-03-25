@@ -3,8 +3,9 @@
   "version": "0.18.0",
   "description": "scrape data from the itunes app store",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "mocha --timeout 8000",
+    "test": "mocha --timeout 8000 --experimental-modules",
     "lint": "eslint ."
   },
   "repository": {

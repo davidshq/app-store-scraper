@@ -1,5 +1,5 @@
 # app-store-scraper [![Build Status](https://secure.travis-ci.org/facundoolano/app-store-scraper.png)](http://travis-ci.org/facundoolano/app-store-scraper)
-Node.js module to scrape application data from the iTunes/Mac App Store.
+A Node.js module to scrape application data from the iTunes/Mac App Store.
 The goal is to provide an interface as close as possible to the
 [google-play-scraper](https://github.com/facundoolano/google-play-scraper) module.
 
@@ -10,19 +10,19 @@ npm install app-store-scraper
 
 ## Usage
 Available methods:
-- [app](#app): Retrieves the full detail of an application.
+- [app](#app): Retrieves the full details of an application.
 - [list](#list): Retrieves a list of applications from one of the collections at iTunes.
-- [search](#search): Retrieves a list of apps that results of searching by the given term.
+- [search](#search): Retrieves a list of apps that result from searching by a given term.
 - [developer](#developer): Retrieves a list of apps by the given developer id.
 - [privacy](#privacy): Display the privacy details for the app.
 - [suggest](#suggest): Given a string returns up to 50 suggestions to complete a search query term.
 - [similar](#similar): Returns the list of "customers also bought" apps shown in the app's detail page.
-- [reviews](#reviews): Retrieves a page of reviews for the app.
-- [ratings](#ratings): Retrieves the ratings for the app.
-- [versionHistory](#versionHistory): Retrieves the version history for the app.
+- [reviews](#reviews): Retrieves a page of reviews of the app.
+- [ratings](#ratings): Retrieves the ratings of the app.
+- [versionHistory](#versionHistory): Retrieves the version history of the app.
 
 ### app
-Retrieves the full detail of an application. Options:
+Retrieves the full details of an application. Options:
 
 * `id`: the iTunes "trackId" of the app, for example `553834731` for Candy Crush Saga. Either this or the `appId` should be provided.
 * `appId`: the iTunes "bundleId" of the app, for example `com.midasplayer.apps.candycrushsaga` for Candy Crush Saga. Either this or the `id` should be provided.

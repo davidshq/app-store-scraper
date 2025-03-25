@@ -1,13 +1,16 @@
 'use strict';
 
-const store = require('../index');
-const assertValidApp = require('./common').assertValidApp;
-const assert = require('chai').assert;
+import { assert } from 'chai';
+import { assertValidApp } from './common.js';
+import store from '../index.js';
 
 describe('Similar method', () => {
   it('should fetch a valid application list', () => {
     return store.similar({id: '553834731'})
-      .then((apps) => apps.map(assertValidApp));
+      .then((apps) => {
+        assert.isArray(apps);
+        return apps.map(assertValidApp);
+      });
   });
 
   it('should a different list in fr country', () => {

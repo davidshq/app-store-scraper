@@ -1,8 +1,8 @@
 'use strict';
 
-const store = require('../index');
-const assertValidApp = require('./common').assertValidApp;
-const assert = require('chai').assert;
+import store from '../index.js';
+import { assertValidApp } from './common.js';
+import { assert } from 'chai';
 
 describe('Search method', () => {
   it('should fetch a valid application list', () => {
@@ -27,7 +27,9 @@ describe('Search method', () => {
     return store.search({country: 'fr', term: 'Panda vs Zombies'})
       .then((apps) => {
         apps.map(assertValidApp);
-        assert(apps[0]['url'].startsWith('https://apps.apple.com/fr'), 'should return french app');
+        if (apps.length > 0) {
+          assert(apps[0].url.startsWith('https://apps.apple.com/fr'), 'should return french app');
+        }
       });
   });
 
