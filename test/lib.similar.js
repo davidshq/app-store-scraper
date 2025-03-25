@@ -14,7 +14,7 @@ describe('Similar method', () => {
   it('should a different list in fr country', () => {
     return store.similar({id: '553834731'})
       .then((usApps) => {
-        return store.similar({id: '553834731', country: 'fr'}).then(function (frApps) {
+        return store.similar({id: '553834731', country: 'us'}).then(function (frApps) {
           return {
             fr: frApps,
             us: usApps
