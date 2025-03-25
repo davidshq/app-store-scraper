@@ -5,9 +5,6 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 - Replace var declarations with const and let where appropriate for better scoping.
 - Use more modern JavaScript features like destructuring, arrow functions, and async/await consistently throughout the codebase.
 
-## Replace Deprecated Dependencies:
-- Consider replacing the debug module with a more modern logging solution if needed.
-
 ## Error Handling Improvements:
 - Implement more robust error handling throughout the codebase, especially for network requests.
 - Use more specific error types/codes to help users identify problems more easily.
@@ -31,7 +28,6 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 - Add specific tests for rate limiting, retry logic, and error handling in the doRequest function.
 
 ## Documentation Updates:
-- Improve JSDoc comments throughout the codebase.
 - Update the README with more examples and clearer explanations.
 - Document all available options for each method more thoroughly.
 
@@ -49,7 +45,6 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 - Add the ability to fetch more detailed information about apps (e.g., in-app purchases).
 
 ## CI/CD Improvements:
-- Replace Travis CI with GitHub Actions or another modern CI/CD solution.
 - Add more automated checks for code quality, dependencies, etc.
 
 These improvements would make the library more maintainable, robust, and easier to use while preserving its core functionality.
