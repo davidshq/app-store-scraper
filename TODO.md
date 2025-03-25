@@ -2,12 +2,10 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 # Recommendations for Improvement
 
 ## Modernize the JavaScript Code Base:
-- Complete the transition to ES Modules. While the code has "type": "module" in package.json, there are still some vestiges of CommonJS patterns.
 - Replace var declarations with const and let where appropriate for better scoping.
 - Use more modern JavaScript features like destructuring, arrow functions, and async/await consistently throughout the codebase.
 
 ## Replace Deprecated Dependencies:
-- The library uses the deprecated request package. Replace it with modern alternatives like node-fetch, axios, or got.
 - Consider replacing the debug module with a more modern logging solution if needed.
 
 ## Error Handling Improvements:
