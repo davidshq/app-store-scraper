@@ -1,5 +1,3 @@
-'use strict';
-
 import * as R from 'ramda';
 import memoizee from 'memoizee';
 import constants from './lib/constants.js';

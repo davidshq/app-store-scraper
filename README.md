@@ -33,9 +33,9 @@ Retrieves the full details of an application. Options:
 Example:
 
 ```javascript
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.app({id: 553834731}).then(console.log).catch(console.log);
+appStore.app({id: 553834731}).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -86,9 +86,9 @@ Results:
 Example with `ratings` option:
 
 ```javascript
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.app({id: 553834731, ratings: true}).then(console.log).catch(console.log);
+appStore.app({id: 553834731, ratings: true}).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -127,11 +127,11 @@ Retrieves a list of applications from one of the collections at iTunes. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.list({
-  collection: store.collection.TOP_FREE_IPAD,
-  category: store.category.GAMES_ACTION,
+appStore.list({
+  collection: appStore.collection.TOP_FREE_IPAD,
+  category: appStore.category.GAMES_ACTION,
   num: 2
 })
 .then(console.log)
@@ -188,9 +188,9 @@ Retrieves a list of apps that results of searching by the given term. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.search({
+appStore.search({
   term: 'panda',
   num: 2,
   page: 3,
@@ -229,9 +229,9 @@ Retrieves a list of applications by the give developer id. Options:
 Example:
 
 ```javascript
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.developer({devId: 284882218}).then(console.log).catch(console.log);
+appStore.developer({devId: 284882218}).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -261,9 +261,9 @@ Retrieves the ratings for the app. Currently only for US App Store. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.privacy({
+appStore.privacy({
   id: 324684580,
 })
 .then(console.log)
@@ -307,9 +307,9 @@ to `10000` for the most searched terms.
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.suggest({term: 'panda'}).then(console.log).catch(console.log);
+appStore.suggest({term: 'panda'}).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -335,9 +335,9 @@ Returns the list of "customers also bought" apps shown in the app's detail page.
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.similar({id: 553834731}).then(console.log).catch(console.log);
+appStore.similar({id: 553834731}).then(console.log).catch(console.log);
 ```
 
 Results:
@@ -373,11 +373,11 @@ Retrieves a page of reviews for the app. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.reviews({
+appStore.reviews({
   appId: 'com.midasplayer.apps.candycrushsaga',
-  sort: store.sort.HELPFUL,
+  sort: appStore.sort.HELPFUL,
   page: 2
 })
 .then(console.log)
@@ -420,9 +420,9 @@ Retrieves the ratings for the app. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.ratings({
+appStore.ratings({
   appId: 'com.midasplayer.apps.candycrushsaga',
 })
 .then(console.log)
@@ -453,9 +453,9 @@ Retrieves the version history for the app. Options:
 Example:
 
 ```js
-var store = require('app-store-scraper');
+import appStore from 'app-store-scraper';
 
-store.versionHistory({
+appStore.versionHistory({
   id: 324684580,
 })
 .then(console.log)
@@ -483,9 +483,9 @@ to avoid requesting the same data twice. The `memoized` function returns the
 store object that caches its results:
 
 ``` javascript
-var store = require('app-store-scraper'); // regular non caching version
-var memoized = require('app-store-scraper').memoized(); // cache with default options
-var memoizedCustom = require('app-store-scraper').memoized({ maxAge: 1000 * 60 }); // cache with default options
+import appStore from 'app-store-scraper'; // regular non caching version
+var memoized = appStore.memoized(); // cache with default options
+var memoizedCustom = appStore.memoized({ maxAge: 1000 * 60 }); // cache with default options
 
 memoized.app({id: 553834731}) // will make a request
   .then(() => memoized.app({id: 553834731})); // will resolve to the cached value without requesting

@@ -1,5 +1,3 @@
-'use strict';
-
 import { assert } from 'chai';
 import { assertValidApp } from './common.js';
 import store from '../index.js';

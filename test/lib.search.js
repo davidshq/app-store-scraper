@@ -1,8 +1,6 @@
-'use strict';
-
+import { assert } from 'chai';
 import store from '../index.js';
 import { assertValidApp } from './common.js';
-import { assert } from 'chai';
 
 describe('Search method', () => {
   it('should fetch a valid application list', () => {
