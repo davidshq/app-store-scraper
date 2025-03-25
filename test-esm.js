@@ -30,7 +30,7 @@ appStore.list({
   .then(results => {
     console.log(`List returned ${results.length} results`);
     results.forEach((app, i) => {
-      console.log(`${i+1}. ${app.title}`);
+      console.log(`${i + 1}. ${app.title}`);
     });
   })
-  .catch(console.error); 
+  .catch(console.error);
