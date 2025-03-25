@@ -32,7 +32,9 @@ function memoized (opts) {
   const cacheOpts = Object.assign({
     primitive: true,
     normalizer: JSON.stringify,
+    // TODO: Make this configurable
     maxAge: 1000 * 60 * 5, // cache for 5 minutes
+    // TODO: Make this configurable
     max: 1000 // save up to 1k results to avoid memory issues
   }, opts);
   const doMemoize = (fn) => memoizee(fn, cacheOpts);
