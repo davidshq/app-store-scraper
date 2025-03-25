@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { assertValidApp, assertValidUrl } from './common.js';
+import { assertValidApp, assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
 
 describe('List method', () => {

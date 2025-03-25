@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import store from '../index.js';
-import { assertValidApp } from './common.js';
+import { assertValidApp } from './common-utils.test.js';
 
 describe('Search method', () => {
   it('should fetch a valid application list', () => {

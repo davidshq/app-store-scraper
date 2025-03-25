@@ -27,6 +27,8 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 - Add more test coverage, especially for edge cases and error scenarios.
 - Consider adding integration tests against the actual App Store API.
 - Implement mock responses to avoid hitting the actual API during tests.
+- ✅ Renamed test files to follow standard naming convention with "*.test.js" suffix.
+- Add specific tests for rate limiting, retry logic, and error handling in the doRequest function.
 
 ## Documentation Updates:
 - Improve JSDoc comments throughout the codebase.

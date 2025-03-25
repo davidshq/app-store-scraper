@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { assertValidApp } from './common.js';
+import { assertValidApp } from './common-utils.test.js';
 import store from '../index.js';
 
 const FACEBOOK_ID = '284882218';
