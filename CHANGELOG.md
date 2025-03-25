@@ -2,5 +2,11 @@
 - Refactored HTTP request handling in `lib/common.js` to use dependency injection
 - Added unit tests for rate limiting, error handling, request functionality
 - Exposed internal functions for testing
-- Updated docs on throttle parameter for rate limiting
+- Added better documentation for the throttle parameter to control rate limiting
+- Updated dependencies to latest compatible versions:
+  - debug: 2.2.0 → 4.4.0
+  - cheerio: 1.0.0-rc.2 → 1.0.0
+  - memoizee: 0.4.15 → 0.4.17
+  - ramda: 0.29.0 → 0.29.1
+  - Multiple dev dependencies updated
 - The app-store-scraper library is now using ESM modules instead of CommonJS. All the API functionality remains the same, but the module system has been updated to use modern JavaScript module syntax.

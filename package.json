@@ -27,22 +27,22 @@
   "homepage": "https://github.com/facundoolano/app-store-scraper#readme",
   "dependencies": {
     "bottleneck": "^2.19.5",
-    "cheerio": "^1.0.0-rc.2",
-    "debug": "^2.2.0",
+    "cheerio": "^1.0.0",
+    "debug": "^4.4.0",
     "got": "^14.4.6",
-    "memoizee": "^0.4.15",
-    "ramda": "^0.29.0",
+    "memoizee": "^0.4.17",
+    "ramda": "^0.29.1",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "chai": "^4.3.8",
-    "eslint": "^8.49.0",
-    "eslint-config-semistandard": "^6.0.1",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-promise": "^1.1.0",
+    "chai": "^4.5.0",
+    "eslint": "^9.23.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-promise": "^7.2.0",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^10.2.0",
+    "mocha": "^10.8.2",
     "sinon": "^14.0.2",
-    "validator": "^13.11.0"
+    "validator": "^13.15.0"
   }
 }
