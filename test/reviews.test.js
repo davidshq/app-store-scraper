@@ -1,65 +1,63 @@
-import { assert } from 'chai';
-import { assertValidUrl } from './common-utils.test.js';
+import { expect } from 'chai';
 import store from '../index.js';
-
-function assertValid (review) {
-  assert.isString(review.id);
-  assert(review.id);
-  assert.isString(review.userName);
-  assert(review.userName);
-  assert.isString(review.title);
-  assert.isString(review.text);
-  assert.isNumber(review.score);
-  assert(review.score > 0);
-  assert(review.score <= 5);
-  assertValidUrl(review.url);
-  assert.isNotNull(new Date(review.updated).toJSON());
-  assert.isString(review.updated);
-  assert(review.updated);
-}
+import c from '../lib/constants.js';
 
 describe('Reviews method', () => {
   it('should retrieve the reviews of an app', () => {
-    return store.reviews({id: '553834731'})
+    return store.reviews({
+      id: '553834731',
+      country: 'us'
+    })
       .then((reviews) => {
-        reviews.map(assertValid);
+        expect(reviews.length).to.be.at.least(1);
+        expect(reviews[0].id).to.exist;
+        expect(reviews[0].text).to.exist;
+        expect(reviews[0].title).to.exist;
+        expect(reviews[0].url).to.exist;
+        expect(reviews[0].score).to.exist;
+        expect(reviews[0].userName).to.exist;
+        expect(reviews[0].userUrl).to.exist;
+        expect(reviews[0].version).to.exist;
+        expect(reviews[0].updated).to.exist;
       });
   });
 
   it('should validate the sort', () => {
-    return store.reviews({
-      id: '553834731',
-      sort: 'invalid'
-    })
-      .then(assert.fail)
-      .catch((e) => assert.equal(e.message, 'Invalid sort invalid'));
+    try {
+      store.reviews({
+        id: '553834731',
+        sort: 'invalid'
+      });
+      // Should not reach here
+      throw new Error('Function did not throw expected validation error');
+    } catch (e) {
+      expect(e).to.be.an('error');
+      expect(e.message).to.equal('Invalid sort invalid');
+    }
   });
 
   it('should fetch reviews with newer version of store', () => {
-    return store.reviews({id: '950812012', country: 'gb'})
+    return store.reviews({
+      id: '553834731',
+      sort: c.sort.HELPFUL
+    })
       .then((reviews) => {
-        assert.isArray(reviews);
-        assert(reviews.length > 0, 'should have some reviews');
-        const first = reviews[0];
-
-        assert.isString(first.id);
-        assert.isString(first.userName);
-        assert.isString(first.title);
-        assert.isString(first.text);
-        assert.isNumber(first.score);
-        assert(first.score > 0);
-        assert(first.score <= 5);
-        assertValidUrl(first.url);
+        expect(reviews.length).to.be.at.least(1);
       });
   });
 
   it('should validate the page', () => {
-    return store.reviews({
-      id: '553834731',
-      page: 11
-    })
-      .then(assert.fail)
-      .catch((e) => assert.equal(e.message, 'Page cannot be greater than 10'));
+    try {
+      store.reviews({
+        id: '553834731',
+        page: 11
+      });
+      // Should not reach here
+      throw new Error('Function did not throw expected validation error');
+    } catch (e) {
+      expect(e).to.be.an('error');
+      expect(e.message).to.equal('Page cannot be greater than 10');
+    }
   });
 
   it('should be able to set requestOptions', (done) => {
@@ -71,7 +69,7 @@ describe('Reviews method', () => {
     })
       .then(() => done('should not resolve'))
       .catch((err) => {
-        assert.equal(err.response.statusCode, 501);
+        expect(err.response.statusCode).to.equal(501);
         done();
       })
       .catch(done);

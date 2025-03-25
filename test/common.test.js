@@ -271,8 +271,10 @@ describe('Common utilities', () => {
 
       // Use the requester
       return requester('https://example.com/api').catch(err => {
-        // Verify the error was transformed correctly
-        assert.deepEqual(err, { response: { statusCode: 404 } });
+        // Verify the error has the correct format
+        assert.instanceOf(err, Error);
+        assert.equal(err.message, 'Request failed with status code 404');
+        assert.deepEqual(err.response, { statusCode: 404 });
       });
     });
 

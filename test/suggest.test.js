@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import store from '../index.js';
 
 describe('Suggest method', () => {
-  it('should return five suggestion for a common term', () => store.suggest({term: 'p'})
+  it('should return five suggestion for a common term', () => store.suggest({ term: 'p' })
     .then((results) => {
       assert.equal(results.length, 10, `expected ${results} to have 10 elements`);
       results.map((r) => assert.include(r.term, 'p'));

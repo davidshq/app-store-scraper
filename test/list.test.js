@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { expect } from 'chai';
 import { assertValidApp, assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
 
@@ -8,36 +8,50 @@ describe('List method', () => {
       category: store.category.GAMES_ACTION,
       collection: store.collection.TOP_FREE_IOS
     })
-      .then((apps) => apps.map(assertValidApp))
-      .then((apps) => apps.map((app) => assert(app.free)));
+      .then((apps) => {
+        apps.forEach(assertValidApp);
+        apps.forEach((app) => expect(app.free).to.be.true);
+      });
   });
 
   it('should validate the category', () => {
-    return store.list({
-      category: 'wrong',
-      collection: store.collection.TOP_FREE_IOS
-    })
-      .then(assert.fail)
-      .catch((e) => assert.equal(e.message, 'Invalid category wrong'));
+    try {
+      store.list({
+        category: 'wrong',
+        collection: store.collection.TOP_FREE_IOS
+      });
+      throw new Error('Function did not throw expected validation error');
+    } catch (e) {
+      expect(e).to.be.an('error');
+      expect(e.message).to.equal('Invalid category wrong');
+    }
   });
 
   it('should validate the collection', () => {
-    return store.list({
-      category: store.category.GAMES_ACTION,
-      collection: 'wrong'
-    })
-      .then(assert.fail)
-      .catch((e) => assert.equal(e.message, 'Invalid collection wrong'));
+    try {
+      store.list({
+        category: store.category.GAMES_ACTION,
+        collection: 'wrong'
+      });
+      throw new Error('Function did not throw expected validation error');
+    } catch (e) {
+      expect(e).to.be.an('error');
+      expect(e.message).to.equal('Invalid collection wrong');
+    }
   });
 
   it('should validate the results number', () => {
-    return store.list({
-      category: store.category.GAMES_ACTION,
-      collection: store.collection.TOP_FREE_IOS,
-      num: 250
-    })
-      .then(assert.fail)
-      .catch((e) => assert.equal(e.message, 'Cannot retrieve more than 200 apps'));
+    try {
+      store.list({
+        category: store.category.GAMES_ACTION,
+        collection: store.collection.TOP_FREE_IOS,
+        num: 250
+      });
+      throw new Error('Function did not throw expected validation error');
+    } catch (e) {
+      expect(e).to.be.an('error');
+      expect(e.message).to.equal('Cannot retrieve more than 200 apps');
+    }
   });
 
   it('should fetch apps with fullDetail', () => {
@@ -46,22 +60,28 @@ describe('List method', () => {
       fullDetail: true,
       num: 3
     })
-      .then((apps) => apps.map(assertValidApp))
-      .then((apps) => apps.map((app) => {
-        assert.isString(app.description);
+      .then((apps) => {
+        apps.forEach(assertValidApp);
+        apps.forEach((app) => {
+          expect(app.description).to.be.a('string');
 
-        // getting some entertainment apps here, skipping the check
-        // assert.equal(app.primaryGenre, 'Games');
-        // assert.equal(app.primaryGenreId, '6014');
+          // getting some entertainment apps here, skipping the check
+          // assert.equal(app.primaryGenre, 'Games');
+          // assert.equal(app.primaryGenreId, '6014');
 
-        assert.equal(app.price, '0.00000');
-        assert(app.free);
+          if (typeof app.price === 'string') {
+            expect(app.price).to.equal('0.00000');
+          } else {
+            expect(app.price).to.equal(0);
+          }
+          expect(app.free).to.be.true;
 
-        assert.isString(app.developer);
-        if (app.developerWebsite) {
-          assertValidUrl(app.developerWebsite);
-        }
-      }));
+          expect(app.developer).to.be.a('string');
+          if (app.developerWebsite) {
+            assertValidUrl(app.developerWebsite);
+          }
+        });
+      });
   });
 
   it('should be able to set requestOptions', (done) => {
@@ -74,7 +94,7 @@ describe('List method', () => {
     })
       .then(() => done('should not resolve'))
       .catch((err) => {
-        assert.equal(err.response.statusCode, 501);
+        expect(err.response.statusCode).to.equal(501);
         done();
       })
       .catch(done);

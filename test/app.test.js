@@ -4,7 +4,7 @@ import store from '../index.js';
 
 describe('App method', () => {
   it('should fetch valid application data', () => {
-    return store.app({id: '553834731'})
+    return store.app({ id: '553834731' })
       .then((app) => {
         assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
         assert.equal(app.title, 'Candy Crush Saga');
@@ -54,7 +54,7 @@ describe('App method', () => {
 
   describe('with ratings option enabled', () => {
     it('should fetch valid application data', () => {
-      return store.app({id: '553834731', ratings: true})
+      return store.app({ id: '553834731', ratings: true })
         .then((app) => {
           assert.isNumber(app.ratings);
           assert.isObject(app.histogram);
@@ -67,7 +67,7 @@ describe('App method', () => {
     });
 
     it('should fetch app with bundle id', () => {
-      return store.app({appId: 'com.midasplayer.apps.candycrushsaga', ratings: true})
+      return store.app({ appId: 'com.midasplayer.apps.candycrushsaga', ratings: true })
         .then((app) => {
           assert.isNumber(app.ratings);
           assert.isObject(app.histogram);
@@ -81,7 +81,7 @@ describe('App method', () => {
   });
 
   it('should fetch app with bundle id', () => {
-    return store.app({appId: 'com.midasplayer.apps.candycrushsaga'})
+    return store.app({ appId: 'com.midasplayer.apps.candycrushsaga' })
       .then((app) => {
         assert.equal(app.id, '553834731');
         assert.equal(app.title, 'Candy Crush Saga');
@@ -92,7 +92,7 @@ describe('App method', () => {
   });
 
   it('should fetch app in spanish', () => {
-    return store.app({id: '553834731', country: 'ar'})
+    return store.app({ id: '553834731', country: 'ar' })
       .then((app) => {
         assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
         assert.equal(app.title, 'Candy Crush Saga');
@@ -101,7 +101,7 @@ describe('App method', () => {
   });
 
   it('should fetch app in french', () => {
-    return store.app({id: '553834731', country: 'fr'})
+    return store.app({ id: '553834731', country: 'fr' })
       .then((app) => {
         assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
         assert.equal(app.title, 'Candy Crush Saga');
@@ -110,7 +110,7 @@ describe('App method', () => {
   });
 
   it('should reject the promise for an invalid id', (done) => {
-    store.app({id: '123'})
+    store.app({ id: '123' })
       .then(() => done('should not resolve'))
       .catch((err) => {
         assert.equal(err.message, 'App not found (404)');
@@ -120,7 +120,7 @@ describe('App method', () => {
   });
 
   it('should reject the promise for an invalid appId', (done) => {
-    store.app({appId: '123'})
+    store.app({ appId: '123' })
       .then(() => done('should not resolve'))
       .catch((err) => {
         assert.equal(err.message, 'App not found (404)');
@@ -131,7 +131,7 @@ describe('App method', () => {
 
   it('should memoize the results when memoize enabled', () => {
     const memoized = store.memoized();
-    return memoized.app({id: '553834731'})
+    return memoized.app({ id: '553834731' })
       .then((app) => {
         assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
         assert.equal(app.title, 'Candy Crush Saga');
@@ -139,8 +139,8 @@ describe('App method', () => {
   });
 
   it('should memoize the results with custom options', () => {
-    const memoized = store.memoized({maxAge: 1000, max: 10});
-    return memoized.app({id: '553834731'})
+    const memoized = store.memoized({ maxAge: 1000, max: 10 });
+    return memoized.app({ id: '553834731' })
       .then((app) => {
         assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
         assert.equal(app.title, 'Candy Crush Saga');

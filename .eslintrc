@@ -14,5 +14,13 @@
     "prefer-const": "error",
     "no-else-return": "error",
     "object-shorthand": ["error", "properties"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

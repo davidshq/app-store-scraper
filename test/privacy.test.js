@@ -10,7 +10,7 @@ function assertValid (privacyType) {
 
 describe('Privacy method', () => {
   it('should retrieve the privacy details of an app', () => {
-    return store.privacy({id: '324684580'})
+    return store.privacy({ id: '324684580' })
       .then((privacy) => {
         assert(privacy.privacyTypes);
         assert(privacy.privacyTypes.length > 0);

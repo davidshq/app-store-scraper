@@ -4,7 +4,7 @@ import store from '../index.js';
 
 describe('Similar method', () => {
   it('should fetch a valid application list', () => {
-    return store.similar({id: '553834731'})
+    return store.similar({ id: '553834731' })
       .then((apps) => {
         assert.isArray(apps);
         return apps.map(assertValidApp);
@@ -12,9 +12,9 @@ describe('Similar method', () => {
   });
 
   it.skip('should a different list in fr country', () => {
-    return store.similar({id: '553834731'})
+    return store.similar({ id: '553834731' })
       .then((usApps) => {
-        return store.similar({id: '553834731', country: 'fr'}).then(function (frApps) {
+        return store.similar({ id: '553834731', country: 'fr' }).then(function (frApps) {
           return {
             fr: frApps,
             us: usApps

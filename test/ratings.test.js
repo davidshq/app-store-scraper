@@ -5,7 +5,7 @@ const id = '553834731';
 
 describe('Ratings method', () => {
   it('should fetch valid ratings data by id', () => {
-    return store.ratings({id})
+    return store.ratings({ id })
       .then((ratings) => {
         assert.isObject(ratings);
         assert.isNumber(ratings.ratings);
@@ -20,11 +20,11 @@ describe('Ratings method', () => {
 
   it('should fetch valid ratings data by id and country', () => {
     let ratingsForUs, ratingsForFr;
-    return store.ratings({id})
+    return store.ratings({ id })
       .then((ratings) => {
         ratingsForUs = ratings;
       })
-      .then(() => store.ratings({id, country: 'fr'}))
+      .then(() => store.ratings({ id, country: 'fr' }))
       .then((ratings) => {
         ratingsForFr = ratings;
       })

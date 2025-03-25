@@ -4,13 +4,13 @@ import { assertValidApp } from './common-utils.test.js';
 
 describe('Search method', () => {
   it('should fetch a valid application list', () => {
-    return store.search({term: 'Panda vs Zombies'})
+    return store.search({ term: 'Panda vs Zombies' })
       .then((apps) => apps.map(assertValidApp));
   });
 
   it('should properly paginate results', () => {
-    const p1 = store.search({term: 'Panda', num: 10});
-    const p2 = store.search({term: 'Panda', num: 10, page: 2});
+    const p1 = store.search({ term: 'Panda', num: 10 });
+    const p2 = store.search({ term: 'Panda', num: 10, page: 2 });
     return Promise.all([p1, p2])
       .then(([apps1, apps2]) => {
         assert.equal(10, apps1.length);
@@ -22,7 +22,7 @@ describe('Search method', () => {
   });
 
   it('should fetch a valid application list in fr country', () => {
-    return store.search({country: 'fr', term: 'Panda vs Zombies'})
+    return store.search({ country: 'fr', term: 'Panda vs Zombies' })
       .then((apps) => {
         apps.map(assertValidApp);
         if (apps.length > 0) {

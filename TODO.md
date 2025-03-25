@@ -27,10 +27,6 @@ Based on my analysis of the codebase, here are my recommendations for updating a
 - ✅ Renamed test files to follow standard naming convention with "*.test.js" suffix.
 - Add specific tests for rate limiting, retry logic, and error handling in the doRequest function.
 
-## Documentation Updates:
-- Update the README with more examples and clearer explanations.
-- Document all available options for each method more thoroughly.
-
 ## Security Enhancements:
 - Implement better handling of sensitive data.
 - Add protection against potential rate limiting or IP blocking.
@@ -68,3 +64,24 @@ Edge cases like handling of non-English content, unusual app data, or very large
 Bottleneck rate limiting:
 The implementation of the rate limiting through Bottleneck is critical for preventing API rate limits, but doesn't have specific tests.
 These areas represent critical functionality where additional test coverage would improve the reliability and maintainability of the codebase.
+
+## Testing Improvements Progress
+
+### Completed
+- ✅ Enhanced the test setup with latest Mocha and better ESM support
+- ✅ Created a dependency injection pattern for easier testing of module dependencies
+- ✅ Added test helpers to create mock functions without module mocking
+- ✅ Refactored endpoint-builder to support dependency injection
+- ✅ Updated similar.js to use the dependency injection pattern
+- ✅ Added tests for endpoint-builder with mock dependencies
+- ✅ Added documentation on testing approach in TESTING.md
+
+### In Progress
+- 🟡 Refactoring more modules to use dependency injection
+- 🟡 Improving test coverage for critical components
+
+### Planned
+- 🔄 Refactor remaining endpoint modules to use dependency injection
+- 🔄 Add tests for memoization and caching behavior
+- 🔄 Add specific tests for error handling and rate limiting
+- 🔄 Consider longer-term migration to Jest or Vitest for better ESM support

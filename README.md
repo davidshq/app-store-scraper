@@ -21,6 +21,14 @@ Available methods:
 - [ratings](#ratings): Retrieves the ratings of the app.
 - [versionHistory](#versionHistory): Retrieves the version history of the app.
 
+### Caching
+
+The module now includes enhanced caching capabilities:
+
+- [memoized](#memoized): Creates a memoized version of the API.
+- [configureCaching](#configureCaching): Configures custom caching per endpoint.
+- [clearCache](#clearCache): Clears cache entries.
+
 ### app
 Retrieves the full details of an application. Options:
 
@@ -493,3 +501,84 @@ memoized.app({id: 553834731}) // will make a request
 
 The options available are those supported by the [memoizee](https://github.com/medikoo/memoizee) module.
 By default up to 1000 values are cached by each method and they expire after 5 minutes.
+
+## Advanced Usage
+
+### memoized
+
+Creates a memoized version of the API with configurable cache settings:
+
+```javascript
+import appStore from 'app-store-scraper';
+
+// Create a memoized API with custom cache settings
+const memoizedApi = appStore.memoized({
+  maxAge: 1000 * 60 * 10, // 10 minutes cache TTL
+  max: 500 // Maximum number of entries to store
+});
+
+// Use like the normal API but with caching
+memoizedApi.app({id: 553834731})
+  .then(console.log)
+  .catch(console.log);
+```
+
+### configureCaching
+
+Configures different cache settings for specific endpoints:
+
+```javascript
+import appStore from 'app-store-scraper';
+
+// Create an API with different cache settings for each endpoint
+const customCachedApi = appStore.configureCaching({
+  // Search results cache for only 2 minutes
+  search: { maxAge: 1000 * 60 * 2 },
+  
+  // App details cache for 1 hour
+  app: { maxAge: 1000 * 60 * 60 },
+  
+  // Reviews cache for 30 minutes
+  reviews: { maxAge: 1000 * 60 * 30 }
+}, {
+  // Default settings for all other endpoints
+  maxAge: 1000 * 60 * 5, // 5 minutes
+  max: 1000
+});
+```
+
+### clearCache
+
+Clears the cache for a memoized API instance:
+
+```javascript
+import appStore from 'app-store-scraper';
+
+const memoizedApi = appStore.memoized();
+
+// Clear cache for a specific endpoint
+memoizedApi.clearCache(memoizedApi, 'search');
+
+// Clear the entire cache
+memoizedApi.clearCache(memoizedApi);
+```
+
+## Development
+
+### Testing
+
+The project uses Mocha for testing. Run tests with:
+
+```bash
+npm test
+```
+
+For more information about the testing approach, see [TESTING.md](TESTING.md).
+
+### Contributing
+
+Contributions are welcome! Please make sure to update tests as appropriate.
+
+## License
+
+ISC
