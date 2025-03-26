@@ -1,5 +1,6 @@
 import * as common from './common.js';
 import { ApiRequestOptions } from './param-utils.js';
+import { validateVersionHistory } from './validators.js';
 
 /**
  * Options for version history lookup
@@ -47,11 +48,8 @@ function versionHistory(opts: VersionHistoryOptions): Promise<VersionHistoryEntr
   opts.country = opts.country || 'US';
 
   return new Promise<void>(resolve => {
-    if (opts.id) {
-      resolve();
-    } else {
-      throw Error('Either id or appId is required');
-    }
+    validateVersionHistory(opts);
+    resolve();
   })
     .then(() => {
       const tokenUrl = `https://apps.apple.com/${opts.country}/app/id${opts.id}`;

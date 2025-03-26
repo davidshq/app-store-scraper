@@ -2,6 +2,7 @@ import type { RequestOptions } from './utils/http-client.js';
 import { lookup } from './api/itunes-api.js';
 import { ApiRequestOptions } from './param-utils.js';
 import type { App } from './types/app-types.js';
+import { validateDeveloper } from './validators.js';
 
 /**
  * Options for developer data lookup
@@ -24,9 +25,8 @@ export interface DeveloperOptions extends ApiRequestOptions {
  */
 function developer(opts: DeveloperOptions): Promise<App[]> {
   return new Promise<App[]>(function (resolve) {
-    if (!opts.devId) {
-      throw Error('devId is required');
-    }
+    validateDeveloper(opts);
+
     resolve(
       lookup([opts.devId], 'id', opts.country, opts.lang, opts.requestOptions, opts.throttle)
     );

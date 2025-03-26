@@ -248,6 +248,93 @@ function validateReviews(opts: ReviewsValidationOptions): void {
   validateRange(opts, 'page', 1, 10);
 }
 
+/**
+ * Search options interface
+ */
+export interface SearchValidationOptions extends BaseRequestOptions, PaginationOptions {
+  term?: string;
+  idsOnly?: boolean;
+}
+
+/**
+ * Validates options for search requests
+ * @param {SearchValidationOptions} opts - Options to validate
+ * @throws {AppStoreScraperError} If term is missing
+ */
+function validateSearch(opts: SearchValidationOptions): void {
+  validateRequired(opts, ['term'], 'Search term is required');
+  validateRange(opts, 'num', 1, 200);
+  validateRange(opts, 'page', 1, 50);
+}
+
+/**
+ * Developer options interface
+ */
+export interface DeveloperValidationOptions extends BaseRequestOptions, PaginationOptions {
+  devId?: string | number;
+  fullDetail?: boolean;
+}
+
+/**
+ * Validates options for developer requests
+ * @param {DeveloperValidationOptions} opts - Options to validate
+ * @throws {AppStoreScraperError} If devId is missing
+ */
+function validateDeveloper(opts: DeveloperValidationOptions): void {
+  validateRequired(opts, ['devId'], 'Developer ID is required');
+  validateRange(opts, 'num', 1, 200);
+}
+
+/**
+ * Privacy options interface
+ */
+export interface PrivacyValidationOptions extends BaseRequestOptions {
+  id?: string | number;
+  appId?: string;
+}
+
+/**
+ * Validates options for privacy requests
+ * @param {PrivacyValidationOptions} opts - Options to validate
+ * @throws {AppStoreScraperError} If id or appId is missing
+ */
+function validatePrivacy(opts: PrivacyValidationOptions): void {
+  validateEither(opts, 'id', 'appId');
+}
+
+/**
+ * Version History options interface
+ */
+export interface VersionHistoryValidationOptions extends BaseRequestOptions {
+  id?: string | number;
+  appId?: string;
+}
+
+/**
+ * Validates options for version history requests
+ * @param {VersionHistoryValidationOptions} opts - Options to validate
+ * @throws {AppStoreScraperError} If id or appId is missing
+ */
+function validateVersionHistory(opts: VersionHistoryValidationOptions): void {
+  validateEither(opts, 'id', 'appId');
+}
+
+/**
+ * Suggest options interface
+ */
+export interface SuggestValidationOptions extends BaseRequestOptions {
+  term?: string;
+}
+
+/**
+ * Validates options for suggest requests
+ * @param {SuggestValidationOptions} opts - Options to validate
+ * @throws {AppStoreScraperError} If term is missing
+ */
+function validateSuggest(opts: SuggestValidationOptions): void {
+  validateRequired(opts, ['term'], 'Search term is required');
+}
+
 export {
   validateRequired,
   validateEither,
@@ -255,5 +342,10 @@ export {
   validateRange,
   validateApp,
   validateList,
-  validateReviews
+  validateReviews,
+  validateSearch,
+  validateDeveloper,
+  validatePrivacy,
+  validateVersionHistory,
+  validateSuggest
 };

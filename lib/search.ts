@@ -4,6 +4,7 @@ import { storeId } from './utils/store-utils.js';
 import { lookup } from './api/itunes-api.js';
 import type { App } from './types/app-types.js';
 import { BaseRequestOptions, PaginationOptions } from './param-types.js';
+import { validateSearch } from './validators.js';
 
 /**
  * Options for app search
@@ -63,9 +64,8 @@ function paginate(num?: number, page?: number): <T>(list: T[]) => T[] {
  */
 function search(opts: SearchOptions): Promise<App[] | number[]> {
   return new Promise(function (resolve, reject) {
-    if (!opts.term) {
-      throw Error('term is required');
-    }
+    validateSearch(opts);
+
     const url = BASE_URL + encodeURIComponent(opts.term);
     const storeCode = storeId(opts.country);
     const lang = opts.lang || 'en-us';

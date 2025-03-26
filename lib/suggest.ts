@@ -1,6 +1,6 @@
 import * as common from './common.js';
 import { parseString } from 'xml2js';
-import { validateRequired } from './validators.js';
+import { validateSuggest } from './validators.js';
 import { ApiRequestOptions } from './param-utils.js';
 
 /**
@@ -83,7 +83,7 @@ function extractSuggestions(xml: SuggestXml): Suggestion[] {
  */
 function suggest(opts: SuggestOptions): Promise<Suggestion[]> {
   return new Promise<string>(function (resolve) {
-    validateRequired(opts, ['term'], 'term missing');
+    validateSuggest(opts);
     return resolve(BASE_URL + encodeURIComponent(opts.term));
   })
     .then(url =>
