@@ -1,17 +1,17 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import store from '../index.js';
 import { assertValidApp } from './common-utils.test.js';
+import type { SearchResult } from './convert-helper.js';
 
 describe('Search method', () => {
   it('should fetch a valid application list', async () => {
-    const apps = await store.search({ term: 'Panda vs Zombies' });
+    const apps = (await store.search({ term: 'Panda vs Zombies' })) as SearchResult[];
     apps.map(assertValidApp);
   });
 
   it('should properly paginate results', async () => {
-    const p1 = store.search({ term: 'Panda', num: 10 });
-    const p2 = store.search({ term: 'Panda', num: 10, page: 2 });
+    const p1 = store.search({ term: 'Panda', num: 10 }) as Promise<SearchResult[]>;
+    const p2 = store.search({ term: 'Panda', num: 10, page: 2 }) as Promise<SearchResult[]>;
     const [apps1, apps2] = await Promise.all([p1, p2]);
 
     expect(apps1.length).toBe(10);
@@ -22,7 +22,10 @@ describe('Search method', () => {
   });
 
   it('should fetch a valid application list in fr country', async () => {
-    const apps = await store.search({ country: 'fr', term: 'Panda vs Zombies' });
+    const apps = (await store.search({
+      country: 'fr',
+      term: 'Panda vs Zombies'
+    })) as SearchResult[];
     apps.map(assertValidApp);
     if (apps.length > 0) {
       expect(apps[0].url.startsWith('https://apps.apple.com/fr')).toBe(true);
@@ -31,10 +34,10 @@ describe('Search method', () => {
 
   it('should validate the results number', async () => {
     const count = 5;
-    const apps = await store.search({
+    const apps = (await store.search({
       term: 'vr',
       num: count
-    });
+    })) as SearchResult[];
 
     apps.map(assertValidApp);
     expect(apps.length).toBe(count);
@@ -52,10 +55,10 @@ describe('Search method', () => {
   });
 
   it('should be able to retrieve array of application ids', async () => {
-    const res = await store.search({
+    const res = (await store.search({
       term: 'vr',
       idsOnly: true
-    });
+    })) as string[];
 
     expect(res).toBeInstanceOf(Array);
     expect(res.every(item => typeof item === 'string')).toBe(true);

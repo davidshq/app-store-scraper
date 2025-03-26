@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import sinon from 'sinon';
 import {
@@ -13,17 +12,20 @@ import { createMockStoreIdFunction } from './helpers/test-utils.js';
 /**
  * Transforms parameters based on rules
  *
- * @param {Object} params - Parameters to transform
- * @param {Object} rules - Rules for transformation
- * @returns {Object} Transformed parameters
+ * @param params - Parameters to transform
+ * @param rules - Rules for transformation
+ * @returns Transformed parameters
  */
-function processParams(params = {}, rules = {}) {
-  if (!params) return {};
+function processParams<T extends Record<string, any>>(
+  params: T | null = {} as T,
+  rules: Record<string, (value: any) => any> = {}
+): T {
+  if (!params) return {} as T;
 
-  const result = { ...params };
+  const result = { ...params } as T;
   Object.keys(rules).forEach(key => {
     if (params[key] !== undefined) {
-      result[key] = rules[key](params[key]);
+      (result as any)[key] = rules[key](params[key]);
     }
   });
 
@@ -33,11 +35,14 @@ function processParams(params = {}, rules = {}) {
 /**
  * Validates parameters against rules
  *
- * @param {Object} params - Parameters to validate
- * @param {Object} rules - Validation rules
- * @returns {boolean} True if valid, false otherwise
+ * @param params - Parameters to validate
+ * @param rules - Validation rules
+ * @returns True if valid, false otherwise
  */
-function isValid(params = {}, rules = {}) {
+function isValid(
+  params: Record<string, any> = {},
+  rules: Record<string, (value: any) => boolean> = {}
+): boolean {
   if (Object.keys(rules).length === 0) return true;
 
   return Object.keys(rules).every(key => {
@@ -70,11 +75,18 @@ describe('Parameter Utilities', () => {
     });
 
     it('should accept custom defaults', () => {
-      const opts = { country: 'fr' };
-      const customDefaults = {
-        country: 'us',
+      const opts = {
         lang: 'fr-fr',
         limit: 10
+      };
+
+      const customDefaults = {
+        country: 'fr',
+        lang: 'en-fr',
+        limit: 20,
+        offset: 0,
+        page: 1,
+        num: 50
       };
 
       const result = applyDefaults(opts, customDefaults);
@@ -90,7 +102,10 @@ describe('Parameter Utilities', () => {
     const mockStoreId = createMockStoreIdFunction();
 
     // Create a test version of getStoreHeader that uses our mock
-    const testGetStoreHeader = (opts, storeType = 32) => {
+    const testGetStoreHeader = (
+      opts: Record<string, any>,
+      storeType = 32
+    ): Record<string, string> => {
       const country = opts.country || 'us';
       const storeId = mockStoreId(country);
       return {
@@ -125,7 +140,7 @@ describe('Parameter Utilities', () => {
 
   describe('addLanguageHeader', () => {
     it('should add language header when lang is provided', () => {
-      const headers = { 'X-Test': 'value' };
+      const headers: Record<string, string> = { 'X-Test': 'value' };
       const opts = { lang: 'en-gb' };
 
       const result = addLanguageHeader(headers, opts);
@@ -137,7 +152,7 @@ describe('Parameter Utilities', () => {
     });
 
     it('should not modify headers when lang is not provided', () => {
-      const headers = { 'X-Test': 'value' };
+      const headers: Record<string, string> = { 'X-Test': 'value' };
       const opts = {};
 
       const result = addLanguageHeader(headers, opts);
@@ -159,7 +174,10 @@ describe('Parameter Utilities', () => {
       const addLangHeaderSpy = sinon.spy(addLanguageHeader);
 
       // Create a custom getHeaders function that uses our spies
-      const testGetHeaders = (testOpts, testStoreType) => {
+      const testGetHeaders = (
+        testOpts: Record<string, any>,
+        testStoreType?: number
+      ): Record<string, string> => {
         const baseHeaders = storeHeaderSpy(testOpts, testStoreType);
         return addLangHeaderSpy(baseHeaders, testOpts);
       };
@@ -227,8 +245,8 @@ describe('Parameter Utilities', () => {
       };
 
       const rules = {
-        name: value => value.toUpperCase(),
-        age: value => value * 2
+        name: (value: string) => value.toUpperCase(),
+        age: (value: number) => value * 2
         // no rule for active
       };
 
@@ -248,7 +266,7 @@ describe('Parameter Utilities', () => {
 
     it('should ignore rules for missing parameters', () => {
       const rules = {
-        name: value => value.toUpperCase()
+        name: (value: string) => value.toUpperCase()
       };
 
       const result = processParams({ age: 30 }, rules);
@@ -267,44 +285,50 @@ describe('Parameter Utilities', () => {
   });
 
   describe('isValid', () => {
-    it('should validate parameters against rules', () => {
+    it('should return true when all rules pass', () => {
       const params = {
-        name: 'Test',
+        name: 'test',
         age: 25
       };
 
       const rules = {
-        name: value => value.length > 0,
-        age: value => value > 18
+        name: (value: string) => value.length > 0,
+        age: (value: number) => value >= 18
       };
 
       expect(isValid(params, rules)).toBe(true);
+    });
 
-      const invalidParams = {
-        name: '',
+    it('should return false when any rule fails', () => {
+      const params = {
+        name: 'test',
         age: 15
       };
 
-      expect(isValid(invalidParams, rules)).toBe(false);
-    });
-
-    it('should handle missing parameters as invalid', () => {
-      const params = {
-        name: 'Test'
-        // Missing age
-      };
-
       const rules = {
-        name: value => value.length > 0,
-        age: value => value > 18
+        name: (value: string) => value.length > 0,
+        age: (value: number) => value >= 18
       };
 
       expect(isValid(params, rules)).toBe(false);
     });
 
-    it('should handle empty rule sets', () => {
+    it('should return false when parameter is missing', () => {
       const params = {
-        name: 'Test',
+        name: 'test'
+      };
+
+      const rules = {
+        name: (value: string) => value.length > 0,
+        age: (value: number) => value >= 18
+      };
+
+      expect(isValid(params, rules)).toBe(false);
+    });
+
+    it('should return true when no rules provided', () => {
+      const params = {
+        name: 'test',
         age: 25
       };
 

@@ -1,18 +1,18 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import { assertValidApp } from './common-utils.test.js';
 import store from '../index.js';
+import type { SearchResult } from './convert-helper.js';
 
 describe('Similar method', () => {
   it('should fetch a valid application list', async () => {
-    const apps = await store.similar({ id: '553834731' });
+    const apps = (await store.similar({ id: '553834731' })) as SearchResult[];
     expect(apps).toBeInstanceOf(Array);
     apps.map(assertValidApp);
   });
 
   it.skip('should a different list in fr country', async () => {
-    const usApps = await store.similar({ id: '553834731' });
-    const frApps = await store.similar({ id: '553834731', country: 'fr' });
+    const usApps = (await store.similar({ id: '553834731' })) as SearchResult[];
+    const frApps = (await store.similar({ id: '553834731', country: 'fr' })) as SearchResult[];
 
     frApps.map(assertValidApp);
 

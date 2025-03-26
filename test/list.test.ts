@@ -1,14 +1,14 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import { assertValidApp, assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
+import type { ListResult, App } from './convert-helper.js';
 
 describe('List method', () => {
   it('should fetch a valid application list for the given category and collection', async () => {
-    const apps = await store.list({
+    const apps = (await store.list({
       category: store.category.GAMES_ACTION,
       collection: store.collection.TOP_FREE_IOS
-    });
+    })) as ListResult[];
     apps.forEach(assertValidApp);
     apps.forEach(app => expect(app.free).toBe(true));
   });
@@ -28,8 +28,8 @@ describe('List method', () => {
       });
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
-      expect(e.message).toContain('Invalid value "wrong" for "category"');
-      expect(e.code).toBe('VALIDATION_ERROR');
+      expect((e as Error).message).toContain('Invalid value "wrong" for "category"');
+      expect((e as any).code).toBe('VALIDATION_ERROR');
     }
   });
 
@@ -48,8 +48,8 @@ describe('List method', () => {
       });
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
-      expect(e.message).toContain('Invalid value "wrong" for "collection"');
-      expect(e.code).toBe('VALIDATION_ERROR');
+      expect((e as Error).message).toContain('Invalid value "wrong" for "collection"');
+      expect((e as any).code).toBe('VALIDATION_ERROR');
     }
   });
 
@@ -70,17 +70,17 @@ describe('List method', () => {
       });
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
-      expect(e.message).toContain('must be at most 200');
-      expect(e.code).toBe('VALIDATION_ERROR');
+      expect((e as Error).message).toContain('must be at most 200');
+      expect((e as any).code).toBe('VALIDATION_ERROR');
     }
   });
 
   it('should fetch apps with fullDetail', async () => {
-    const apps = await store.list({
+    const apps = (await store.list({
       collection: store.collection.TOP_FREE_GAMES_IOS,
       fullDetail: true,
       num: 3
-    });
+    })) as App[];
 
     apps.forEach(assertValidApp);
     apps.forEach(app => {

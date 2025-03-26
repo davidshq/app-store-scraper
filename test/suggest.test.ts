@@ -1,10 +1,10 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import store from '../index.js';
+import type { SuggestionsResult } from './convert-helper.js';
 
 describe('Suggest method', () => {
   it('should return suggestions for a common term', async () => {
-    const results = await store.suggest({ term: 'p' });
+    const results = (await store.suggest({ term: 'p' })) as SuggestionsResult[];
     expect(results.length).toBe(10);
     results.forEach(r => {
       expect(r.term.toLowerCase()).toContain('p');

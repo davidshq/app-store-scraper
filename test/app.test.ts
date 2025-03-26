@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import { assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
+import type { App } from '../lib/types/app-types.js';
 
 describe('App method', () => {
   it('should fetch valid application data', async () => {
-    const app = await store.app({ id: '553834731' });
+    const app = (await store.app({ id: '553834731' })) as App;
     expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
     expect(app.title).toBe('Candy Crush Saga');
     expect(app.url).toBe('https://apps.apple.com/us/app/candy-crush-saga/id553834731?uo=4');
@@ -54,34 +54,37 @@ describe('App method', () => {
 
   describe('with ratings option enabled', () => {
     it('should fetch valid application data', async () => {
-      const app = await store.app({ id: '553834731', ratings: true });
+      const app = (await store.app({ id: '553834731', ratings: true })) as App;
       expect(app.ratings).toBeDefined();
       expect(app.ratings).toBeTypeOf('number');
       expect(app.histogram).toBeDefined();
       expect(app.histogram).toBeTypeOf('object');
-      expect(app.histogram['1']).toBeDefined();
-      expect(app.histogram['2']).toBeDefined();
-      expect(app.histogram['3']).toBeDefined();
-      expect(app.histogram['4']).toBeDefined();
-      expect(app.histogram['5']).toBeDefined();
+      expect(app.histogram?.['1']).toBeDefined();
+      expect(app.histogram?.['2']).toBeDefined();
+      expect(app.histogram?.['3']).toBeDefined();
+      expect(app.histogram?.['4']).toBeDefined();
+      expect(app.histogram?.['5']).toBeDefined();
     });
 
     it('should fetch app with bundle id', async () => {
-      const app = await store.app({ appId: 'com.midasplayer.apps.candycrushsaga', ratings: true });
+      const app = (await store.app({
+        appId: 'com.midasplayer.apps.candycrushsaga',
+        ratings: true
+      })) as App;
       expect(app.ratings).toBeDefined();
       expect(app.ratings).toBeTypeOf('number');
       expect(app.histogram).toBeDefined();
       expect(app.histogram).toBeTypeOf('object');
-      expect(app.histogram['1']).toBeDefined();
-      expect(app.histogram['2']).toBeDefined();
-      expect(app.histogram['3']).toBeDefined();
-      expect(app.histogram['4']).toBeDefined();
-      expect(app.histogram['5']).toBeDefined();
+      expect(app.histogram?.['1']).toBeDefined();
+      expect(app.histogram?.['2']).toBeDefined();
+      expect(app.histogram?.['3']).toBeDefined();
+      expect(app.histogram?.['4']).toBeDefined();
+      expect(app.histogram?.['5']).toBeDefined();
     });
   });
 
   it('should fetch app with bundle id', async () => {
-    const app = await store.app({ appId: 'com.midasplayer.apps.candycrushsaga' });
+    const app = (await store.app({ appId: 'com.midasplayer.apps.candycrushsaga' })) as App;
     expect(app.id).toBeTypeOf('number');
     expect(app.id).toBe(553834731);
     expect(app.title).toBe('Candy Crush Saga');
@@ -91,14 +94,14 @@ describe('App method', () => {
   });
 
   it('should fetch app in spanish', async () => {
-    const app = await store.app({ id: '553834731', country: 'ar' });
+    const app = (await store.app({ id: '553834731', country: 'ar' })) as App;
     expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
     expect(app.title).toBe('Candy Crush Saga');
     expect(app.url).toBe('https://apps.apple.com/ar/app/candy-crush-saga/id553834731?uo=4');
   });
 
   it('should fetch app in french', async () => {
-    const app = await store.app({ id: '553834731', country: 'fr' });
+    const app = (await store.app({ id: '553834731', country: 'fr' })) as App;
     expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
     expect(app.title).toBe('Candy Crush Saga');
     expect(app.url).toBe('https://apps.apple.com/fr/app/candy-crush-saga/id553834731?uo=4');
@@ -114,14 +117,14 @@ describe('App method', () => {
 
   it('should memoize the results when memoize enabled', async () => {
     const memoized = store.memoized();
-    const app = await memoized.app({ id: '553834731' });
+    const app = (await memoized.app({ id: '553834731' })) as App;
     expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
     expect(app.title).toBe('Candy Crush Saga');
   });
 
   it('should memoize the results with custom options', async () => {
     const memoized = store.memoized({ maxAge: 1000, max: 10 });
-    const app = await memoized.app({ id: '553834731' });
+    const app = (await memoized.app({ id: '553834731' })) as App;
     expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
     expect(app.title).toBe('Candy Crush Saga');
   });

@@ -1,6 +1,6 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import validator from 'validator';
+import type { App } from '../lib/types/app-types.js';
 
 describe('Common Utilities', () => {
   it('should validate URL correctly', () => {
@@ -16,13 +16,13 @@ describe('Common Utilities', () => {
   });
 });
 
-function assertValidUrl(url) {
+function assertValidUrl(url: string): boolean {
   const isValid = validator.isURL(url, { allow_protocol_relative_urls: true });
   expect(isValid, `${url} is not a valid url`).toBe(true);
   return isValid;
 }
 
-function assertValidApp(app) {
+function assertValidApp(app: App): App {
   expect(app.appId).toBeTypeOf('string');
   expect(app.title).toBeTypeOf('string');
   expect(app.description).toBeTypeOf('string');

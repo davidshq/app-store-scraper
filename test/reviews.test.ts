@@ -1,14 +1,14 @@
-// @ts-nocheck
 import { describe, it, expect } from 'vitest';
 import store from '../index.js';
 import c from '../dist/lib/constants.js';
+import type { ReviewsResult } from './convert-helper.js';
 
 describe('Reviews method', () => {
   it('should retrieve the reviews of an app', async () => {
-    const reviews = await store.reviews({
+    const reviews = (await store.reviews({
       id: '553834731',
       country: 'us'
-    });
+    })) as ReviewsResult[];
 
     expect(reviews.length).toBeGreaterThanOrEqual(1);
     expect(reviews[0].id).toBeDefined();
@@ -37,16 +37,16 @@ describe('Reviews method', () => {
       });
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
-      expect(e.message).toContain('Invalid value "invalid" for "sort"');
-      expect(e.code).toBe('VALIDATION_ERROR');
+      expect((e as Error).message).toContain('Invalid value "invalid" for "sort"');
+      expect((e as any).code).toBe('VALIDATION_ERROR');
     }
   });
 
   it('should fetch reviews with newer version of store', async () => {
-    const reviews = await store.reviews({
+    const reviews = (await store.reviews({
       id: '553834731',
       sort: c.sort.HELPFUL
-    });
+    })) as ReviewsResult[];
 
     expect(reviews.length).toBeGreaterThanOrEqual(1);
   });
@@ -66,8 +66,8 @@ describe('Reviews method', () => {
       });
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
-      expect(e.message).toContain('must be at most 10');
-      expect(e.code).toBe('VALIDATION_ERROR');
+      expect((e as Error).message).toContain('must be at most 10');
+      expect((e as any).code).toBe('VALIDATION_ERROR');
     }
   });
 

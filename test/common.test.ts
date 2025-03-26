@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { describe, it, expect, vi } from 'vitest';
 import * as common from '../dist/lib/common.js';
 import Bottleneck from 'bottleneck';
@@ -67,7 +66,7 @@ describe('Common utilities', () => {
         description: 'This is an example app',
         artworkUrl512: 'https://example.com/image512.jpg',
         genres: ['Utilities', 'Productivity'],
-        genreIds: [6002, 6007],
+        genreIds: ['6002', '6007'],
         primaryGenreName: 'Utilities',
         primaryGenreId: 6002,
         contentAdvisoryRating: '4+',
@@ -89,8 +88,8 @@ describe('Common utilities', () => {
         averageUserRatingForCurrentVersion: 4.7,
         userRatingCountForCurrentVersion: 500,
         screenshotUrls: ['https://example.com/screenshot1.jpg'],
-        ipadScreenshots: ['https://example.com/ipad-screenshot1.jpg'],
-        appletvScreenshots: ['https://example.com/appletv-screenshot1.jpg'],
+        ipadScreenshotUrls: ['https://example.com/ipad-screenshot1.jpg'],
+        appletvScreenshotUrls: ['https://example.com/appletv-screenshot1.jpg'],
         supportedDevices: ['iPhone', 'iPad']
       };
 
@@ -248,17 +247,13 @@ describe('Common utilities', () => {
 
     it('should handle HTTP errors correctly', async () => {
       // Create a mock API error with response information
-      const errorResponse = {
-        statusCode: 404
-      };
+      const errorWithResponse = new Error('API error');
+      Object.defineProperty(errorWithResponse, 'response', {
+        value: { statusCode: 429 },
+        writable: true
+      });
 
-      // Create a mock text function that rejects with an error
-      const apiError = new Error('API Error');
-      apiError.response = errorResponse;
-
-      const mockTextFn = vi.fn().mockRejectedValue(apiError);
-
-      // Create a mock HTTP client that returns an object with our failing text method
+      const mockTextFn = vi.fn().mockRejectedValue(errorWithResponse);
       const mockHttpClient = vi.fn().mockImplementation(() => {
         return { text: mockTextFn };
       });
@@ -274,23 +269,22 @@ describe('Common utilities', () => {
       // Create a requester with our mocks
       const requester = common.createRequester(mockHttpClient, mockLimiterFactory);
 
-      // Test the requester with error
+      // Test that we properly format the error
       try {
         await requester('https://example.com');
-        // Should not reach here
-        expect(true).toBe(false);
-      } catch (e) {
-        // Verify the error has the expected structure
-        expect(e.message).toContain('Request failed with status code');
-        expect(e.response).toHaveProperty('statusCode', 404);
+        // If we reach here, the promise didn't reject as expected
+        expect(true).toBe(false); // Force fail
+      } catch (error) {
+        expect(error.message).toContain('Request failed with status code 429');
+        expect(error.response).toBeDefined();
+        expect(error.response.statusCode).toBe(429);
       }
     });
 
     it('should handle network errors correctly', async () => {
-      // Create a network error
-      const networkError = new Error('Network Error');
+      // Create a plain network error
+      const networkError = new Error('Network failed');
 
-      // Create a mock text function that rejects with a network error
       const mockTextFn = vi.fn().mockRejectedValue(networkError);
 
       // Create a mock HTTP client that returns an object with our failing text method
@@ -309,15 +303,8 @@ describe('Common utilities', () => {
       // Create a requester with our mocks
       const requester = common.createRequester(mockHttpClient, mockLimiterFactory);
 
-      // Test the requester with error
-      try {
-        await requester('https://example.com');
-        // Should not reach here
-        expect(true).toBe(false);
-      } catch (e) {
-        // Verify the error was passed through unchanged
-        expect(e.message).toBe('Network Error');
-      }
+      // Test that we pass through the error
+      await expect(requester('https://example.com')).rejects.toThrow('Network failed');
     });
   });
 });

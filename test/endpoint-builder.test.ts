@@ -1,13 +1,15 @@
-// @ts-nocheck
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import sinon from 'sinon';
 import createEndpoint from '../dist/lib/endpoint-builder.js';
 import { createTestFn } from './helpers/test-utils.js';
 
 describe('Endpoint Builder', () => {
-  let mockCommon;
-  let mockApp;
-  let createEndpointWithMocks;
+  let mockCommon: {
+    storeId: sinon.SinonStub;
+    request: sinon.SinonStub;
+  };
+  let mockApp: sinon.SinonStub;
+  let createEndpointWithMocks: any;
 
   beforeEach(() => {
     mockCommon = {
@@ -79,8 +81,8 @@ describe('Endpoint Builder', () => {
 });
 
 // Helper function to parse string templates with variables
-function parseString(template) {
-  return vars => {
+function parseString(template: string): (vars: Record<string, any>) => string {
+  return (vars: Record<string, any>): string => {
     return template.replace(/\{([^}]+)\}/g, (match, key) => {
       return vars[key] !== undefined ? vars[key] : match;
     });
