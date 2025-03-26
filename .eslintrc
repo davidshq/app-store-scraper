@@ -1,18 +1,44 @@
 {
-  "env": {
-    "es6": true,
-    "mocha": true,
-    "node": true
-  },
-  "extends": "semistandard",
+  "extends": [
+    "semistandard",
+    "prettier"
+  ],
   "plugins": [
-    "standard"
+    "prettier"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      }
+    },
+    {
+      "files": ["test/**/*.js", "test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off"
+      }
+    }
   ],
   "rules": {
-    "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
-    "no-var": "error",
-    "prefer-const": "error",
-    "no-else-return": "error",
-    "object-shorthand": ["error", "properties"]
+    "prettier/prettier": "error",
+    "no-console": "warn",
+    "prefer-const": "warn"
   }
 }

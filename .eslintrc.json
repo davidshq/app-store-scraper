@@ -1,0 +1,25 @@
+{
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-function-type": "off",
+    "no-undef": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "ignorePatterns": ["node_modules/", "dist/"],
+  "overrides": [
+    {
+      "files": ["test/**/*.js", "test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off"
+      }
+    }
+  ]
+}

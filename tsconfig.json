@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Modules */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": false,
+
+    /* JavaScript Support */
+    "allowJs": true,
+    "checkJs": true,
+
+    /* Interop Constraints */
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2020"],
+
+    /* Completeness */
+    "skipLibCheck": true
+  },
+  "include": ["index.ts", "index.d.ts", "lib/**/*.ts", "test/**/*.js"],
+  "exclude": ["node_modules", "backup", "build"]
+}
