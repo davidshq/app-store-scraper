@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import c from './constants.js';
+import { AppIdentifierOptions, BaseRequestOptions, PaginationOptions } from './param-types.js';
 
 /**
  * Generic options interface with string-indexed keys
@@ -96,26 +97,25 @@ export interface AppValidationOptions extends GenericOptions {
 
 /**
  * Validates options for app requests
- * @param {Object} opts - Options to validate
+ * @param {AppIdentifierOptions} opts - Options to validate
  * @throws {Error} If id/appId is missing
  */
-function validateApp(opts: AppValidationOptions): void {
+function validateApp(opts: AppIdentifierOptions): void {
   validateEither(opts, 'id', 'appId', 'Either id or appId is required');
 }
 
 /**
  * List options interface
  */
-export interface ListValidationOptions extends GenericOptions {
+export interface ListValidationOptions extends BaseRequestOptions {
   category?: number;
   collection?: string;
   num?: number;
-  country?: string;
 }
 
 /**
  * Validates options for list requests
- * @param {Object} opts - Options to validate
+ * @param {ListValidationOptions} opts - Options to validate
  * @throws {Error} If category, collection, or num options are invalid
  */
 function validateList(opts: ListValidationOptions): void {
@@ -135,16 +135,16 @@ function validateList(opts: ListValidationOptions): void {
 /**
  * Reviews options interface
  */
-export interface ReviewsValidationOptions extends GenericOptions {
-  id?: string | number;
-  appId?: string;
+export interface ReviewsValidationOptions
+  extends AppIdentifierOptions,
+    BaseRequestOptions,
+    Pick<PaginationOptions, 'page'> {
   sort?: string;
-  page?: number;
 }
 
 /**
  * Validates options for reviews requests
- * @param {Object} opts - Options to validate
+ * @param {ReviewsValidationOptions} opts - Options to validate
  * @throws {Error} If id/appId is missing or other options are invalid
  */
 function validateReviews(opts: ReviewsValidationOptions): void {

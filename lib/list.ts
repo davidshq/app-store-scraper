@@ -1,19 +1,19 @@
 import * as common from './common.js';
-import { validateList, ListValidationOptions } from './validators.js';
+import { validateList } from './validators.js';
 import { App } from './common.js';
+import { BaseRequestOptions, DetailOptions, PaginationOptions } from './param-types.js';
 
 /**
  * Options for list lookup
  */
-export interface ListOptions extends ListValidationOptions {
+export interface ListOptions
+  extends BaseRequestOptions,
+    DetailOptions,
+    Pick<PaginationOptions, 'num'> {
+  /** The collection to fetch */
   collection?: string;
+  /** The category to fetch */
   category?: number;
-  country?: string;
-  num?: number;
-  fullDetail?: boolean;
-  requestOptions?: common.RequestOptions;
-  lang?: string;
-  throttle?: number;
 }
 
 /**
@@ -151,16 +151,8 @@ function normalizeListApp(app: ListApiResponse['feed']['entry'][0]): ListApp {
 
 /**
  * Fetches a list of apps from the App Store
- * @param {Object} opts - The options object
- * @param {string} [opts.collection=TOP_FREE_IOS] - The collection to fetch
- * @param {number} [opts.category] - The category to fetch
- * @param {string} [opts.country='us'] - The country code
- * @param {number} [opts.num=50] - Number of apps to retrieve (max 200)
- * @param {boolean} [opts.fullDetail=false] - If true, fetches full app details
- * @param {Object} [opts.requestOptions] - Additional options for the request
- * @param {string} [opts.lang] - Language code for the response
- * @param {number} [opts.throttle] - Maximum number of requests per second
- * @returns {Promise<Array>} Promise resolving to an array of apps
+ * @param {ListOptions} opts - The options object
+ * @returns {Promise<App[] | ListApp[]>} Promise resolving to an array of apps
  */
 function list<T extends ListOptions = ListOptions>(
   opts: T = {} as T

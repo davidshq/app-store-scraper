@@ -1,18 +1,18 @@
 import * as common from './common.js';
 import app from './app.js';
 import c from './constants.js';
-import { validateReviews, ReviewsValidationOptions } from './validators.js';
+import { validateReviews } from './validators.js';
+import { AppIdentifierOptions, BaseRequestOptions, PaginationOptions } from './param-types.js';
 
 /**
  * Options for reviews lookup
  */
-export interface ReviewsOptions extends ReviewsValidationOptions {
-  id?: string | number;
-  appId?: string;
-  country?: string;
+export interface ReviewsOptions
+  extends AppIdentifierOptions,
+    BaseRequestOptions,
+    Pick<PaginationOptions, 'page'> {
+  /** The sort order (see constants.sort) */
   sort?: string;
-  page?: number;
-  requestOptions?: common.RequestOptions;
 }
 
 /**
@@ -104,14 +104,8 @@ function cleanList(results: ReviewApiResponse): Review[] {
 
 /**
  * Fetches reviews for an app
- * @param {Object} opts - The options object
- * @param {number} [opts.id] - The iTunes app ID (either this or appId is required)
- * @param {string} [opts.appId] - The app bundle ID (either this or id is required)
- * @param {string} [opts.country='us'] - The country code
- * @param {string} [opts.sort=RECENT] - The sort order (see constants.sort)
- * @param {number} [opts.page=1] - Page number of reviews to fetch (1-10)
- * @param {Object} [opts.requestOptions] - Additional options for the request
- * @returns {Promise<Array>} Promise resolving to an array of reviews
+ * @param {ReviewsOptions} opts - The options object
+ * @returns {Promise<Review[]>} Promise resolving to an array of reviews
  */
 const reviews = (opts: ReviewsOptions): Promise<Review[]> => {
   validateReviews(opts);

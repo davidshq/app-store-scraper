@@ -1,17 +1,17 @@
 import * as cheerio from 'cheerio';
-import * as common from './common.js';
+import { request } from './utils/http-client.js';
+import { getHeaders, applyDefaults } from './param-utils.js';
 import { validateRequired } from './validators.js';
 import createEndpoint from './endpoint-builder.js';
-import { getHeaders, applyDefaults, ApiRequestOptions } from './param-utils.js';
 import { notFoundError } from './error-utils.js';
+import { BaseRequestOptions } from './param-types.js';
 
 /**
  * Options for ratings lookup
  */
-export interface RatingsOptions extends ApiRequestOptions {
+export interface RatingsOptions extends BaseRequestOptions {
+  /** The iTunes app ID to fetch */
   id: string | number;
-  country?: string;
-  requestOptions?: common.RequestOptions;
 }
 
 /**
@@ -37,7 +37,7 @@ export interface RatingsData {
 /**
  * Fetches ratings HTML from iTunes
  *
- * @param {Object} opts - Options object
+ * @param {RatingsOptions} opts - Options object
  * @returns {Promise<string>} - Promise resolving to HTML content
  * @private
  */
@@ -50,13 +50,18 @@ function fetchRatingsHtml(opts: RatingsOptions): Promise<string> {
   // Use the App Store URL format which is the current approach
   const url = `https://apps.apple.com/${country}/app/id${idValue}`;
 
-  return common.request(url, getHeaders(normalizedOpts, 12), normalizedOpts.requestOptions);
+  return request(
+    url,
+    getHeaders(normalizedOpts, 12),
+    normalizedOpts.requestOptions,
+    normalizedOpts.throttle
+  );
 }
 
 /**
  * Validates ratings options
  *
- * @param {Object} opts - Options to validate
+ * @param {RatingsOptions} opts - Options to validate
  * @throws {Error} If id is not provided
  * @private
  */
@@ -67,9 +72,9 @@ function validateRatingsOpts(opts: RatingsOptions): void {
 /**
  * Parses the HTML response to extract ratings data
  * @param {string} html - HTML content from the iTunes reviews page
- * @returns {Object} Object containing ratings count and histogram
+ * @returns {RatingsData} Object containing ratings count and histogram
  * @returns {number} returns.ratings - Total number of ratings
- * @returns {Object} returns.histogram - Distribution of ratings by star (1-5)
+ * @returns {RatingsHistogram} returns.histogram - Distribution of ratings by star (1-5)
  * @private
  */
 function parseRatings(html: string): RatingsData {
@@ -125,11 +130,8 @@ function parseRatings(html: string): RatingsData {
 
 /**
  * Fetches ratings data for an app
- * @param {Object} opts - The options object
- * @param {number} opts.id - The iTunes app ID to fetch
- * @param {string} [opts.country='us'] - The country code for the App Store
- * @param {Object} [opts.requestOptions] - Additional options for the request
- * @returns {Promise<Object>} Promise resolving to app ratings data
+ * @param {RatingsOptions} opts - The options object
+ * @returns {Promise<RatingsData>} Promise resolving to app ratings data
  * @throws {Error} If id is not provided or app is not found
  */
 const ratings = createEndpoint<RatingsOptions, RatingsData>({

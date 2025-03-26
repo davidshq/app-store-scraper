@@ -1,7 +1,7 @@
 /**
  * Utilities for handling and normalizing API parameters
  */
-import * as common from './common.js';
+import { storeId } from './utils/store-utils.js';
 
 /**
  * Interface for API request default options
@@ -63,7 +63,7 @@ function applyDefaults<T extends object>(
 function getStoreHeader(opts: ApiRequestOptions, storeType: number = 32): Record<string, string> {
   const country = opts.country || DEFAULTS.country;
   return {
-    'X-Apple-Store-Front': `${common.storeId(country)},${storeType}`
+    'X-Apple-Store-Front': `${storeId(country)},${storeType}`
   };
 }
 

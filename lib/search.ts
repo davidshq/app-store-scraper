@@ -1,20 +1,18 @@
 import * as R from 'ramda';
-import * as common from './common.js';
-import { ApiRequestOptions } from './param-utils.js';
-import { App } from './common.js';
+import { request } from './utils/http-client.js';
+import { storeId } from './utils/store-utils.js';
+import { lookup } from './api/itunes-api.js';
+import type { App } from './types/app-types.js';
+import { BaseRequestOptions, PaginationOptions } from './param-types.js';
 
 /**
  * Options for app search
  */
-export interface SearchOptions extends ApiRequestOptions {
+export interface SearchOptions extends BaseRequestOptions, PaginationOptions {
+  /** The search term to query for */
   term: string;
-  country?: string;
-  lang?: string;
-  num?: number;
-  page?: number;
+  /** If true, returns only the app IDs instead of the full app details */
   idsOnly?: boolean;
-  requestOptions?: common.RequestOptions;
-  throttle?: number;
 }
 
 /**
@@ -59,16 +57,8 @@ function paginate(num?: number, page?: number): <T>(list: T[]) => T[] {
 /**
  * Searches for apps in the App Store
  *
- * @param {Object} opts - The options object
- * @param {string} opts.term - The search term to query for
- * @param {string} [opts.country='us'] - The country code for the App Store
- * @param {string} [opts.lang='en-us'] - Language code for the response
- * @param {number} [opts.num=50] - Number of results to retrieve per page
- * @param {number} [opts.page=1] - Page number of results to retrieve (starting at 1)
- * @param {boolean} [opts.idsOnly=false] - If true, returns only the app IDs instead of the full app details
- * @param {Object} [opts.requestOptions] - Additional options for the request
- * @param {number} [opts.throttle] - Maximum number of requests per second
- * @returns {Promise<Array>} Promise resolving to an array of apps or app IDs (if idsOnly is true)
+ * @param {SearchOptions} opts - The options object
+ * @returns {Promise<App[] | number[]>} Promise resolving to an array of apps or app IDs (if idsOnly is true)
  * @throws {Error} If term is not provided
  */
 function search(opts: SearchOptions): Promise<App[] | number[]> {
@@ -77,18 +67,18 @@ function search(opts: SearchOptions): Promise<App[] | number[]> {
       throw Error('term is required');
     }
     const url = BASE_URL + encodeURIComponent(opts.term);
-    const storeId = common.storeId(opts.country);
+    const storeCode = storeId(opts.country);
     const lang = opts.lang || 'en-us';
 
-    common
-      .request(
-        url,
-        {
-          'X-Apple-Store-Front': `${storeId},24 t:native`,
-          'Accept-Language': lang
-        },
-        opts.requestOptions
-      )
+    request(
+      url,
+      {
+        'X-Apple-Store-Front': `${storeCode},24 t:native`,
+        'Accept-Language': lang
+      },
+      opts.requestOptions,
+      opts.throttle
+    )
       .then((body: string) => JSON.parse(body) as SearchApiResponse)
       .then(response => (response.bubbles[0] && response.bubbles[0].results) || [])
       .then(paginate(opts.num, opts.page))
@@ -98,14 +88,7 @@ function search(opts: SearchOptions): Promise<App[] | number[]> {
       })
       .then(async ids => {
         if (!opts.idsOnly) {
-          return common.lookup(
-            ids,
-            'id',
-            opts.country,
-            opts.lang,
-            opts.requestOptions,
-            opts.throttle
-          );
+          return lookup(ids, 'id', opts.country, opts.lang, opts.requestOptions, opts.throttle);
         }
         return ids;
       })

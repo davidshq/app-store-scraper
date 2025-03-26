@@ -1,19 +1,16 @@
-import * as common from './common.js';
+import { request } from './utils/http-client.js';
+import { lookup } from './api/itunes-api.js';
 import { validateApp } from './validators.js';
 import createEndpoint from './endpoint-builder.js';
-import { getHeaders, ApiRequestOptions } from './param-utils.js';
-import { App } from './common.js';
+import { getHeaders } from './param-utils.js';
+import type { App } from './types/app-types.js';
+import { AppIdentifierOptions, BaseRequestOptions } from './param-types.js';
 
 /**
  * Options for similar apps lookup
  */
-export interface SimilarOptions extends ApiRequestOptions {
-  id: string | number;
-  appId?: string;
-  country?: string;
-  lang?: string;
-  requestOptions?: common.RequestOptions;
-  throttle?: number;
+export interface SimilarOptions extends AppIdentifierOptions, BaseRequestOptions {
+  /** Maximum number of similar apps to return */
   limit?: number;
 }
 
@@ -21,8 +18,8 @@ export interface SimilarOptions extends ApiRequestOptions {
  * Dependencies for testing/mocking
  */
 interface SimilarDependencies {
-  requestFn?: typeof common.request;
-  lookupFn?: typeof common.lookup;
+  requestFn?: typeof request;
+  lookupFn?: typeof lookup;
 }
 
 /**
@@ -35,8 +32,8 @@ const BASE_URL = 'https://itunes.apple.com/us/app/app/id';
 /**
  * Fetches similar apps data from iTunes API
  *
- * @param {Object} opts - Request options
- * @param {Object} [deps] - Injected dependencies
+ * @param {SimilarOptions} opts - Request options
+ * @param {SimilarDependencies} [deps] - Injected dependencies
  * @returns {Promise<string>} - Promise resolving to HTML response
  * @private
  */
@@ -44,18 +41,18 @@ function fetchSimilarApps(opts: SimilarOptions, deps: SimilarDependencies = {}):
   const id = opts.id;
   const headers = getHeaders(opts, 32);
 
-  const requestFn = deps.requestFn || common.request;
+  const requestFn = deps.requestFn || request;
 
-  return requestFn(`${BASE_URL}${id}`, headers, opts.requestOptions);
+  return requestFn(`${BASE_URL}${id}`, headers, opts.requestOptions, opts.throttle);
 }
 
 /**
  * Extracts app IDs from HTML response and looks up complete app details
  *
  * @param {string} text - HTML response from iTunes
- * @param {Object} opts - Original request options
- * @param {Object} [deps] - Injected dependencies
- * @returns {Promise<Array>} Promise resolving to array of similar apps
+ * @param {SimilarOptions} opts - Original request options
+ * @param {SimilarDependencies} [deps] - Injected dependencies
+ * @returns {Promise<App[]>} Promise resolving to array of similar apps
  * @private
  */
 function extractAndLookupApps(
@@ -80,11 +77,11 @@ function extractAndLookupApps(
   try {
     const ids = JSON.parse(match[1]);
     // Use injected lookup function or the default
-    const lookupFn = deps.lookupFn || common.lookup;
+    const lookupFn = deps.lookupFn || lookup;
 
     // Look up the full details for each similar app
     return lookupFn(ids, 'id', opts.country, opts.lang, opts.requestOptions, opts.throttle);
-  } catch (_) {
+  } catch {
     // Return empty array if parsing fails
     return Promise.resolve([]);
   }
@@ -93,14 +90,8 @@ function extractAndLookupApps(
 /**
  * Fetches a list of similar apps for a given app
  *
- * @param {Object} opts - The options object
- * @param {number} [opts.id] - The iTunes app ID (either this or appId is required)
- * @param {string} [opts.appId] - The app bundle ID (either this or id is required)
- * @param {string} [opts.country='us'] - The country code for the App Store
- * @param {string} [opts.lang] - Language code for the response
- * @param {Object} [opts.requestOptions] - Additional options for the request
- * @param {number} [opts.throttle] - Maximum number of requests per second
- * @returns {Promise<Array>} Promise resolving to an array of similar apps
+ * @param {SimilarOptions} opts - The options object
+ * @returns {Promise<App[]>} Promise resolving to an array of similar apps
  * @throws {Error} If neither id nor appId is provided
  */
 const similar = createEndpoint<SimilarOptions, App[]>({
@@ -111,7 +102,7 @@ const similar = createEndpoint<SimilarOptions, App[]>({
   fetch: async (opts, { requestFn } = {}) => {
     const text = await fetchSimilarApps(opts, { requestFn });
     return extractAndLookupApps(text, opts, {
-      lookupFn: common.lookup,
+      lookupFn: lookup,
       requestFn
     });
   }

@@ -1,47 +1,32 @@
-import * as common from './common.js';
+import { lookup } from './api/itunes-api.js';
 import ratings, { RatingsOptions } from './ratings.js';
 import { validateApp } from './validators.js';
-import { App } from './common.js';
+import type { App } from './types/app-types.js';
+import { AppIdentifierOptions, BaseRequestOptions, normalizeAppIdentifier } from './param-types.js';
 
 /**
  * Options for app lookup
  */
-export interface AppOptions {
-  id?: string | number;
-  appId?: string;
-  country?: string;
-  lang?: string;
-  requestOptions?: common.RequestOptions;
-  throttle?: number;
+export interface AppOptions extends AppIdentifierOptions, BaseRequestOptions {
+  /** Whether to include ratings data with the response */
   ratings?: boolean;
 }
 
 /**
  * Fetches detailed information about an app
  *
- * @param {Object} opts - The options object
- * @param {number} [opts.id] - The iTunes app ID to fetch (either this or appId is required)
- * @param {string} [opts.appId] - The app bundle ID (iOS app ID) to fetch (either this or id is required)
- * @param {string} [opts.country='us'] - The country code for the App Store
- * @param {string} [opts.lang] - The language code for localized data
- * @param {Object} [opts.requestOptions] - Options passed to the request function
- * @param {number} [opts.throttle] - Maximum number of requests per second
- * @param {boolean} [opts.ratings=false] - If true, includes ratings data with the response
- * @returns {Promise<Object>} Promise resolving to the app information
+ * @param {AppOptions} opts - The options object
+ * @returns {Promise<App>} Promise resolving to the app information
  * @throws {Error} If neither id nor appId is provided or app is not found
  */
 function app(opts: AppOptions): Promise<App> {
   return new Promise<App[]>(function (resolve) {
     validateApp(opts);
-    const idField = opts.id ? 'id' : 'bundleId';
-    const idValue = opts.id || opts.appId;
 
-    if (!idValue) {
-      throw Error('Either id or appId is required');
-    }
+    const { idField, idValue } = normalizeAppIdentifier(opts);
 
     resolve(
-      common.lookup([idValue], idField, opts.country, opts.lang, opts.requestOptions, opts.throttle)
+      lookup([idValue], idField, opts.country, opts.lang, opts.requestOptions, opts.throttle)
     );
   }).then(results => {
     if (results.length === 0) {

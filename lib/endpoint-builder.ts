@@ -1,7 +1,8 @@
 /**
  * Utility to create standardized API endpoint functions
  */
-import * as common from './common.js';
+import type { RequestOptions } from './utils/http-client.js';
+import { request } from './utils/http-client.js';
 
 // Use dynamic import to avoid circular dependency issues
 let appModule: any = null;
@@ -13,7 +14,7 @@ export interface EndpointConfig<T, R> {
   /**
    * Function that performs the actual API request
    */
-  fetch: (opts: T, dependencies?: { requestFn?: typeof common.request }) => Promise<R>;
+  fetch: (opts: T, dependencies?: { requestFn?: typeof request }) => Promise<R>;
 
   /**
    * Function to validate the options
@@ -41,22 +42,16 @@ export interface EndpointDependencies {
   appFunction?: (opts: any) => Promise<any>;
 
   /**
-   * Request function to use (defaults to common.request)
+   * Request function to use (defaults to request)
    */
-  requestFunction?: typeof common.request;
+  requestFunction?: typeof request;
 }
 
 /**
  * Creates a standardized endpoint function with consistent error handling and request patterns
  *
- * @param {Object} config - Configuration for the endpoint
- * @param {Function} config.fetch - Function that performs the actual API request
- * @param {Function} [config.validate] - Function to validate the options
- * @param {Function} [config.transform] - Function to transform the response data
- * @param {boolean} [config.resolveId] - Whether to resolve id/appId to numeric id if needed
- * @param {Object} [dependencies] - Optional dependencies for testing
- * @param {Function} [dependencies.appFunction] - App function to use (defaults to app import)
- * @param {Function} [dependencies.requestFunction] - Request function to use (defaults to common.request)
+ * @param {EndpointConfig<T, R>} config - Configuration for the endpoint
+ * @param {EndpointDependencies} [dependencies] - Optional dependencies for testing
  * @returns {Function} A standardized endpoint function
  */
 function createEndpoint<
@@ -65,7 +60,7 @@ function createEndpoint<
     appId?: string;
     country?: string;
     lang?: string;
-    requestOptions?: any;
+    requestOptions?: RequestOptions;
     throttle?: number;
   },
   R
@@ -73,7 +68,7 @@ function createEndpoint<
   const { fetch, validate, transform, resolveId } = config;
 
   // Use provided dependencies or fall back to imports
-  const requestFn = dependencies.requestFunction || common.request;
+  const requestFn = dependencies.requestFunction || request;
 
   return function endpoint(opts: T = {} as T): Promise<R> {
     return new Promise((resolve, reject) => {
