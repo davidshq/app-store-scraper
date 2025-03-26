@@ -1,6 +1,38 @@
 import * as common from './common.js';
 import { parseString } from 'xml2js';
 import { validateRequired } from './validators.js';
+import { ApiRequestOptions } from './param-utils.js';
+
+/**
+ * Options for app suggestion lookup
+ */
+export interface SuggestOptions extends ApiRequestOptions {
+  term: string;
+  country?: string;
+  requestOptions?: common.RequestOptions;
+}
+
+/**
+ * Suggestion result format
+ */
+export interface Suggestion {
+  term: string;
+}
+
+/**
+ * Internal XML structure after parsing
+ */
+interface SuggestXml {
+  plist: {
+    dict: Array<{
+      array: Array<{
+        dict?: Array<{
+          string: string[];
+        }>;
+      }>;
+    }>;
+  };
+}
 
 const BASE_URL =
   'https://search.itunes.apple.com/WebObjects/MZSearchHints.woa/wa/hints?clientApplication=Software&term=';
@@ -11,14 +43,14 @@ const BASE_URL =
  * @returns {Promise<Object>} Promise resolving to parsed XML as JSON
  * @private
  */
-function parseXML(string) {
+function parseXML(string: string): Promise<SuggestXml> {
   return new Promise(function (resolve, reject) {
-    return parseString(string, (err, res) => {
+    parseString(string, (err, res: unknown) => {
       if (err) {
         reject(err);
         return;
       }
-      resolve(res);
+      resolve(res as SuggestXml);
     });
   });
 }
@@ -29,8 +61,8 @@ function parseXML(string) {
  * @returns {Array<Object>} Array of suggestion objects with term property
  * @private
  */
-function extractSuggestions(xml) {
-  const toJSON = item => ({
+function extractSuggestions(xml: SuggestXml): Suggestion[] {
+  const toJSON = (item: { string: string[] }): Suggestion => ({
     term: item.string[0]
   });
 
@@ -49,8 +81,8 @@ function extractSuggestions(xml) {
  * @returns {Promise<Array>} Promise resolving to an array of term suggestions
  * @throws {Error} If term is not provided
  */
-function suggest(opts) {
-  return new Promise(function (resolve) {
+function suggest(opts: SuggestOptions): Promise<Suggestion[]> {
+  return new Promise<string>(function (resolve) {
     validateRequired(opts, ['term'], 'term missing');
     return resolve(BASE_URL + encodeURIComponent(opts.term));
   })

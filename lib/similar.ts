@@ -1,7 +1,29 @@
 import * as common from './common.js';
 import { validateApp } from './validators.js';
 import createEndpoint from './endpoint-builder.js';
-import { getHeaders } from './param-utils.js';
+import { getHeaders, ApiRequestOptions } from './param-utils.js';
+import { App } from './common.js';
+
+/**
+ * Options for similar apps lookup
+ */
+export interface SimilarOptions extends ApiRequestOptions {
+  id: string | number;
+  appId?: string;
+  country?: string;
+  lang?: string;
+  requestOptions?: common.RequestOptions;
+  throttle?: number;
+  limit?: number;
+}
+
+/**
+ * Dependencies for testing/mocking
+ */
+interface SimilarDependencies {
+  requestFn?: typeof common.request;
+  lookupFn?: typeof common.lookup;
+}
 
 /**
  * Base URL for iTunes app pages
@@ -18,7 +40,7 @@ const BASE_URL = 'https://itunes.apple.com/us/app/app/id';
  * @returns {Promise<string>} - Promise resolving to HTML response
  * @private
  */
-function fetchSimilarApps(opts, deps = {}) {
+function fetchSimilarApps(opts: SimilarOptions, deps: SimilarDependencies = {}): Promise<string> {
   const id = opts.id;
   const headers = getHeaders(opts, 32);
 
@@ -36,11 +58,15 @@ function fetchSimilarApps(opts, deps = {}) {
  * @returns {Promise<Array>} Promise resolving to array of similar apps
  * @private
  */
-function extractAndLookupApps(text, opts, deps = {}) {
+function extractAndLookupApps(
+  text: string,
+  opts: SimilarOptions,
+  deps: SimilarDependencies = {}
+): Promise<App[]> {
   // Check if the customersAlsoBoughtApps section exists in the response
   const index = text.indexOf('customersAlsoBoughtApps');
   if (index === -1) {
-    return [];
+    return Promise.resolve([]);
   }
 
   // Extract the array of similar app IDs using regex
@@ -48,7 +74,7 @@ function extractAndLookupApps(text, opts, deps = {}) {
   const match = regExp.exec(text);
 
   if (!match || !match[1]) {
-    return [];
+    return Promise.resolve([]);
   }
 
   try {
@@ -58,9 +84,9 @@ function extractAndLookupApps(text, opts, deps = {}) {
 
     // Look up the full details for each similar app
     return lookupFn(ids, 'id', opts.country, opts.lang, opts.requestOptions, opts.throttle);
-  } catch (_e) {
+  } catch (_) {
     // Return empty array if parsing fails
-    return [];
+    return Promise.resolve([]);
   }
 }
 
@@ -77,7 +103,7 @@ function extractAndLookupApps(text, opts, deps = {}) {
  * @returns {Promise<Array>} Promise resolving to an array of similar apps
  * @throws {Error} If neither id nor appId is provided
  */
-const similar = createEndpoint({
+const similar = createEndpoint<SimilarOptions, App[]>({
   validate: validateApp,
 
   resolveId: true, // Automatically resolve appId to numeric id

@@ -1,4 +1,38 @@
 import * as common from './common.js';
+import { ApiRequestOptions } from './param-utils.js';
+
+/**
+ * Options for version history lookup
+ */
+export interface VersionHistoryOptions extends ApiRequestOptions {
+  id: string | number;
+  country?: string;
+  requestOptions?: common.RequestOptions;
+}
+
+/**
+ * Version history entry format
+ */
+export interface VersionHistoryEntry {
+  versionDisplay: string;
+  releaseDate: string;
+  releaseNotes?: string;
+}
+
+/**
+ * Internal API response format
+ */
+interface VersionHistoryApiResponse {
+  data: Array<{
+    attributes: {
+      platformAttributes: {
+        ios: {
+          versionHistory: VersionHistoryEntry[];
+        };
+      };
+    };
+  }>;
+}
 
 /**
  * Fetches the version history for an app
@@ -9,10 +43,10 @@ import * as common from './common.js';
  * @returns {Promise<Array>} Promise resolving to an array of version history entries
  * @throws {Error} If id is not provided or app is not found
  */
-function versionHistory(opts) {
+function versionHistory(opts: VersionHistoryOptions): Promise<VersionHistoryEntry[]> {
   opts.country = opts.country || 'US';
 
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     if (opts.id) {
       resolve();
     } else {
@@ -28,6 +62,11 @@ function versionHistory(opts) {
       // The token is URL-encoded in the page as token%22%3A%22[TOKEN]%22%7D
       const regExp = /token%22%3A%22([^%]+)%22%7D/g;
       const match = regExp.exec(html);
+
+      if (!match || !match[1]) {
+        throw Error('Could not retrieve authorization token');
+      }
+
       const token = match[1];
 
       const url = `https://amp-api.apps.apple.com/v1/catalog/${opts.country}/apps/${opts.id}?platform=web&extend=versionHistory&additionalPlatforms=appletv,ipad,iphone,mac,realityDevice`;
@@ -45,7 +84,8 @@ function versionHistory(opts) {
         throw Error('App not found (404)');
       }
 
-      return JSON.parse(json).data[0].attributes.platformAttributes.ios.versionHistory;
+      const parsedJson = JSON.parse(json) as VersionHistoryApiResponse;
+      return parsedJson.data[0].attributes.platformAttributes.ios.versionHistory;
     });
 }
 

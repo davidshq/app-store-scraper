@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { expect } from 'chai';
 import sinon from 'sinon';
-import createEndpoint from '../lib/endpoint-builder.js';
+import createEndpoint from '../dist/lib/endpoint-builder.js';
 import { createTestFn } from './helpers/test-utils.js';
 
 describe('Endpoint Builder', () => {

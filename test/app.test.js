@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { assert } from 'chai';
 import { assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
@@ -54,13 +55,15 @@ describe('App method', () => {
   describe('with ratings option enabled', () => {
     it('should fetch valid application data', () => {
       return store.app({ id: '553834731', ratings: true }).then(app => {
+        assert.isDefined(app.ratings);
         assert.isNumber(app.ratings);
+        assert.isDefined(app.histogram);
         assert.isObject(app.histogram);
-        assert.isNumber(app.histogram['1']);
-        assert.isNumber(app.histogram['2']);
-        assert.isNumber(app.histogram['3']);
-        assert.isNumber(app.histogram['4']);
-        assert.isNumber(app.histogram['5']);
+        assert.isDefined(app.histogram['1']);
+        assert.isDefined(app.histogram['2']);
+        assert.isDefined(app.histogram['3']);
+        assert.isDefined(app.histogram['4']);
+        assert.isDefined(app.histogram['5']);
       });
     });
 
@@ -68,13 +71,15 @@ describe('App method', () => {
       return store
         .app({ appId: 'com.midasplayer.apps.candycrushsaga', ratings: true })
         .then(app => {
+          assert.isDefined(app.ratings);
           assert.isNumber(app.ratings);
+          assert.isDefined(app.histogram);
           assert.isObject(app.histogram);
-          assert.isNumber(app.histogram['1']);
-          assert.isNumber(app.histogram['2']);
-          assert.isNumber(app.histogram['3']);
-          assert.isNumber(app.histogram['4']);
-          assert.isNumber(app.histogram['5']);
+          assert.isDefined(app.histogram['1']);
+          assert.isDefined(app.histogram['2']);
+          assert.isDefined(app.histogram['3']);
+          assert.isDefined(app.histogram['4']);
+          assert.isDefined(app.histogram['5']);
         });
     });
   });

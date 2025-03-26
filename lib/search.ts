@@ -1,5 +1,33 @@
 import * as R from 'ramda';
 import * as common from './common.js';
+import { ApiRequestOptions } from './param-utils.js';
+import { App } from './common.js';
+
+/**
+ * Options for app search
+ */
+export interface SearchOptions extends ApiRequestOptions {
+  term: string;
+  country?: string;
+  lang?: string;
+  num?: number;
+  page?: number;
+  idsOnly?: boolean;
+  requestOptions?: common.RequestOptions;
+  throttle?: number;
+}
+
+/**
+ * Internal search response format
+ */
+interface SearchApiResponse {
+  bubbles: Array<{
+    results: Array<{
+      id: number;
+      [key: string]: any;
+    }>;
+  }>;
+}
 
 /**
  * Base URL for iTunes app search API
@@ -20,11 +48,11 @@ const BASE_URL =
  * @returns {Function} A function that slices an array to get the specified page
  * @private
  */
-function paginate(num, page) {
-  num = num || 50;
-  page = page - 1 || 0;
-  const pageStart = num * page;
-  const pageEnd = pageStart + num;
+function paginate(num?: number, page?: number): <T>(list: T[]) => T[] {
+  const numValue = num || 50;
+  const pageValue = (page || 1) - 1;
+  const pageStart = numValue * pageValue;
+  const pageEnd = pageStart + numValue;
   return R.slice(pageStart, pageEnd);
 }
 
@@ -43,7 +71,7 @@ function paginate(num, page) {
  * @returns {Promise<Array>} Promise resolving to an array of apps or app IDs (if idsOnly is true)
  * @throws {Error} If term is not provided
  */
-function search(opts) {
+function search(opts: SearchOptions): Promise<App[] | number[]> {
   return new Promise(function (resolve, reject) {
     if (!opts.term) {
       throw Error('term is required');
@@ -61,11 +89,14 @@ function search(opts) {
         },
         opts.requestOptions
       )
-      .then(JSON.parse)
+      .then((body: string) => JSON.parse(body) as SearchApiResponse)
       .then(response => (response.bubbles[0] && response.bubbles[0].results) || [])
       .then(paginate(opts.num, opts.page))
-      .then(R.pluck('id'))
-      .then(ids => {
+      .then(results => {
+        const ids = results.map(result => result.id);
+        return ids as number[];
+      })
+      .then(async ids => {
         if (!opts.idsOnly) {
           return common.lookup(
             ids,

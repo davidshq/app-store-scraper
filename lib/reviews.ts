@@ -1,14 +1,76 @@
 import * as common from './common.js';
 import app from './app.js';
 import c from './constants.js';
-import { validateReviews } from './validators.js';
+import { validateReviews, ReviewsValidationOptions } from './validators.js';
+
+/**
+ * Options for reviews lookup
+ */
+export interface ReviewsOptions extends ReviewsValidationOptions {
+  id?: string | number;
+  appId?: string;
+  country?: string;
+  sort?: string;
+  page?: number;
+  requestOptions?: common.RequestOptions;
+}
+
+/**
+ * Review object returned by the API
+ */
+export interface Review {
+  id: string;
+  userName: string;
+  userUrl: string;
+  version: string;
+  score: number;
+  title: string;
+  text: string;
+  url: string;
+  updated: string;
+}
+
+/**
+ * Internal review API response format
+ */
+interface ReviewApiResponse {
+  feed: {
+    entry?:
+      | Array<{
+          id: { label: string };
+          author: {
+            name: { label: string };
+            uri: { label: string };
+          };
+          'im:version': { label: string };
+          'im:rating': { label: string };
+          title: { label: string };
+          content: { label: string };
+          link: { attributes: { href: string } };
+          updated: { label: string };
+        }>
+      | {
+          id: { label: string };
+          author: {
+            name: { label: string };
+            uri: { label: string };
+          };
+          'im:version': { label: string };
+          'im:rating': { label: string };
+          title: { label: string };
+          content: { label: string };
+          link: { attributes: { href: string } };
+          updated: { label: string };
+        };
+  };
+}
 
 /**
  * Ensures a value is an array
  * @param {*} value - Value to convert
  * @returns {Array} The value as an array
  */
-function ensureArray(value) {
+function ensureArray<T>(value: T | T[] | undefined): T[] {
   if (!value) {
     return [];
   }
@@ -25,7 +87,7 @@ function ensureArray(value) {
  * @param {Object} results - Raw reviews data from iTunes API
  * @returns {Array<Object>} Array of normalized review objects
  */
-function cleanList(results) {
+function cleanList(results: ReviewApiResponse): Review[] {
   const reviews = ensureArray(results.feed.entry);
   return reviews.map(review => ({
     id: review.id.label,
@@ -51,7 +113,7 @@ function cleanList(results) {
  * @param {Object} [opts.requestOptions] - Additional options for the request
  * @returns {Promise<Array>} Promise resolving to an array of reviews
  */
-const reviews = opts => {
+const reviews = (opts: ReviewsOptions): Promise<Review[]> => {
   validateReviews(opts);
 
   // Resolve the app ID
@@ -68,7 +130,7 @@ const reviews = opts => {
       const url = `https://itunes.apple.com/${options.country}/rss/customerreviews/page=${options.page}/id=${id}/sortby=${options.sort}/json`;
       return common.request(url, {}, opts.requestOptions);
     })
-    .then(JSON.parse)
+    .then(response => JSON.parse(response) as ReviewApiResponse)
     .then(cleanList);
 };
 

@@ -1,4 +1,19 @@
 import * as common from './common.js';
+import { ApiRequestOptions } from './param-utils.js';
+import { App } from './common.js';
+
+/**
+ * Options for developer data lookup
+ */
+export interface DeveloperOptions extends ApiRequestOptions {
+  devId: string | number;
+  country?: string;
+  lang?: string;
+  requestOptions?: common.RequestOptions;
+  throttle?: number;
+  num?: number;
+  fullDetail?: boolean;
+}
 
 /**
  * Fetches information about a developer and their apps
@@ -11,8 +26,8 @@ import * as common from './common.js';
  * @returns {Promise<Array>} Promise resolving to developer information and their apps
  * @throws {Error} If devId is not provided or developer is not found
  */
-function developer(opts) {
-  return new Promise(function (resolve) {
+function developer(opts: DeveloperOptions): Promise<App[]> {
+  return new Promise<App[]>(function (resolve) {
     if (!opts.devId) {
       throw Error('devId is required');
     }

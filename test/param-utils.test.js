@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { expect } from 'chai';
 import sinon from 'sinon';
 import {
@@ -6,7 +7,7 @@ import {
   getStoreHeader,
   addLanguageHeader,
   getUrlParams
-} from '../lib/param-utils.js';
+} from '../dist/lib/param-utils.js';
 import { createMockStoreIdFunction } from './helpers/test-utils.js';
 
 /**

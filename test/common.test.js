@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { assert } from 'chai';
-import * as common from '../lib/common.js';
+import * as common from '../dist/lib/common.js';
 import sinon from 'sinon';
 import Bottleneck from 'bottleneck';
 

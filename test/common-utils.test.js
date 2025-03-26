@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { assert } from 'chai';
 import validator from 'validator';
 

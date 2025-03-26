@@ -1,7 +1,114 @@
 import got from 'got';
+import type { Method } from 'got';
 import Bottleneck from 'bottleneck';
 import debugModule from 'debug';
 import c from './constants.js';
+
+/**
+ * Interface for request options
+ */
+export interface RequestOptions {
+  headers?: Record<string, string>;
+  retry?: {
+    limit: number;
+    methods: Method[];
+  };
+  timeout?: {
+    request: number;
+  };
+  [key: string]: any;
+}
+
+/**
+ * Interface for raw app data from iTunes API
+ */
+export interface RawAppData {
+  trackId: number;
+  bundleId: string;
+  trackName: string;
+  trackViewUrl: string;
+  description: string;
+  artworkUrl512?: string;
+  artworkUrl100?: string;
+  artworkUrl60?: string;
+  genres: string[];
+  genreIds: string[];
+  primaryGenreName: string;
+  primaryGenreId: number;
+  contentAdvisoryRating: string;
+  languageCodesISO2A: string[];
+  fileSizeBytes: string;
+  minimumOsVersion: string;
+  releaseDate: string;
+  currentVersionReleaseDate?: string;
+  releaseNotes?: string;
+  version: string;
+  price: number;
+  currency: string;
+  artistId: number;
+  artistName: string;
+  artistViewUrl: string;
+  sellerUrl?: string;
+  averageUserRating: number;
+  userRatingCount: number;
+  averageUserRatingForCurrentVersion?: number;
+  userRatingCountForCurrentVersion?: number;
+  screenshotUrls: string[];
+  ipadScreenshotUrls: string[];
+  appletvScreenshotUrls: string[];
+  supportedDevices: string[];
+  wrapperType?: string;
+  [key: string]: any;
+}
+
+/**
+ * Interface for cleaned and normalized app data
+ */
+export interface App {
+  id: number;
+  appId: string;
+  title: string;
+  url: string;
+  description: string;
+  icon: string;
+  genres: string[];
+  genreIds: string[];
+  primaryGenre: string;
+  primaryGenreId: number;
+  contentRating: string;
+  languages: string[];
+  size: string;
+  requiredOsVersion: string;
+  released: string;
+  updated: string;
+  releaseNotes?: string;
+  version: string;
+  price: number;
+  currency: string;
+  free: boolean;
+  developerId: number;
+  developer: string;
+  developerUrl: string;
+  developerWebsite?: string;
+  score: number;
+  reviews: number;
+  currentVersionScore?: number;
+  currentVersionReviews?: number;
+  screenshots: string[];
+  ipadScreenshots: string[];
+  appletvScreenshots: string[];
+  supportedDevices: string[];
+  ratings?: number;
+  histogram?: { [key: string]: number };
+}
+
+/**
+ * Interface for iTunes API response
+ */
+export interface ITunesApiResponse {
+  resultCount: number;
+  results: RawAppData[];
+}
 
 /**
  * Debug logger instance for app-store-scraper
@@ -13,14 +120,14 @@ const debug = debugModule('app-store-scraper');
  * @param {Object} app - Raw app data from iTunes API
  * @returns {Object} Cleaned and normalized app data
  */
-function cleanApp(app) {
+function cleanApp(app: RawAppData): App {
   return {
     id: app.trackId,
     appId: app.bundleId,
     title: app.trackName,
     url: app.trackViewUrl,
     description: app.description,
-    icon: app.artworkUrl512 || app.artworkUrl100 || app.artworkUrl60,
+    icon: app.artworkUrl512 || app.artworkUrl100 || app.artworkUrl60 || '',
     genres: app.genres,
     genreIds: app.genreIds,
     primaryGenre: app.primaryGenreName,
@@ -66,7 +173,7 @@ const defaultLimiter = new Bottleneck({
  * @param {number} [limit] - Maximum number of requests per second
  * @returns {Bottleneck} A configured rate limiter instance
  */
-const getLimiter = limit => {
+const getLimiter = (limit?: number): Bottleneck => {
   if (!limit) return defaultLimiter;
 
   return new Bottleneck({
@@ -81,12 +188,15 @@ const getLimiter = limit => {
  * @param {Object} [customOptions] - Custom request options to merge with defaults
  * @returns {Object} The merged request options
  */
-const createRequestOptions = (headers, customOptions) => {
-  const options = {
+const createRequestOptions = (
+  headers?: Record<string, string>,
+  customOptions?: RequestOptions
+): RequestOptions => {
+  const options: RequestOptions = {
     headers: headers || {},
     retry: {
       limit: 2, // Retry failed requests twice
-      methods: ['GET'] // Only retry GET requests
+      methods: ['GET' as Method] // Only retry GET requests
     },
     timeout: {
       request: 30000 // 30 second timeout
@@ -110,7 +220,15 @@ const createRequestOptions = (headers, customOptions) => {
  * @param {Function} [limiterFactory=getLimiter] - Factory function for rate limiters
  * @returns {Function} A request function that uses the provided dependencies
  */
-const createRequester = (httpClient = got, limiterFactory = getLimiter) => {
+const createRequester = (
+  httpClient: typeof got = got,
+  limiterFactory: typeof getLimiter = getLimiter
+): ((
+  url: string,
+  headers?: Record<string, string>,
+  requestOptions?: RequestOptions,
+  limit?: number
+) => Promise<string>) => {
   /**
    * Makes an HTTP request with rate limiting
    * @param {string} url - The URL to request
@@ -119,7 +237,12 @@ const createRequester = (httpClient = got, limiterFactory = getLimiter) => {
    * @param {number} [limit] - Rate limit for requests
    * @returns {Promise<string>} Promise resolving to the response body
    */
-  return (url, headers, requestOptions, limit) => {
+  return (
+    url: string,
+    headers?: Record<string, string>,
+    requestOptions?: RequestOptions,
+    limit?: number
+  ): Promise<string> => {
     debug('Making request: %s %j %o', url, headers, requestOptions);
 
     const options = createRequestOptions(headers, requestOptions);
@@ -143,7 +266,7 @@ const createRequester = (httpClient = got, limiterFactory = getLimiter) => {
             const apiError = new Error(
               `Request failed with status code ${error.response.statusCode}`
             );
-            apiError.response = { statusCode: error.response.statusCode };
+            (apiError as any).response = { statusCode: error.response.statusCode };
             return Promise.reject(apiError);
           }
           return Promise.reject(error);
@@ -157,7 +280,7 @@ const createRequester = (httpClient = got, limiterFactory = getLimiter) => {
  * @type {Function}
  * @private
  */
-const doRequest = createRequester();
+const request = createRequester();
 
 /**
  * iTunes lookup API endpoint URL
@@ -176,14 +299,20 @@ const LOOKUP_URL = 'https://itunes.apple.com/lookup';
  * @param {number} [limit] - Rate limit for requests
  * @returns {Promise<Array<Object>>} Promise resolving to an array of app data
  */
-function lookup(ids, idField, country, lang, requestOptions, limit) {
-  idField = idField || 'id';
-  country = country || 'us';
+function lookup(
+  ids: (string | number)[],
+  idField: string = 'id',
+  country: string = 'us',
+  lang?: string,
+  requestOptions?: RequestOptions,
+  limit?: number
+): Promise<App[]> {
   const langParam = lang ? `&lang=${lang}` : '';
   const joinedIds = ids.join(',');
   const url = `${LOOKUP_URL}?${idField}=${joinedIds}&country=${country}&entity=software${langParam}`;
-  return doRequest(url, {}, requestOptions, limit)
-    .then(JSON.parse)
+
+  return request(url, {}, requestOptions, limit)
+    .then(response => JSON.parse(response) as ITunesApiResponse)
     .then(res =>
       res.results.filter(function (app) {
         return typeof app.wrapperType === 'undefined' || app.wrapperType === 'software';
@@ -197,10 +326,32 @@ function lookup(ids, idField, country, lang, requestOptions, limit) {
  * @param {string} countryCode - The two-letter country code
  * @returns {string} The corresponding iTunes store ID
  */
-function storeId(countryCode) {
+function storeId(countryCode?: string): string {
   const markets = c.markets;
   const defaultStore = '143441';
-  return (countryCode && markets[countryCode.toUpperCase()]) || defaultStore;
+
+  if (countryCode) {
+    const upperCode = countryCode.toUpperCase();
+    // Check if the country code exists in markets
+    if (upperCode in markets) {
+      // Type assertion to tell TypeScript that the key exists
+      const storeCode = markets[upperCode as keyof typeof markets];
+      return String(storeCode);
+    }
+  }
+
+  return defaultStore;
+}
+
+/**
+ * Interface for request configuration
+ */
+interface RequestConfig {
+  url: string;
+  headers?: Record<string, string>;
+  requestOptions?: RequestOptions;
+  limit?: number;
+  parseJson?: boolean;
 }
 
 /**
@@ -213,7 +364,7 @@ function storeId(countryCode) {
  * @param {number} [config.limit] - Rate limit for requests from opts
  * @returns {Promise<any>} Promise resolving to the response (parsed if JSON)
  */
-function makeRequest(config) {
+function makeRequest(config: RequestConfig): Promise<any> {
   const { url, headers = {}, requestOptions, limit } = config;
   const shouldParseJson = config.parseJson !== false;
 
@@ -245,7 +396,7 @@ function makeRequest(config) {
           const apiError = new Error(
             `Request failed with status code ${error.response.statusCode}`
           );
-          apiError.response = { statusCode: error.response.statusCode };
+          (apiError as any).response = { statusCode: error.response.statusCode };
           return Promise.reject(apiError);
         }
         return Promise.reject(error);
@@ -255,12 +406,11 @@ function makeRequest(config) {
 
 export {
   cleanApp,
-  lookup,
-  doRequest as request,
-  makeRequest,
-  storeId,
-  // Expose these additional functions for testing
   getLimiter,
+  createRequestOptions,
   createRequester,
-  createRequestOptions
+  request,
+  lookup,
+  storeId,
+  makeRequest
 };

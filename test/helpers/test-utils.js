@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Test utilities for supporting dependency injection in tests
  */

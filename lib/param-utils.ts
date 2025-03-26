@@ -1,133 +1,117 @@
 /**
- * Utility functions for handling and validating parameters
+ * Utilities for handling and normalizing API parameters
  */
-
-import { validationError } from './error-utils.js';
+import * as common from './common.js';
 
 /**
- * Ensures all required parameters are present
- *
- * @param opts - Options to validate
- * @param requiredParams - Array of required parameter names
- * @param defaultValues - Optional default values to apply if parameter missing
- * @returns Validated options with defaults applied
+ * Interface for API request default options
  */
-export function assertRequired<T extends Record<string, any>>(
-  opts: T,
-  requiredParams: string[],
-  defaultValues?: Partial<Record<string, any>>
-): T {
-  // Apply default values if provided
-  if (defaultValues) {
-    for (const [key, value] of Object.entries(defaultValues)) {
-      if (opts[key as keyof T] === undefined) {
-        (opts as Record<string, any>)[key] = value;
-      }
-    }
-  }
-
-  // Check for required parameters
-  const missingParams = requiredParams.filter(param => opts[param as keyof T] === undefined);
-
-  if (missingParams.length > 0) {
-    throw validationError(`Missing required parameters: ${missingParams.join(', ')}`);
-  }
-
-  return opts;
+export interface DefaultOptions {
+  country: string;
+  lang: string;
+  limit: number;
+  offset: number;
+  page: number;
+  num: number;
+  [key: string]: any;
 }
 
 /**
- * Ensures that either of two parameters is present
- *
- * @param opts - Options to validate
- * @param param1 - First parameter name
- * @param param2 - Second parameter name
- * @returns Input options if valid
+ * Interface for API request options
  */
-export function assertEither<T extends Record<string, any>>(
-  opts: T,
-  param1: string,
-  param2: string
-): T {
-  if (opts[param1 as keyof T] === undefined && opts[param2 as keyof T] === undefined) {
-    throw validationError(`Either ${param1} or ${param2} is required`);
-  }
-
-  return opts;
+export interface ApiRequestOptions {
+  country?: string;
+  lang?: string;
+  [key: string]: any;
 }
 
 /**
- * Validates that a numeric value is within a range
- *
- * @param value - Value to check
- * @param min - Minimum allowed value
- * @param max - Maximum allowed value
- * @param defaultValue - Default to use if value is undefined
- * @returns Validated value
+ * Default parameters for API requests
+ * @type {Object}
  */
-export function validateInRange(
-  value: number | undefined,
-  min: number,
-  max: number,
-  defaultValue?: number
-): number {
-  // If value is undefined and default is provided, use default
-  if (value === undefined && defaultValue !== undefined) {
-    return defaultValue;
-  }
-
-  // If value is still undefined after checking for default, throw error
-  if (value === undefined) {
-    throw validationError(`Value is required but was undefined`);
-  }
-
-  // Check range constraints
-  if (value < min) {
-    throw validationError(`Value ${value} is less than minimum ${min}`);
-  }
-
-  if (value > max) {
-    throw validationError(`Value ${value} is greater than maximum ${max}`);
-  }
-
-  return value;
-}
-
-/**
- * Validates that a value is within an enum of valid values
- *
- * @param value - Value to check
- * @param validValues - Array of valid options
- * @param defaultValue - Default to use if value is undefined
- * @returns Validated value
- */
-export function validateEnum<T>(value: T | undefined, validValues: T[], defaultValue?: T): T {
-  // If value is undefined and default is provided, use default
-  if (value === undefined && defaultValue !== undefined) {
-    return defaultValue;
-  }
-
-  // If value is still undefined after checking for default, throw error
-  if (value === undefined) {
-    throw validationError(`Value is required but was undefined`);
-  }
-
-  // Check if value is in valid values
-  if (!validValues.includes(value)) {
-    throw validationError(
-      `Value ${String(value)} is not in valid values: ${validValues.map(v => String(v)).join(', ')}`
-    );
-  }
-
-  return value;
-}
-
-/**
- * Exported interface for parameter utility functions
- */
-export default {
-  assertRequired,
-  assertEither,
-  validateInRange,
-  validateEnum
+const DEFAULTS: DefaultOptions = {
+  country: 'us',
+  lang: 'en-us',
+  limit: 50,
+  offset: 0,
+  page: 1,
+  num: 50
 };
+
+/**
+ * Applies default values to options object
+ *
+ * @param {Object} opts - Input options object
+ * @param {Object} [defaults=DEFAULTS] - Default values to apply
+ * @returns {Object} Options with defaults applied
+ */
+function applyDefaults<T extends object>(
+  opts: T,
+  defaults: DefaultOptions = DEFAULTS
+): T & DefaultOptions {
+  return { ...defaults, ...opts };
+}
+
+/**
+ * Creates store header for request
+ *
+ * @param {Object} opts - Options object
+ * @param {string} [opts.country='us'] - Country code
+ * @param {number} [storeType=32] - Store type (varies by endpoint)
+ * @returns {Object} Headers object with X-Apple-Store-Front
+ */
+function getStoreHeader(opts: ApiRequestOptions, storeType: number = 32): Record<string, string> {
+  const country = opts.country || DEFAULTS.country;
+  return {
+    'X-Apple-Store-Front': `${common.storeId(country)},${storeType}`
+  };
+}
+
+/**
+ * Adds language headers if specified
+ *
+ * @param {Object} headers - Existing headers object
+ * @param {Object} opts - Options object
+ * @param {string} [opts.lang] - Language code
+ * @returns {Object} Headers with language added if specified
+ */
+function addLanguageHeader(
+  headers: Record<string, string>,
+  opts: ApiRequestOptions
+): Record<string, string> {
+  if (opts.lang) {
+    return {
+      ...headers,
+      'Accept-Language': opts.lang
+    };
+  }
+  return headers;
+}
+
+/**
+ * Creates a complete set of headers for a request
+ *
+ * @param {Object} opts - Options object
+ * @param {number} [storeType=32] - Store type (varies by endpoint)
+ * @returns {Object} Complete headers object
+ */
+function getHeaders(opts: ApiRequestOptions, storeType: number = 32): Record<string, string> {
+  const baseHeaders = getStoreHeader(opts, storeType);
+  return addLanguageHeader(baseHeaders, opts);
+}
+
+/**
+ * Creates URL parameters from options
+ *
+ * @param {Object} opts - Options object
+ * @param {Array<string>} paramNames - Names of parameters to include
+ * @returns {string} URL parameters string
+ */
+function getUrlParams(opts: ApiRequestOptions, paramNames: string[]): string {
+  return paramNames
+    .filter(name => opts[name] !== undefined)
+    .map(name => `${name}=${encodeURIComponent(opts[name])}`)
+    .join('&');
+}
+
+export { DEFAULTS, applyDefaults, getStoreHeader, addLanguageHeader, getHeaders, getUrlParams };

@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { expect } from 'chai';
 import store from '../index.js';
-import c from '../lib/constants.js';
+import c from '../dist/lib/constants.js';
 
 describe('Reviews method', () => {
   it('should retrieve the reviews of an app', () => {

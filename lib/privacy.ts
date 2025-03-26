@@ -1,4 +1,56 @@
 import * as common from './common.js';
+import { ApiRequestOptions } from './param-utils.js';
+
+/**
+ * Options for privacy data lookup
+ */
+export interface PrivacyOptions extends ApiRequestOptions {
+  id: string | number;
+  country?: string;
+  requestOptions?: common.RequestOptions;
+}
+
+/**
+ * Privacy detail type mappings
+ */
+export type PrivacyType = 'DATA_LINKED_TO_YOU' | 'DATA_USED_TO_TRACK_YOU' | 'DATA_NOT_COLLECTED';
+
+/**
+ * Privacy detail category
+ */
+export interface PrivacyDetailCategory {
+  identifier: string;
+  dataTypes: string[];
+  purposes?: string[];
+}
+
+/**
+ * Privacy detail type
+ */
+export interface PrivacyDetailType {
+  identifier: PrivacyType;
+  description: string;
+  categories: PrivacyDetailCategory[];
+}
+
+/**
+ * Privacy details response
+ */
+export interface PrivacyDetails {
+  managePrivacyChoicesUrl?: string;
+  privacyTypes: PrivacyDetailType[];
+}
+
+/**
+ * Internal API response format
+ */
+interface PrivacyApiResponse {
+  data: Array<{
+    attributes: {
+      privacyDetails: PrivacyDetails;
+    };
+  }>;
+}
 
 /**
  * Fetches privacy information for an app
@@ -9,10 +61,10 @@ import * as common from './common.js';
  * @returns {Promise<Object>} Promise resolving to app privacy details
  * @throws {Error} If id is not provided or app is not found
  */
-function privacy(opts) {
+function privacy(opts: PrivacyOptions): Promise<PrivacyDetails> {
   opts.country = opts.country || 'US';
 
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     if (opts.id) {
       resolve();
     } else {
@@ -28,6 +80,11 @@ function privacy(opts) {
       // The token is URL-encoded in the page as token%22%3A%22[TOKEN]%22%7D
       const regExp = /token%22%3A%22([^%]+)%22%7D/g;
       const match = regExp.exec(html);
+
+      if (!match || !match[1]) {
+        throw Error('Could not retrieve authorization token');
+      }
+
       const token = match[1];
 
       const url = `https://amp-api.apps.apple.com/v1/catalog/${opts.country}/apps/${opts.id}?platform=web&fields=privacyDetails`;
@@ -45,7 +102,8 @@ function privacy(opts) {
         throw Error('App not found (404)');
       }
 
-      return JSON.parse(json).data[0].attributes.privacyDetails;
+      const parsedJson = JSON.parse(json) as PrivacyApiResponse;
+      return parsedJson.data[0].attributes.privacyDetails;
     });
 }
 

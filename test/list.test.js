@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { expect } from 'chai';
 import { assertValidApp, assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';

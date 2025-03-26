@@ -1,3 +1,6 @@
+/**
+ * iTunes Store collection types
+ */
 const collection = {
   TOP_MAC: 'topmacapps',
   TOP_FREE_MAC: 'topfreemacapps',
@@ -12,8 +15,11 @@ const collection = {
   TOP_GROSSING_IPAD: 'topgrossingipadapplications',
   TOP_PAID_IOS: 'toppaidapplications',
   TOP_PAID_IPAD: 'toppaidipadapplications'
-};
+} as const;
 
+/**
+ * App Store category IDs
+ */
 const category = {
   BOOKS: 6018,
   BUSINESS: 6000,
@@ -85,21 +91,30 @@ const category = {
   TRAVEL: 6003,
   UTILITIES: 6002,
   WEATHER: 6001
-};
+} as const;
 
+/**
+ * Device types for filtering apps
+ */
 const device = {
   IPAD: 'iPadSoftware',
   MAC: 'macSoftware',
   ALL: 'software'
-};
+} as const;
 
+/**
+ * Sorting options for reviews
+ */
 const sort = {
   RECENT: 'mostRecent',
   HELPFUL: 'mostHelpful'
-};
+} as const;
 
-// From https://github.com/gonzoua/random-stuff/blob/master/appstorereviews.rb
-const markets = {
+/**
+ * iTunes Store market/country IDs (Apple Store Front)
+ * From https://github.com/gonzoua/random-stuff/blob/master/appstorereviews.rb
+ */
+const markets: Record<string, number> = {
   DZ: 143563,
   AO: 143564,
   AI: 143538,
@@ -217,4 +232,12 @@ const markets = {
   YE: 143571
 };
 
+// Create type definitions for the constants
+export type Collection = (typeof collection)[keyof typeof collection];
+export type Category = (typeof category)[keyof typeof category];
+export type Device = (typeof device)[keyof typeof device];
+export type Sort = (typeof sort)[keyof typeof sort];
+export type MarketCountry = keyof typeof markets;
+
+// Export all constants
 export default { collection, category, device, sort, markets };
