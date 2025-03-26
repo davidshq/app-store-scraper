@@ -16,14 +16,14 @@ describe('List method', () => {
   it('should validate the category', () => {
     expect(() => {
       store.list({
-        category: 'wrong',
+        category: 'wrong' as any,
         collection: store.collection.TOP_FREE_IOS
       });
     }).toThrow();
 
     try {
       store.list({
-        category: 'wrong',
+        category: 'wrong' as any,
         collection: store.collection.TOP_FREE_IOS
       });
     } catch (e) {
@@ -77,7 +77,7 @@ describe('List method', () => {
 
   it('should fetch apps with fullDetail', async () => {
     const apps = (await store.list({
-      collection: store.collection.TOP_FREE_GAMES_IOS,
+      collection: store.collection.TOP_FREE_IOS,
       fullDetail: true,
       num: 3
     })) as App[];
@@ -107,7 +107,7 @@ describe('List method', () => {
   it('should be able to set requestOptions', async () => {
     await expect(
       store.list({
-        collection: store.collection.TOP_FREE_GAMES_IOS,
+        collection: store.collection.TOP_FREE_IOS,
         num: 5,
         requestOptions: {
           method: 'DELETE'

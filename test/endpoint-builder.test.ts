@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import sinon from 'sinon';
-import createEndpoint from '../dist/lib/endpoint-builder.js';
+import createEndpoint from '../lib/endpoint-builder.js';
 import { createTestFn } from './helpers/test-utils.js';
 
 describe('Endpoint Builder', () => {
@@ -31,7 +31,9 @@ describe('Endpoint Builder', () => {
 
   it('should build endpoint correctly for id', async () => {
     // Don't use any dependencies, test simply that our fetch function gets called
-    const fetchSpy = sinon.spy(() => Promise.resolve({ data: 'test' }));
+    const fetchSpy = sinon.spy<(opts: Record<string, any>) => Promise<{ data: string }>>(() =>
+      Promise.resolve({ data: 'test' })
+    );
 
     // Create endpoint with minimal configuration
     const fn = createEndpointWithMocks({
@@ -44,8 +46,15 @@ describe('Endpoint Builder', () => {
 
     // Verify fetch was called with the right parameters
     expect(fetchSpy.calledOnce).toBe(true);
-    expect(fetchSpy.firstCall.args[0]).to.deep.equal(opts);
-    expect(result).to.deep.equal({ data: 'test' });
+
+    // Fix the type error by checking if the spy was called and then accessing the args
+    if (fetchSpy.firstCall && fetchSpy.firstCall.args) {
+      expect(fetchSpy.firstCall.args[0]).toEqual(opts);
+    } else {
+      expect.fail('fetchSpy.firstCall.args should be defined');
+    }
+
+    expect(result).toEqual({ data: 'test' });
   });
 
   it('should build endpoint correctly for appId', async () => {
@@ -54,7 +63,7 @@ describe('Endpoint Builder', () => {
   });
 
   it('should call validate function when provided', async () => {
-    const validateSpy = sinon.spy();
+    const validateSpy = sinon.spy<(opts: Record<string, any>) => void>(() => {});
     const fn = createEndpointWithMocks({
       fetch: () => Promise.resolve({}),
       validate: validateSpy
@@ -67,7 +76,7 @@ describe('Endpoint Builder', () => {
   });
 
   it('should transform response data when transform provided', async () => {
-    const transformSpy = sinon.stub().returns({ transformed: true });
+    const transformSpy = sinon.stub<[(data: any) => any]>().returns({ transformed: true });
     const fn = createEndpointWithMocks({
       fetch: () => Promise.resolve({ original: true }),
       transform: transformSpy
@@ -76,7 +85,7 @@ describe('Endpoint Builder', () => {
     const result = await fn({});
 
     expect(transformSpy.calledWith({ original: true })).toBe(true);
-    expect(result).to.deep.equal({ transformed: true });
+    expect(result).toEqual({ transformed: true });
   });
 });
 

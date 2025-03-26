@@ -5,9 +5,20 @@ import {
   applyDefaults,
   getStoreHeader,
   addLanguageHeader,
+  getHeaders,
   getUrlParams
-} from '../dist/lib/param-utils.js';
+} from '../lib/param-utils.js';
 import { createMockStoreIdFunction } from './helpers/test-utils.js';
+import {
+  validateList,
+  validateApp,
+  validateSearch,
+  validateReviews,
+  validateDeveloper,
+  validatePrivacy,
+  validateVersionHistory,
+  validateSuggest
+} from '../lib/validators.js';
 
 /**
  * Transforms parameters based on rules

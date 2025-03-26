@@ -7,7 +7,7 @@
  */
 interface MockAppFunctionOptions {
   shouldFail?: boolean;
-  customResponse?: Record<string, any>;
+  customResponse?: MockApp;
 }
 
 /**
@@ -21,6 +21,16 @@ interface MockApp {
   url: string;
   developer: string;
   developerId: number;
+  [key: string]: any;
+}
+
+/**
+ * Interface for app function options
+ */
+interface AppFunctionOptions {
+  id?: string | number;
+  appId?: string;
+  country?: string;
   [key: string]: any;
 }
 
@@ -48,10 +58,10 @@ interface MockRequestFunctionOptions {
  */
 export function createMockAppFunction(
   options: MockAppFunctionOptions = {}
-): (opts: any) => Promise<MockApp> {
+): (opts: AppFunctionOptions) => Promise<MockApp> {
   const { shouldFail = false, customResponse } = options;
 
-  return async function mockApp(opts: any): Promise<MockApp> {
+  return async function mockApp(opts: AppFunctionOptions): Promise<MockApp> {
     if (shouldFail) {
       throw new Error('App lookup failed');
     }
@@ -68,6 +78,13 @@ export function createMockAppFunction(
       }
     );
   };
+}
+
+/**
+ * Interface for store ID function options
+ */
+interface StoreIdFunctionOptions {
+  countryCode?: string;
 }
 
 /**
@@ -101,9 +118,12 @@ export function createMockStoreIdFunction(
  * Interface for parameter utilities
  */
 interface ParamUtils {
-  getStoreHeader: (opts: any, storeType?: number) => Record<string, string>;
-  addLanguageHeader: (headers: Record<string, string>, opts: any) => Record<string, string>;
-  getHeaders: (opts: any, storeType?: number) => Record<string, string>;
+  getStoreHeader: (opts: Record<string, any>, storeType?: number) => Record<string, string>;
+  addLanguageHeader: (
+    headers: Record<string, string>,
+    opts: Record<string, any>
+  ) => Record<string, string>;
+  getHeaders: (opts: Record<string, any>, storeType?: number) => Record<string, string>;
 }
 
 /**
@@ -113,14 +133,14 @@ interface ParamUtils {
  */
 export function createMockParamUtils(): ParamUtils {
   return {
-    getStoreHeader: (opts: any, storeType = 32) => {
+    getStoreHeader: (opts: Record<string, any>, storeType = 32) => {
       const country = opts.country || 'us';
       return {
         'X-Apple-Store-Front': `test-store-${country},${storeType}`
       };
     },
 
-    addLanguageHeader: (headers: Record<string, string>, opts: any) => {
+    addLanguageHeader: (headers: Record<string, string>, opts: Record<string, any>) => {
       if (opts.lang) {
         return {
           ...headers,
@@ -130,7 +150,7 @@ export function createMockParamUtils(): ParamUtils {
       return headers;
     },
 
-    getHeaders: function (opts: any, storeType?: number) {
+    getHeaders: function (opts: Record<string, any>, storeType?: number) {
       const baseHeaders = this.getStoreHeader(opts, storeType);
       return this.addLanguageHeader(baseHeaders, opts);
     }
@@ -145,10 +165,10 @@ export function createMockParamUtils(): ParamUtils {
  */
 export function createMockRequestFunction(
   options: MockRequestFunctionOptions = {}
-): (url: string) => Promise<any> {
+): (url: string, opts?: Record<string, any>) => Promise<any> {
   const { shouldFail = false, statusCode = 404, response } = options;
 
-  return async function mockRequest(url: string): Promise<any> {
+  return async function mockRequest(url: string, opts?: Record<string, any>): Promise<any> {
     if (shouldFail) {
       const error: Error & { response?: { statusCode: number } } = new Error('Request failed');
       error.response = { statusCode };

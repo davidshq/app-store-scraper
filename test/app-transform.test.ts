@@ -157,7 +157,14 @@ describe('App Transform', () => {
         currency: 'USD',
         artistId: 98765,
         artistName: 'Example Developer',
-        artistViewUrl: 'https://apps.apple.com/developer/id98765'
+        artistViewUrl: 'https://apps.apple.com/developer/id98765',
+        // Add missing required properties
+        averageUserRating: 4.5,
+        userRatingCount: 100,
+        screenshotUrls: ['https://example.com/screenshot1.png'],
+        ipadScreenshotUrls: ['https://example.com/ipad_screenshot1.png'],
+        appletvScreenshotUrls: [],
+        supportedDevices: ['iPhone', 'iPad']
       };
 
       const cleaned = cleanApp(rawData);

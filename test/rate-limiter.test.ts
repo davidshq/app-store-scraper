@@ -1,6 +1,21 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RateLimiter } from 'limiter';
 
+// Define types for rate limiter module
+interface RateLimiterInstance {
+  removeTokens: (tokens: number) => Promise<number>;
+}
+
+interface RateLimiterModule {
+  getLimiter: (rateLimit?: number) => RateLimiterInstance;
+  scheduleWithRateLimit: <T>(fn: () => Promise<T>, rateLimit?: number) => Promise<T>;
+}
+
+// Mock RateLimiter type to match what we need for tests
+type MockedRateLimiter = {
+  removeTokens: ReturnType<typeof vi.fn>;
+};
+
 // Mock limiter
 vi.mock('limiter', () => {
   const MockRateLimiter = vi.fn(() => ({
@@ -10,10 +25,10 @@ vi.mock('limiter', () => {
 });
 
 describe('Rate Limiter', () => {
-  let rateLimiter;
-  let getLimiter;
-  let scheduleWithRateLimit;
-  let mockRateLimiter;
+  let rateLimiter: RateLimiterModule;
+  let getLimiter: (rateLimit?: number) => RateLimiterInstance;
+  let scheduleWithRateLimit: <T>(fn: () => Promise<T>, rateLimit?: number) => Promise<T>;
+  let mockRateLimiter: ReturnType<typeof vi.mocked<typeof RateLimiter>>;
 
   beforeEach(async () => {
     // Clear all mocks between tests
@@ -23,7 +38,7 @@ describe('Rate Limiter', () => {
     vi.resetModules();
 
     // Import the module fresh for each test to reset state
-    rateLimiter = await import('../lib/utils/rate-limiter.js');
+    rateLimiter = (await import('../lib/utils/rate-limiter.js')) as RateLimiterModule;
     getLimiter = rateLimiter.getLimiter;
     scheduleWithRateLimit = rateLimiter.scheduleWithRateLimit;
 
@@ -76,11 +91,14 @@ describe('Rate Limiter', () => {
     it('should schedule function with the limiter', async () => {
       // Setup a mock instance to return from RateLimiter
       const mockRemoveTokens = vi.fn().mockResolvedValue(4); // 4 tokens remaining
-      mockRateLimiter.mockImplementation(() => ({
-        removeTokens: mockRemoveTokens
-      }));
+      mockRateLimiter.mockImplementation(
+        () =>
+          ({
+            removeTokens: mockRemoveTokens
+          }) as unknown as RateLimiter
+      );
 
-      const testFn = async () => 'test result';
+      const testFn = async (): Promise<string> => 'test result';
       const result = await scheduleWithRateLimit(testFn, 3);
 
       expect(mockRemoveTokens).toHaveBeenCalledWith(1);
@@ -90,11 +108,14 @@ describe('Rate Limiter', () => {
     it('should use default limiter when no limit is specified', async () => {
       // Setup a mock instance to return from RateLimiter
       const mockRemoveTokens = vi.fn().mockResolvedValue(4); // 4 tokens remaining
-      mockRateLimiter.mockImplementation(() => ({
-        removeTokens: mockRemoveTokens
-      }));
+      mockRateLimiter.mockImplementation(
+        () =>
+          ({
+            removeTokens: mockRemoveTokens
+          }) as unknown as RateLimiter
+      );
 
-      const testFn = async () => 'default result';
+      const testFn = async (): Promise<string> => 'default result';
       const result = await scheduleWithRateLimit(testFn);
 
       expect(mockRemoveTokens).toHaveBeenCalledWith(1);
@@ -106,11 +127,14 @@ describe('Rate Limiter', () => {
 
       // Set up a mock that will successfully remove tokens
       const mockRemoveTokens = vi.fn().mockResolvedValue(4);
-      mockRateLimiter.mockImplementation(() => ({
-        removeTokens: mockRemoveTokens
-      }));
+      mockRateLimiter.mockImplementation(
+        () =>
+          ({
+            removeTokens: mockRemoveTokens
+          }) as unknown as RateLimiter
+      );
 
-      const testFn = async () => {
+      const testFn = async (): Promise<never> => {
         throw error;
       };
 
@@ -123,11 +147,14 @@ describe('Rate Limiter', () => {
 
       // Set up a mock that will reject when removing tokens
       const mockRemoveTokens = vi.fn().mockRejectedValue(error);
-      mockRateLimiter.mockImplementation(() => ({
-        removeTokens: mockRemoveTokens
-      }));
+      mockRateLimiter.mockImplementation(
+        () =>
+          ({
+            removeTokens: mockRemoveTokens
+          }) as unknown as RateLimiter
+      );
 
-      const testFn = async () => 'this should never be returned';
+      const testFn = async (): Promise<string> => 'this should never be returned';
 
       await expect(scheduleWithRateLimit(testFn)).rejects.toThrow(error);
       expect(mockRemoveTokens).toHaveBeenCalledWith(1);

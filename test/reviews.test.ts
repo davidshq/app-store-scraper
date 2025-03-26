@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import store from '../index.js';
-import c from '../dist/lib/constants.js';
+import c from '../lib/constants.js';
 import type { ReviewsResult } from './convert-helper.js';
 
 describe('Reviews method', () => {

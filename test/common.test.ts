@@ -1,10 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
-import * as common from '../dist/lib/common.js';
+import * as common from '../lib/common.js';
 import { RateLimiter } from 'limiter';
 
 // Mock the rate-limiter module globally
 vi.mock('../lib/utils/rate-limiter.js', () => ({
-  getLimiter: vi.fn(),
+  getLimiter: vi.fn().mockImplementation(() => {
+    return new RateLimiter({
+      tokensPerInterval: 5,
+      interval: 1000
+    });
+  }),
   scheduleWithRateLimit: vi.fn().mockImplementation(async fn => fn())
 }));
 
@@ -116,12 +121,35 @@ describe('Common utilities', () => {
       expect(cleanedApp.genres).toEqual(mockAppData.genres);
     });
 
-    it('should handle apps with no price', () => {
+    it('should set free attribute correctly based on price', () => {
       const mockAppData = {
         trackId: 123456789,
         bundleId: 'com.example.freeapp',
         trackName: 'Free Example App',
-        price: 0
+        price: 0,
+        // Add required properties
+        trackViewUrl: 'https://apps.apple.com/app/id123456789',
+        description: 'Test description',
+        genres: ['Entertainment'],
+        genreIds: ['6016'],
+        primaryGenreName: 'Entertainment',
+        primaryGenreId: 6016,
+        contentAdvisoryRating: '4+',
+        languageCodesISO2A: ['EN'],
+        fileSizeBytes: '10485760',
+        minimumOsVersion: '14.0',
+        releaseDate: '2021-01-01T12:00:00Z',
+        version: '1.0',
+        currency: 'USD',
+        artistId: 98765,
+        artistName: 'Test Developer',
+        artistViewUrl: 'https://apps.apple.com/developer/id98765',
+        averageUserRating: 4.5,
+        userRatingCount: 100,
+        screenshotUrls: ['https://example.com/screenshot1.png'],
+        ipadScreenshotUrls: ['https://example.com/ipad_screenshot1.png'],
+        appletvScreenshotUrls: [],
+        supportedDevices: ['iPhone', 'iPad']
       };
 
       const cleanedApp = common.cleanApp(mockAppData);
@@ -133,8 +161,31 @@ describe('Common utilities', () => {
         trackId: 123456789,
         bundleId: 'com.example.app',
         trackName: 'Example App',
-        artworkUrl100: 'https://example.com/image100.jpg'
-        // No artworkUrl512
+        artworkUrl100: 'https://example.com/image100.jpg',
+        // Add required properties
+        trackViewUrl: 'https://apps.apple.com/app/id123456789',
+        description: 'Test description',
+        genres: ['Entertainment'],
+        genreIds: ['6016'],
+        primaryGenreName: 'Entertainment',
+        primaryGenreId: 6016,
+        contentAdvisoryRating: '4+',
+        languageCodesISO2A: ['EN'],
+        fileSizeBytes: '10485760',
+        minimumOsVersion: '14.0',
+        releaseDate: '2021-01-01T12:00:00Z',
+        version: '1.0',
+        price: 0,
+        currency: 'USD',
+        artistId: 98765,
+        artistName: 'Test Developer',
+        artistViewUrl: 'https://apps.apple.com/developer/id98765',
+        averageUserRating: 4.5,
+        userRatingCount: 100,
+        screenshotUrls: ['https://example.com/screenshot1.png'],
+        ipadScreenshotUrls: ['https://example.com/ipad_screenshot1.png'],
+        appletvScreenshotUrls: [],
+        supportedDevices: ['iPhone', 'iPad']
       };
 
       const cleanedApp = common.cleanApp(mockAppData);
@@ -145,7 +196,31 @@ describe('Common utilities', () => {
         bundleId: 'com.example.app',
         trackName: 'Example App',
         // No artwork URLs at all, only artworkUrl60
-        artworkUrl60: 'https://example.com/image60.jpg'
+        artworkUrl60: 'https://example.com/image60.jpg',
+        // Add required properties
+        trackViewUrl: 'https://apps.apple.com/app/id123456789',
+        description: 'Test description',
+        genres: ['Entertainment'],
+        genreIds: ['6016'],
+        primaryGenreName: 'Entertainment',
+        primaryGenreId: 6016,
+        contentAdvisoryRating: '4+',
+        languageCodesISO2A: ['EN'],
+        fileSizeBytes: '10485760',
+        minimumOsVersion: '14.0',
+        releaseDate: '2021-01-01T12:00:00Z',
+        version: '1.0',
+        price: 0,
+        currency: 'USD',
+        artistId: 98765,
+        artistName: 'Test Developer',
+        artistViewUrl: 'https://apps.apple.com/developer/id98765',
+        averageUserRating: 4.5,
+        userRatingCount: 100,
+        screenshotUrls: ['https://example.com/screenshot1.png'],
+        ipadScreenshotUrls: ['https://example.com/ipad_screenshot1.png'],
+        appletvScreenshotUrls: [],
+        supportedDevices: ['iPhone', 'iPad']
       };
 
       const cleanedAppNoArtwork = common.cleanApp(mockAppDataNoArtwork);
@@ -162,11 +237,11 @@ describe('Common utilities', () => {
       expect(options.headers).toEqual(headers);
 
       // Verify retry options
-      expect(options.retry.limit).toBe(2);
-      expect(options.retry.methods).toEqual(['GET']);
+      expect(options.retry?.limit).toBe(2);
+      expect(options.retry?.methods).toEqual(['GET']);
 
       // Verify timeout options
-      expect(options.timeout.request).toBe(30000);
+      expect(options.timeout?.request).toBe(30000);
     });
 
     it('should merge custom request options', () => {
@@ -184,8 +259,8 @@ describe('Common utilities', () => {
       expect(options.throwHttpErrors).toBe(false);
 
       // Verify default options still exist
-      expect(options.retry.limit).toBe(2);
-      expect(options.timeout.request).toBe(30000);
+      expect(options.retry?.limit).toBe(2);
+      expect(options.timeout?.request).toBe(30000);
     });
 
     it('should handle empty headers and options', () => {
@@ -195,8 +270,8 @@ describe('Common utilities', () => {
       expect(options.headers).toEqual({});
 
       // Verify default options still exist
-      expect(options.retry.limit).toBe(2);
-      expect(options.timeout.request).toBe(30000);
+      expect(options.retry?.limit).toBe(2);
+      expect(options.timeout?.request).toBe(30000);
     });
   });
 
@@ -291,7 +366,7 @@ describe('Common utilities', () => {
         await requester('https://example.com');
         // If we reach here, the promise didn't reject as expected
         expect(true).toBe(false); // Force fail
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toContain('Request failed with status code 429');
         expect(error.response).toBeDefined();
         expect(error.response.statusCode).toBe(429);

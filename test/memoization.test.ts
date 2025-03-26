@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import store from '../index.js';
 
+// Use a simplified approach with less strict typing
 describe('Memoization', () => {
   // Mock the app and search methods
   const mockApp = vi.fn();
@@ -22,22 +23,23 @@ describe('Memoization', () => {
     vi.clearAllMocks();
 
     // Override memoized to use our mock API
-    store.memoized = (opts = {}) => {
+    // Use any to bypass type checking since we're just testing functionality
+    store.memoized = ((opts = {}) => {
       const memoizedApi = originalMemoized.call({ ...api }, opts);
       // Restore our mock implementations to the memoized API
       memoizedApi.app = memoizee(mockApp);
       memoizedApi.search = memoizee(mockSearch);
       return memoizedApi;
-    };
+    }) as any;
 
     // Override configureCaching to use our mock API
-    store.configureCaching = (methodConfigs = {}, defaultOpts = {}) => {
+    store.configureCaching = ((methodConfigs = {}, defaultOpts = {}) => {
       const configuredApi = originalConfigureCaching.call({ ...api }, methodConfigs, defaultOpts);
       // Restore our mock implementations to the configured API
       configuredApi.app = memoizee(mockApp);
       configuredApi.search = memoizee(mockSearch);
       return configuredApi;
-    };
+    }) as any;
   });
 
   // After all tests, restore the originals
@@ -48,9 +50,10 @@ describe('Memoization', () => {
   });
 
   // Helper function to create a memoized function
-  function memoizee(fn) {
+  // Use Type 'any' explicitly to fix TypeScript errors
+  function memoizee(fn: any): any {
     const cache = new Map();
-    const memoized = function (...args) {
+    const memoized = function (this: any, ...args: any[]): any {
       const key = JSON.stringify(args);
       if (cache.has(key)) {
         return cache.get(key);
@@ -61,7 +64,7 @@ describe('Memoization', () => {
     };
 
     // Add clear method
-    memoized.clear = () => {
+    memoized.clear = (): void => {
       cache.clear();
     };
 
@@ -183,7 +186,7 @@ describe('Memoization', () => {
 
       // Mock store.configureCaching with simplified functionality for test
       const testMemoized = vi.fn();
-      testMemoized.mockImplementation((methodConfigs, defaultOpts) => {
+      testMemoized.mockImplementation(() => {
         const api = {
           app: memoizee(mockApp),
           search: memoizee(mockSearch),

@@ -6,7 +6,8 @@ import type { SearchResult } from './convert-helper.js';
 describe('Search method', () => {
   it('should fetch a valid application list', async () => {
     const apps = (await store.search({ term: 'Panda vs Zombies' })) as SearchResult[];
-    apps.map(assertValidApp);
+    expect(Array.isArray(apps)).toBe(true);
+    apps.forEach(app => assertValidApp(app));
   });
 
   it('should properly paginate results', async () => {
@@ -16,8 +17,8 @@ describe('Search method', () => {
 
     expect(apps1.length).toBe(10);
     expect(apps2.length).toBe(10);
-    apps1.map(assertValidApp);
-    apps2.map(assertValidApp);
+    apps1.forEach(app => assertValidApp(app));
+    apps2.forEach(app => assertValidApp(app));
     expect(apps1[0].appId).not.toBe(apps2[0].appId);
   });
 
@@ -26,7 +27,10 @@ describe('Search method', () => {
       country: 'fr',
       term: 'Panda vs Zombies'
     })) as SearchResult[];
-    apps.map(assertValidApp);
+
+    expect(Array.isArray(apps)).toBe(true);
+    apps.forEach(app => assertValidApp(app));
+
     if (apps.length > 0) {
       expect(apps[0].url.startsWith('https://apps.apple.com/fr')).toBe(true);
     }
@@ -39,7 +43,8 @@ describe('Search method', () => {
       num: count
     })) as SearchResult[];
 
-    apps.map(assertValidApp);
+    expect(Array.isArray(apps)).toBe(true);
+    apps.forEach(app => assertValidApp(app));
     expect(apps.length).toBe(count);
   });
 
@@ -55,12 +60,16 @@ describe('Search method', () => {
   });
 
   it('should be able to retrieve array of application ids', async () => {
-    const res = (await store.search({
+    const res = await store.search({
       term: 'vr',
       idsOnly: true
-    })) as string[];
+    });
 
+    // Type guard to check the result is an array of strings
+    const isStringArray = (value: any): value is string[] =>
+      Array.isArray(value) && value.every(item => typeof item === 'string');
+
+    expect(isStringArray(res)).toBe(true);
     expect(res).toBeInstanceOf(Array);
-    expect(res.every(item => typeof item === 'string')).toBe(true);
   });
 });

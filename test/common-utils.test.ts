@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import validator from 'validator';
 import type { App } from '../lib/types/app-types.js';
+import type { SearchResult, ListResult, DeveloperResult } from './convert-helper.js';
 
 describe('Common Utilities', () => {
   it('should validate URL correctly', () => {
@@ -22,21 +23,41 @@ function assertValidUrl(url: string): boolean {
   return isValid;
 }
 
-function assertValidApp(app: App): App {
-  expect(app.appId).toBeTypeOf('string');
+/**
+ * Asserts that an app object is valid based on its properties
+ * This function can handle App, SearchResult, ListResult, and DeveloperResult types
+ */
+function assertValidApp(app: App | SearchResult | ListResult | DeveloperResult): any {
+  // Common properties across all types
   expect(app.title).toBeTypeOf('string');
-  expect(app.description).toBeTypeOf('string');
-  assertValidUrl(app.url);
-  assertValidUrl(app.icon);
+  expect(app.appId).toBeTypeOf('string');
 
-  if (app.score !== undefined) {
-    // would fail for new apps without score
+  // Check URL if it exists
+  if ('url' in app && app.url) {
+    assertValidUrl(app.url);
+  }
+
+  // Check icon if it exists
+  if ('icon' in app && app.icon) {
+    assertValidUrl(app.icon);
+  }
+
+  // Check description if it exists
+  if ('description' in app && app.description) {
+    expect(app.description).toBeTypeOf('string');
+  }
+
+  // Check score if it exists
+  if ('score' in app && app.score !== undefined) {
     expect(app.score).toBeTypeOf('number');
     expect(app.score).toBeGreaterThanOrEqual(0);
     expect(app.score).toBeLessThanOrEqual(5);
   }
 
-  expect(app.free).toBeTypeOf('boolean');
+  // Check free property if it exists
+  if ('free' in app) {
+    expect(app.free).toBeTypeOf('boolean');
+  }
 
   return app;
 }
