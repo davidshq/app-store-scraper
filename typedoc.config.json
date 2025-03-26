@@ -1,0 +1,18 @@
+{
+  "entryPoints": ["index.ts", "lib/**/*.ts"],
+  "out": "docs",
+  "name": "App Store Scraper API",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "README.md",
+  "sourceLinkTemplate": "https://github.com/facundoolano/app-store-scraper/blob/{gitRevision}/{path}#L{line}",
+  "navigationLinks": {
+    "GitHub": "https://github.com/facundoolano/app-store-scraper"
+  },
+  "categorizeByGroup": true,
+  "categoryOrder": ["API Methods", "Constants", "Caching", "Types", "*"]
+}

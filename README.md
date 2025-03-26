@@ -10,6 +10,10 @@ The goal is to provide an interface as close as possible to the
 npm install app-store-scraper
 ```
 
+## Documentation
+
+For detailed API reference documentation, please visit the [API Documentation](./docs/README.md).
+
 ## Usage
 
 Available methods:

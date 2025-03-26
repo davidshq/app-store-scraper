@@ -14,6 +14,7 @@ import versionHistory from './lib/version-history.js';
 
 /**
  * API method types
+ * @group Types
  */
 type ApiMethods = {
   app: typeof app;
@@ -30,6 +31,7 @@ type ApiMethods = {
 
 /**
  * Collection of all API methods
+ * @private
  * @type {Object}
  */
 const methods: ApiMethods = {
@@ -47,18 +49,26 @@ const methods: ApiMethods = {
 
 /**
  * Interface for cache options
+ * @group Caching
  */
 export interface CacheOptions {
+  /** Whether to consider arguments as primitives */
   primitive?: boolean;
+  /** Function to create cache keys from arguments */
   normalizer?: (args: any[]) => string;
+  /** Cache TTL in milliseconds */
   maxAge?: number;
+  /** Maximum cache size to prevent memory issues */
   max?: number;
+  /** Whether to cache promise rejections */
   promise?: boolean;
+  /** Name of cache profile for debugging */
   profileName?: string;
 }
 
 /**
  * Method cache configuration by method name
+ * @group Caching
  */
 export interface MethodCacheConfig {
   [methodName: string]: CacheOptions;
@@ -66,16 +76,21 @@ export interface MethodCacheConfig {
 
 /**
  * Type for the complete API with all methods and constants
+ * @group Types
  */
 export type Api = ApiMethods &
   typeof constants & {
+    /** Creates a memoized version of the API with configurable caching */
     memoized: (opts?: CacheOptions) => Api;
+    /** Creates API with method-specific cache configurations */
     configureCaching: (methodConfigs: MethodCacheConfig, defaultOpts?: CacheOptions) => Api;
+    /** Clears the cache for a memoized API instance */
     clearCache: (memoizedApi: ApiInstance, methodName?: string) => void;
   };
 
 /**
  * Type for a memoized API instance
+ * @group Types
  */
 export type ApiInstance = ApiMethods &
   typeof constants & {
@@ -84,6 +99,7 @@ export type ApiInstance = ApiMethods &
 
 /**
  * Default cache configuration
+ * @private
  * @type {Object}
  */
 const DEFAULT_CACHE_OPTIONS: CacheOptions = {
@@ -96,6 +112,7 @@ const DEFAULT_CACHE_OPTIONS: CacheOptions = {
 /**
  * Creates a memoized version of the API with configurable cache settings
  *
+ * @group Caching
  * @param {Object} [opts] - Memoization options
  * @param {boolean} [opts.primitive=true] - Whether to consider arguments as primitives
  * @param {Function} [opts.normalizer=JSON.stringify] - Function to create cache keys from arguments
@@ -135,6 +152,7 @@ function memoized(opts: CacheOptions = {}): Api {
 /**
  * Applies custom cache options to specific methods
  *
+ * @group Caching
  * @param {Object} methodConfigs - Configuration by method name
  * @param {Object} [defaultOpts] - Default options for all methods
  * @returns {Object} API with method-specific cache configurations
@@ -170,6 +188,7 @@ function configureCaching(methodConfigs: MethodCacheConfig, defaultOpts: CacheOp
 /**
  * Clears the cache for a memoized API instance
  *
+ * @group Caching
  * @param {Object} memoizedApi - A memoized API instance
  * @param {string} [methodName] - Specific method to clear cache for, or all if not specified
  */
@@ -193,22 +212,26 @@ function clearCache(memoizedApi: ApiInstance, methodName?: string): void {
 
 /**
  * App Store Scraper API
+ *
+ * This is the main export for the app-store-scraper package, providing methods to scrape
+ * app data from the Apple App Store.
+ *
+ * @module app-store-scraper
  * @namespace api
- * @type {Object}
- * @property {Function} memoized - Creates a memoized version of the API with configurable caching
- * @property {Function} configureCaching - Creates API with method-specific cache configurations
- * @property {Function} clearCache - Clears the cache for a memoized API instance
- * @property {Object} constants - App Store constants (collections, categories, etc.)
- * @property {Function} app - Get app details by ID or App ID
- * @property {Function} list - Get apps from a specific collection
- * @property {Function} search - Search for apps
- * @property {Function} developer - Get apps by developer ID
- * @property {Function} privacy - Get app privacy details
- * @property {Function} suggest - Get app name suggestions
- * @property {Function} similar - Get similar apps
- * @property {Function} reviews - Get app reviews
- * @property {Function} ratings - Get app ratings
- * @property {Function} versionHistory - Get app version history
+ * @group API Methods
+ * @property {Function} app - Retrieves the full details of an application
+ * @property {Function} list - Retrieves a list of applications from one of the collections
+ * @property {Function} search - Searches for apps by a given term
+ * @property {Function} developer - Retrieves a list of apps by the given developer id
+ * @property {Function} privacy - Displays the privacy details for an app
+ * @property {Function} suggest - Returns suggestions to complete a search query term
+ * @property {Function} similar - Returns list of "customers also bought" apps
+ * @property {Function} reviews - Retrieves reviews for an app
+ * @property {Function} ratings - Retrieves the ratings for an app
+ * @property {Function} versionHistory - Retrieves version history for an app
+ * @property {Function} memoized - Creates a memoized version of the API
+ * @property {Function} configureCaching - Configures custom caching per endpoint
+ * @property {Function} clearCache - Clears cache entries
  */
 const api: Api = Object.assign(
   {

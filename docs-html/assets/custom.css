@@ -1,0 +1,13 @@
+
+    .examples-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #f8f9fa;
+      border-radius: 6px;
+    }
+    .examples-section pre {
+      background-color: #f1f1f1;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+  
