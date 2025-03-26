@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+dist/
+
+# Generated documentation
+docs/
+docs-html/
+
+# Build outputs
+coverage/
+.nyc_output/
+
+# Misc
+.github/
+.husky/ 

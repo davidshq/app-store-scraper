@@ -63,9 +63,5 @@
 
 ## Documentation
 
-- ✅ Create API reference documentation
-  - ✅ Implemented automated API documentation generation with TypeDoc
-  - ✅ Created documentation structure and linking
-  - ✅ Added script for easy documentation regeneration
 - 🔄 Add more code examples and use cases
   - Could enhance with more practical examples

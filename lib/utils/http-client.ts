@@ -91,12 +91,9 @@ export function createRequester(
 
     const options = createRequestOptions(headers, requestOptions);
 
-    // Get appropriate limiter based on limit parameter
-    const limiter = limiterFactory(limit);
-
-    // Schedule the request through the limiter
-    return limiter.schedule(() =>
-      httpClient(url, options)
+    // Create request function
+    const makeRequestFn = async () => {
+      return httpClient(url, options)
         .text()
         .then(body => {
           debug('Finished request');
@@ -114,8 +111,12 @@ export function createRequester(
             return Promise.reject(apiError);
           }
           return Promise.reject(error);
-        })
-    );
+        });
+    };
+
+    // Schedule the request through the rate limiter
+    const limiter = limiterFactory(limit);
+    return scheduleWithRateLimit(makeRequestFn, limit);
   };
 }
 

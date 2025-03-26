@@ -1,7 +1,7 @@
 /**
  * Rate limiting utilities for controlling request frequency
  */
-import Bottleneck from 'bottleneck';
+import { RateLimiter } from 'limiter';
 
 /**
  * Default rate limit in requests per second
@@ -12,30 +12,30 @@ const DEFAULT_RATE_LIMIT = 5;
 
 /**
  * Map for storing rate limiters by limit value
- * @type {Map<number, Bottleneck>}
+ * @type {Map<number, RateLimiter>}
  * @private
  */
-const limiters = new Map<number, Bottleneck>();
+const limiters = new Map<number, RateLimiter>();
 
 /**
  * Gets a rate limiter for the specified limit
  *
  * @param {number} [limit=DEFAULT_RATE_LIMIT] - Rate limit in requests per second
- * @returns {Bottleneck} A limiter instance configured for the specified rate limit
+ * @returns {RateLimiter} A limiter instance configured for the specified rate limit
  */
-export function getLimiter(limit?: number): Bottleneck {
+export function getLimiter(limit?: number): RateLimiter {
   const rateLimit = limit || DEFAULT_RATE_LIMIT;
 
   if (!limiters.has(rateLimit)) {
     // Create a new limiter with the specified rate limit
-    const limiter = new Bottleneck({
-      maxConcurrent: rateLimit,
-      minTime: 1000 / rateLimit
+    const limiter = new RateLimiter({
+      tokensPerInterval: rateLimit,
+      interval: 1000 // 1 second in milliseconds
     });
     limiters.set(rateLimit, limiter);
   }
 
-  return limiters.get(rateLimit) as Bottleneck;
+  return limiters.get(rateLimit) as RateLimiter;
 }
 
 /**
@@ -48,5 +48,10 @@ export function getLimiter(limit?: number): Bottleneck {
  */
 export async function scheduleWithRateLimit<T>(fn: () => Promise<T>, limit?: number): Promise<T> {
   const limiter = getLimiter(limit);
-  return limiter.schedule(fn);
+
+  // Wait until a token is available
+  await limiter.removeTokens(1);
+
+  // Execute the function once we have a token
+  return fn();
 }

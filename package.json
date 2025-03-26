@@ -43,10 +43,10 @@
   },
   "homepage": "https://github.com/facundoolano/app-store-scraper#readme",
   "dependencies": {
-    "bottleneck": "^2.19.5",
     "cheerio": "^1.0.0",
     "debug": "^4.4.0",
     "got": "^14.4.6",
+    "limiter": "^3.0.0",
     "memoizee": "^0.4.17",
     "ramda": "^0.29.1",
     "xml2js": "^0.6.2"

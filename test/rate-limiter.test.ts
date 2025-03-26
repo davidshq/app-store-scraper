@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import Bottleneck from 'bottleneck';
+import { RateLimiter } from 'limiter';
 
-// Mock Bottleneck
-vi.mock('bottleneck', () => {
-  const MockBottleneck = vi.fn(() => ({
-    schedule: vi.fn(fn => fn())
+// Mock limiter
+vi.mock('limiter', () => {
+  const MockRateLimiter = vi.fn(() => ({
+    removeTokens: vi.fn(() => Promise.resolve(1)) // Will resolve with remaining tokens
   }));
-  return { default: MockBottleneck };
+  return { RateLimiter: MockRateLimiter };
 });
 
 describe('Rate Limiter', () => {
   let rateLimiter;
   let getLimiter;
   let scheduleWithRateLimit;
-  let mockBottleneck;
+  let mockRateLimiter;
 
   beforeEach(async () => {
     // Clear all mocks between tests
@@ -27,8 +27,8 @@ describe('Rate Limiter', () => {
     getLimiter = rateLimiter.getLimiter;
     scheduleWithRateLimit = rateLimiter.scheduleWithRateLimit;
 
-    // Get reference to the mocked Bottleneck constructor
-    mockBottleneck = vi.mocked(Bottleneck);
+    // Get reference to the mocked RateLimiter constructor
+    mockRateLimiter = vi.mocked(RateLimiter);
   });
 
   describe('getLimiter', () => {
@@ -36,21 +36,21 @@ describe('Rate Limiter', () => {
       // Default rate is 5 requests per second
       getLimiter();
 
-      expect(mockBottleneck).toHaveBeenCalledWith({
-        maxConcurrent: 5,
-        minTime: 200 // 1000ms / 5 = 200ms
+      expect(mockRateLimiter).toHaveBeenCalledWith({
+        tokensPerInterval: 5,
+        interval: 1000
       });
-      expect(mockBottleneck).toHaveBeenCalledTimes(1);
+      expect(mockRateLimiter).toHaveBeenCalledTimes(1);
     });
 
     it('should create a new limiter with specified rate limit', () => {
       getLimiter(10);
 
-      expect(mockBottleneck).toHaveBeenCalledWith({
-        maxConcurrent: 10,
-        minTime: 100 // 1000ms / 10 = 100ms
+      expect(mockRateLimiter).toHaveBeenCalledWith({
+        tokensPerInterval: 10,
+        interval: 1000
       });
-      expect(mockBottleneck).toHaveBeenCalledTimes(1);
+      expect(mockRateLimiter).toHaveBeenCalledTimes(1);
     });
 
     it('should reuse existing limiter for same rate limit', () => {
@@ -58,7 +58,7 @@ describe('Rate Limiter', () => {
       const limiter2 = getLimiter(7);
 
       // Should only create one instance for the same rate limit
-      expect(mockBottleneck).toHaveBeenCalledTimes(1);
+      expect(mockRateLimiter).toHaveBeenCalledTimes(1);
       expect(limiter1).toBe(limiter2); // Both should reference the same instance
     });
 
@@ -67,45 +67,47 @@ describe('Rate Limiter', () => {
       const limiter2 = getLimiter(10);
 
       // Should create two different instances for different rate limits
-      expect(mockBottleneck).toHaveBeenCalledTimes(2);
+      expect(mockRateLimiter).toHaveBeenCalledTimes(2);
       expect(limiter1).not.toBe(limiter2);
     });
   });
 
   describe('scheduleWithRateLimit', () => {
     it('should schedule function with the limiter', async () => {
-      // Setup a mock instance to return from Bottleneck
-      const mockSchedule = vi.fn().mockResolvedValue('test result');
-      mockBottleneck.mockImplementation(() => ({
-        schedule: mockSchedule
+      // Setup a mock instance to return from RateLimiter
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4); // 4 tokens remaining
+      mockRateLimiter.mockImplementation(() => ({
+        removeTokens: mockRemoveTokens
       }));
 
       const testFn = async () => 'test result';
-      await scheduleWithRateLimit(testFn, 3);
+      const result = await scheduleWithRateLimit(testFn, 3);
 
-      expect(mockSchedule).toHaveBeenCalledWith(testFn);
+      expect(mockRemoveTokens).toHaveBeenCalledWith(1);
+      expect(result).toBe('test result');
     });
 
     it('should use default limiter when no limit is specified', async () => {
-      // Setup a mock instance to return from Bottleneck
-      const mockSchedule = vi.fn().mockResolvedValue('default result');
-      mockBottleneck.mockImplementation(() => ({
-        schedule: mockSchedule
+      // Setup a mock instance to return from RateLimiter
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4); // 4 tokens remaining
+      mockRateLimiter.mockImplementation(() => ({
+        removeTokens: mockRemoveTokens
       }));
 
       const testFn = async () => 'default result';
-      await scheduleWithRateLimit(testFn);
+      const result = await scheduleWithRateLimit(testFn);
 
-      expect(mockSchedule).toHaveBeenCalledWith(testFn);
+      expect(mockRemoveTokens).toHaveBeenCalledWith(1);
+      expect(result).toBe('default result');
     });
 
     it('should handle errors from the scheduled function', async () => {
       const error = new Error('Test error');
 
-      // Set up a mock that will call the function and let errors propagate
-      const mockSchedule = vi.fn().mockImplementation(fn => fn());
-      mockBottleneck.mockImplementation(() => ({
-        schedule: mockSchedule
+      // Set up a mock that will successfully remove tokens
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4);
+      mockRateLimiter.mockImplementation(() => ({
+        removeTokens: mockRemoveTokens
       }));
 
       const testFn = async () => {
@@ -113,20 +115,22 @@ describe('Rate Limiter', () => {
       };
 
       await expect(scheduleWithRateLimit(testFn)).rejects.toThrow(error);
+      expect(mockRemoveTokens).toHaveBeenCalledWith(1);
     });
 
-    it('should handle errors from bottleneck scheduling', async () => {
-      const error = new Error('Bottleneck error');
+    it('should handle errors from token removal', async () => {
+      const error = new Error('Token error');
 
-      // Set up a mock that will reject with our error
-      const mockSchedule = vi.fn().mockRejectedValue(error);
-      mockBottleneck.mockImplementation(() => ({
-        schedule: mockSchedule
+      // Set up a mock that will reject when removing tokens
+      const mockRemoveTokens = vi.fn().mockRejectedValue(error);
+      mockRateLimiter.mockImplementation(() => ({
+        removeTokens: mockRemoveTokens
       }));
 
       const testFn = async () => 'this should never be returned';
 
       await expect(scheduleWithRateLimit(testFn)).rejects.toThrow(error);
+      expect(mockRemoveTokens).toHaveBeenCalledWith(1);
     });
   });
 });

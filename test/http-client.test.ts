@@ -86,17 +86,20 @@ describe('HTTP Client', () => {
         text: vi.fn().mockResolvedValue('response body')
       });
 
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4);
       const mockLimiter = {
-        schedule: vi.fn().mockImplementation(fn => fn())
+        removeTokens: mockRemoveTokens
       };
 
       const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
+
+      vi.spyOn(rateLimiter, 'scheduleWithRateLimit').mockImplementation(async fn => fn());
 
       const requester = createRequester(mockHttpClient as any, mockLimiterFactory);
       const result = await requester('https://example.com');
 
       expect(mockLimiterFactory).toHaveBeenCalled();
-      expect(mockLimiter.schedule).toHaveBeenCalled();
+      expect(rateLimiter.scheduleWithRateLimit).toHaveBeenCalled();
       expect(mockHttpClient).toHaveBeenCalledWith('https://example.com', expect.any(Object));
       expect(result).toBe('response body');
     });
@@ -107,11 +110,14 @@ describe('HTTP Client', () => {
         text: vi.fn().mockRejectedValue(error)
       });
 
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4);
       const mockLimiter = {
-        schedule: vi.fn().mockImplementation(fn => fn())
+        removeTokens: mockRemoveTokens
       };
 
       const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
+
+      vi.spyOn(rateLimiter, 'scheduleWithRateLimit').mockImplementation(async fn => fn());
 
       const requester = createRequester(mockHttpClient as any, mockLimiterFactory);
 
@@ -126,11 +132,14 @@ describe('HTTP Client', () => {
         text: vi.fn().mockRejectedValue(error)
       });
 
+      const mockRemoveTokens = vi.fn().mockResolvedValue(4);
       const mockLimiter = {
-        schedule: vi.fn().mockImplementation(fn => fn())
+        removeTokens: mockRemoveTokens
       };
 
       const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
+
+      vi.spyOn(rateLimiter, 'scheduleWithRateLimit').mockImplementation(async fn => fn());
 
       const requester = createRequester(mockHttpClient as any, mockLimiterFactory);
 
