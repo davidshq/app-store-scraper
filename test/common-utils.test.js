@@ -1,29 +1,42 @@
 // @ts-nocheck
-import { assert } from 'chai';
+import { describe, it, expect } from 'vitest';
 import validator from 'validator';
 
+describe('Common Utilities', () => {
+  it('should validate URL correctly', () => {
+    const validUrl = 'https://example.com';
+    const isValid = validator.isURL(validUrl, { allow_protocol_relative_urls: true });
+    expect(isValid).toBe(true);
+  });
+
+  it('should reject invalid URL', () => {
+    const invalidUrl = 'not-a-url';
+    const isValid = validator.isURL(invalidUrl, { allow_protocol_relative_urls: true });
+    expect(isValid).toBe(false);
+  });
+});
+
 function assertValidUrl(url) {
-  return assert(
-    validator.isURL(url, { allow_protocol_relative_urls: true }),
-    `${url} is not a valid url`
-  );
+  const isValid = validator.isURL(url, { allow_protocol_relative_urls: true });
+  expect(isValid, `${url} is not a valid url`).toBe(true);
+  return isValid;
 }
 
 function assertValidApp(app) {
-  assert.isString(app.appId);
-  assert.isString(app.title);
-  assert.isString(app.description);
+  expect(app.appId).toBeTypeOf('string');
+  expect(app.title).toBeTypeOf('string');
+  expect(app.description).toBeTypeOf('string');
   assertValidUrl(app.url);
   assertValidUrl(app.icon);
 
   if (app.score !== undefined) {
     // would fail for new apps without score
-    assert.isNumber(app.score);
-    assert(app.score >= 0);
-    assert(app.score <= 5);
+    expect(app.score).toBeTypeOf('number');
+    expect(app.score).toBeGreaterThanOrEqual(0);
+    expect(app.score).toBeLessThanOrEqual(5);
   }
 
-  assert.isBoolean(app.free);
+  expect(app.free).toBeTypeOf('boolean');
 
   return app;
 }

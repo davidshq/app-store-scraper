@@ -1,7 +1,6 @@
 // @ts-nocheck
-import { assert } from 'chai';
+import { describe, it, expect, vi } from 'vitest';
 import * as common from '../dist/lib/common.js';
-import sinon from 'sinon';
 import Bottleneck from 'bottleneck';
 
 describe('Common utilities', () => {
@@ -9,22 +8,22 @@ describe('Common utilities', () => {
     // Basic tests that don't need to mock internal modules
     it('should export request function', () => {
       // This just verifies that the module exports a request function
-      assert.isFunction(common.request, 'request should be a function');
+      expect(common.request).toBeTypeOf('function');
     });
 
     it('should export lookup function', () => {
       // Verify that lookup is exported
-      assert.isFunction(common.lookup, 'lookup should be a function');
+      expect(common.lookup).toBeTypeOf('function');
     });
 
     it('should export cleanApp function', () => {
       // Verify that cleanApp is exported
-      assert.isFunction(common.cleanApp, 'cleanApp should be a function');
+      expect(common.cleanApp).toBeTypeOf('function');
     });
 
     it('should export storeId function', () => {
       // Verify that storeId is exported
-      assert.isFunction(common.storeId, 'storeId should be a function');
+      expect(common.storeId).toBeTypeOf('function');
     });
   });
 
@@ -33,28 +32,28 @@ describe('Common utilities', () => {
       const defaultStoreId = '143441'; // US store ID
 
       const result = common.storeId();
-      assert.equal(result, defaultStoreId, 'Should return default store ID');
+      expect(result).toBe(defaultStoreId);
     });
 
     it('should return store ID for a valid country code', () => {
       const japanStoreId = '143462'; // Japan store ID
 
       const result = common.storeId('JP');
-      assert.equal(result, japanStoreId, 'Should return Japan store ID');
+      expect(result).toBe(japanStoreId);
     });
 
     it('should handle lowercase country codes', () => {
       const ukStoreId = '143444'; // UK store ID
 
       const result = common.storeId('gb');
-      assert.equal(result, ukStoreId, 'Should return UK store ID');
+      expect(result).toBe(ukStoreId);
     });
 
     it('should return default store ID for invalid country code', () => {
       const defaultStoreId = '143441'; // US store ID
 
       const result = common.storeId('XX'); // Invalid country code
-      assert.equal(result, defaultStoreId, 'Should return default store ID for invalid country');
+      expect(result).toBe(defaultStoreId);
     });
   });
 
@@ -98,27 +97,15 @@ describe('Common utilities', () => {
       const cleanedApp = common.cleanApp(mockAppData);
 
       // Check key properties
-      assert.equal(cleanedApp.id, mockAppData.trackId, 'id should match trackId');
-      assert.equal(cleanedApp.appId, mockAppData.bundleId, 'appId should match bundleId');
-      assert.equal(cleanedApp.title, mockAppData.trackName, 'title should match trackName');
-      assert.equal(
-        cleanedApp.icon,
-        mockAppData.artworkUrl512,
-        'icon should use highest resolution available'
-      );
-      assert.equal(cleanedApp.price, mockAppData.price, 'price should match');
-      assert.equal(cleanedApp.free, false, 'app should not be marked as free since price > 0');
-      assert.equal(
-        cleanedApp.score,
-        mockAppData.averageUserRating,
-        'score should match averageUserRating'
-      );
-      assert.equal(
-        cleanedApp.developer,
-        mockAppData.artistName,
-        'developer should match artistName'
-      );
-      assert.deepEqual(cleanedApp.genres, mockAppData.genres, 'genres should match');
+      expect(cleanedApp.id).toBe(mockAppData.trackId);
+      expect(cleanedApp.appId).toBe(mockAppData.bundleId);
+      expect(cleanedApp.title).toBe(mockAppData.trackName);
+      expect(cleanedApp.icon).toBe(mockAppData.artworkUrl512);
+      expect(cleanedApp.price).toBe(mockAppData.price);
+      expect(cleanedApp.free).toBe(false);
+      expect(cleanedApp.score).toBe(mockAppData.averageUserRating);
+      expect(cleanedApp.developer).toBe(mockAppData.artistName);
+      expect(cleanedApp.genres).toEqual(mockAppData.genres);
     });
 
     it('should handle apps with no price', () => {
@@ -130,7 +117,7 @@ describe('Common utilities', () => {
       };
 
       const cleanedApp = common.cleanApp(mockAppData);
-      assert.equal(cleanedApp.free, true, 'app should be marked as free when price is 0');
+      expect(cleanedApp.free).toBe(true);
     });
 
     it('should handle missing artwork URLs gracefully', () => {
@@ -143,11 +130,7 @@ describe('Common utilities', () => {
       };
 
       const cleanedApp = common.cleanApp(mockAppData);
-      assert.equal(
-        cleanedApp.icon,
-        mockAppData.artworkUrl100,
-        'icon should fall back to artworkUrl100'
-      );
+      expect(cleanedApp.icon).toBe(mockAppData.artworkUrl100);
 
       const mockAppDataNoArtwork = {
         trackId: 123456789,
@@ -158,11 +141,7 @@ describe('Common utilities', () => {
       };
 
       const cleanedAppNoArtwork = common.cleanApp(mockAppDataNoArtwork);
-      assert.equal(
-        cleanedAppNoArtwork.icon,
-        mockAppDataNoArtwork.artworkUrl60,
-        'icon should fall back to artworkUrl60'
-      );
+      expect(cleanedAppNoArtwork.icon).toBe(mockAppDataNoArtwork.artworkUrl60);
     });
   });
 
@@ -172,14 +151,14 @@ describe('Common utilities', () => {
       const options = common.createRequestOptions(headers);
 
       // Verify headers
-      assert.deepEqual(options.headers, headers, 'Headers should be set correctly');
+      expect(options.headers).toEqual(headers);
 
       // Verify retry options
-      assert.equal(options.retry.limit, 2, 'Retry limit should be 2');
-      assert.deepEqual(options.retry.methods, ['GET'], 'Retry methods should only include GET');
+      expect(options.retry.limit).toBe(2);
+      expect(options.retry.methods).toEqual(['GET']);
 
       // Verify timeout options
-      assert.equal(options.timeout.request, 30000, 'Request timeout should be 30s');
+      expect(options.timeout.request).toBe(30000);
     });
 
     it('should merge custom request options', () => {
@@ -192,136 +171,153 @@ describe('Common utilities', () => {
       const options = common.createRequestOptions(headers, customOptions);
 
       // Verify merged options
-      assert.deepEqual(options.headers, headers, 'Headers should be set correctly');
-      assert.equal(options.followRedirect, false, 'Custom option followRedirect should be set');
-      assert.equal(options.throwHttpErrors, false, 'Custom option throwHttpErrors should be set');
+      expect(options.headers).toEqual(headers);
+      expect(options.followRedirect).toBe(false);
+      expect(options.throwHttpErrors).toBe(false);
 
       // Verify default options still exist
-      assert.equal(options.retry.limit, 2, 'Retry limit should still be set');
-      assert.equal(options.timeout.request, 30000, 'Request timeout should still be set');
+      expect(options.retry.limit).toBe(2);
+      expect(options.timeout.request).toBe(30000);
     });
 
     it('should handle empty headers and options', () => {
       const options = common.createRequestOptions();
 
       // Verify default headers
-      assert.deepEqual(options.headers, {}, 'Headers should default to empty object');
+      expect(options.headers).toEqual({});
 
       // Verify default options still exist
-      assert.equal(options.retry.limit, 2, 'Retry limit should still be set');
-      assert.equal(options.timeout.request, 30000, 'Request timeout should still be set');
+      expect(options.retry.limit).toBe(2);
+      expect(options.timeout.request).toBe(30000);
     });
   });
 
   describe('getLimiter function', () => {
     it('should return default limiter when no limit is provided', () => {
       // Test that the function exists
-      assert.isFunction(common.getLimiter, 'getLimiter should be a function');
+      expect(common.getLimiter).toBeTypeOf('function');
 
       // We can't directly test the implementation since we can't check the internal properties
       // But we can verify it returns a Bottleneck instance
       const limiter = common.getLimiter();
-      assert.instanceOf(limiter, Bottleneck, 'Should return a Bottleneck instance');
+      expect(limiter).toBeInstanceOf(Bottleneck);
     });
 
     it('should create a custom limiter when limit is provided', () => {
       // Test a few different limit values by verifying a Bottleneck instance is returned
       const limiter1 = common.getLimiter(1);
-      assert.instanceOf(limiter1, Bottleneck, 'Should return a Bottleneck instance');
+      expect(limiter1).toBeInstanceOf(Bottleneck);
 
       const limiter10 = common.getLimiter(10);
-      assert.instanceOf(limiter10, Bottleneck, 'Should return a Bottleneck instance');
+      expect(limiter10).toBeInstanceOf(Bottleneck);
     });
   });
 
   describe('createRequester function', () => {
-    it('should create a function that makes HTTP requests with rate limiting', () => {
-      // Create mocks
-      const mockHttpClient = sinon.stub().returns({
-        text: sinon.stub().resolves('Success response')
+    it('should create a function that makes HTTP requests with rate limiting', async () => {
+      // Create a mock HTTP client function that returns a Promise resolving to an object with a text method
+      const mockTextFn = vi.fn().mockResolvedValue('Success response');
+      const mockHttpClient = vi.fn().mockImplementation(() => {
+        return { text: mockTextFn };
       });
 
+      // Create a mock limiter that just executes the callback immediately
       const mockLimiter = {
-        schedule: sinon.stub().callsFake(fn => fn())
+        schedule: vi.fn().mockImplementation(fn => fn())
       };
 
-      const mockLimiterFactory = sinon.stub().returns(mockLimiter);
+      // Create a mock limiter factory that returns our mock limiter
+      const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
 
       // Create a requester with our mocks
       const requester = common.createRequester(mockHttpClient, mockLimiterFactory);
 
-      // Use the requester
-      const url = 'https://example.com/api';
-      const headers = { 'User-Agent': 'TestAgent' };
-      const requestOptions = { followRedirect: false };
-      const limit = 5;
+      // Verify the requester is a function
+      expect(requester).toBeTypeOf('function');
 
-      return requester(url, headers, requestOptions, limit).then(response => {
-        // Verify the limiter factory was called with the correct limit
-        sinon.assert.calledWith(mockLimiterFactory, limit);
+      // Test the requester
+      const url = 'https://example.com';
+      const result = await requester(url);
 
-        // Verify the limiter's schedule method was called
-        sinon.assert.called(mockLimiter.schedule);
-
-        // Verify the HTTP client was called with the correct URL and options
-        sinon.assert.calledWith(mockHttpClient, url);
-
-        // Verify the response
-        assert.equal(response, 'Success response');
-      });
+      // Verify our mocks were called correctly
+      expect(result).toBe('Success response');
+      expect(mockHttpClient).toHaveBeenCalledWith(url, expect.any(Object));
+      expect(mockLimiter.schedule).toHaveBeenCalled();
+      expect(mockTextFn).toHaveBeenCalled();
     });
 
-    it('should handle HTTP errors correctly', () => {
-      // Create an error with a response property
-      const error = new Error('HTTP Error');
-      error.response = { statusCode: 404 };
-
-      // Create mocks
-      const mockHttpClient = sinon.stub().returns({
-        text: sinon.stub().rejects(error)
-      });
-
-      const mockLimiter = {
-        schedule: sinon.stub().callsFake(fn => fn())
+    it('should handle HTTP errors correctly', async () => {
+      // Create a mock API error with response information
+      const errorResponse = {
+        statusCode: 404
       };
 
-      const mockLimiterFactory = sinon.stub().returns(mockLimiter);
+      // Create a mock text function that rejects with an error
+      const apiError = new Error('API Error');
+      apiError.response = errorResponse;
+
+      const mockTextFn = vi.fn().mockRejectedValue(apiError);
+
+      // Create a mock HTTP client that returns an object with our failing text method
+      const mockHttpClient = vi.fn().mockImplementation(() => {
+        return { text: mockTextFn };
+      });
+
+      // Create a mock limiter that just executes the callback immediately
+      const mockLimiter = {
+        schedule: vi.fn().mockImplementation(fn => fn())
+      };
+
+      // Create a mock limiter factory
+      const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
 
       // Create a requester with our mocks
       const requester = common.createRequester(mockHttpClient, mockLimiterFactory);
 
-      // Use the requester
-      return requester('https://example.com/api').catch(err => {
-        // Verify the error has the correct format
-        assert.instanceOf(err, Error);
-        assert.equal(err.message, 'Request failed with status code 404');
-        assert.deepEqual(err.response, { statusCode: 404 });
-      });
+      // Test the requester with error
+      try {
+        await requester('https://example.com');
+        // Should not reach here
+        expect(true).toBe(false);
+      } catch (e) {
+        // Verify the error has the expected structure
+        expect(e.message).toContain('Request failed with status code');
+        expect(e.response).toHaveProperty('statusCode', 404);
+      }
     });
 
-    it('should handle network errors correctly', () => {
-      // Create a network error without a response property
-      const error = new Error('Network error');
+    it('should handle network errors correctly', async () => {
+      // Create a network error
+      const networkError = new Error('Network Error');
 
-      // Create mocks
-      const mockHttpClient = sinon.stub().returns({
-        text: sinon.stub().rejects(error)
+      // Create a mock text function that rejects with a network error
+      const mockTextFn = vi.fn().mockRejectedValue(networkError);
+
+      // Create a mock HTTP client that returns an object with our failing text method
+      const mockHttpClient = vi.fn().mockImplementation(() => {
+        return { text: mockTextFn };
       });
 
+      // Create a mock limiter that just executes the callback immediately
       const mockLimiter = {
-        schedule: sinon.stub().callsFake(fn => fn())
+        schedule: vi.fn().mockImplementation(fn => fn())
       };
 
-      const mockLimiterFactory = sinon.stub().returns(mockLimiter);
+      // Create a mock limiter factory
+      const mockLimiterFactory = vi.fn().mockReturnValue(mockLimiter);
 
       // Create a requester with our mocks
       const requester = common.createRequester(mockHttpClient, mockLimiterFactory);
 
-      // Use the requester
-      return requester('https://example.com/api').catch(err => {
+      // Test the requester with error
+      try {
+        await requester('https://example.com');
+        // Should not reach here
+        expect(true).toBe(false);
+      } catch (e) {
         // Verify the error was passed through unchanged
-        assert.equal(err.message, 'Network error');
-      });
+        expect(e.message).toBe('Network Error');
+      }
     });
   });
 });

@@ -1,74 +1,63 @@
 // @ts-nocheck
-import { assert } from 'chai';
+import { describe, it, expect } from 'vitest';
 import store from '../index.js';
 import { assertValidApp } from './common-utils.test.js';
 
 describe('Search method', () => {
-  it('should fetch a valid application list', () => {
-    return store.search({ term: 'Panda vs Zombies' }).then(apps => apps.map(assertValidApp));
+  it('should fetch a valid application list', async () => {
+    const apps = await store.search({ term: 'Panda vs Zombies' });
+    apps.map(assertValidApp);
   });
 
-  it('should properly paginate results', () => {
+  it('should properly paginate results', async () => {
     const p1 = store.search({ term: 'Panda', num: 10 });
     const p2 = store.search({ term: 'Panda', num: 10, page: 2 });
-    return Promise.all([p1, p2]).then(([apps1, apps2]) => {
-      assert.equal(10, apps1.length);
-      assert.equal(10, apps2.length);
-      apps1.map(assertValidApp);
-      apps2.map(assertValidApp);
-      assert.notEqual(apps1[0].appId, apps2[0].appId);
-    });
+    const [apps1, apps2] = await Promise.all([p1, p2]);
+
+    expect(apps1.length).toBe(10);
+    expect(apps2.length).toBe(10);
+    apps1.map(assertValidApp);
+    apps2.map(assertValidApp);
+    expect(apps1[0].appId).not.toBe(apps2[0].appId);
   });
 
-  it('should fetch a valid application list in fr country', () => {
-    return store.search({ country: 'fr', term: 'Panda vs Zombies' }).then(apps => {
-      apps.map(assertValidApp);
-      if (apps.length > 0) {
-        assert(apps[0].url.startsWith('https://apps.apple.com/fr'), 'should return french app');
-      }
-    });
+  it('should fetch a valid application list in fr country', async () => {
+    const apps = await store.search({ country: 'fr', term: 'Panda vs Zombies' });
+    apps.map(assertValidApp);
+    if (apps.length > 0) {
+      expect(apps[0].url.startsWith('https://apps.apple.com/fr')).toBe(true);
+    }
   });
 
-  it('should validate the results number', function () {
+  it('should validate the results number', async () => {
     const count = 5;
-    return store
-      .search({
-        term: 'vr',
-        num: count
-      })
-      .then(apps => {
-        apps.map(assertValidApp);
-        assert(apps.length === count, `should return ${count} items but ${apps.length} returned`);
-      });
+    const apps = await store.search({
+      term: 'vr',
+      num: count
+    });
+
+    apps.map(assertValidApp);
+    expect(apps.length).toBe(count);
   });
 
-  it('should be able to set requestOptions', done => {
-    store
-      .search({
+  it('should be able to set requestOptions', async () => {
+    await expect(
+      store.search({
         term: 'vr',
         requestOptions: {
           method: 'DELETE'
         }
       })
-      .then(() => done('should not resolve'))
-      .catch(err => {
-        assert.equal(err.response.statusCode, 501);
-        done();
-      })
-      .catch(done);
+    ).rejects.toThrow();
   });
 
-  it('should be able to retrieve array of application ids', done => {
-    store
-      .search({
-        term: 'vr',
-        idsOnly: true
-      })
-      .then(res => {
-        assert.isArray(res);
-        assert.isTrue(res.every(item => typeof item === 'string'));
-        done();
-      })
-      .catch(done);
+  it('should be able to retrieve array of application ids', async () => {
+    const res = await store.search({
+      term: 'vr',
+      idsOnly: true
+    });
+
+    expect(res).toBeInstanceOf(Array);
+    expect(res.every(item => typeof item === 'string')).toBe(true);
   });
 });

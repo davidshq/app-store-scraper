@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import sinon from 'sinon';
 import {
   DEFAULTS,
@@ -51,7 +51,7 @@ describe('Parameter Utilities', () => {
       const opts = {};
       const result = applyDefaults(opts);
 
-      expect(result).to.include(DEFAULTS);
+      expect(result).toEqual(expect.objectContaining(DEFAULTS));
     });
 
     it('should preserve user-provided values', () => {
@@ -63,10 +63,10 @@ describe('Parameter Utilities', () => {
 
       const result = applyDefaults(opts);
 
-      expect(result.country).to.equal('uk');
-      expect(result.lang).to.equal('en-gb');
-      expect(result.num).to.equal(100);
-      expect(result.page).to.equal(DEFAULTS.page);
+      expect(result.country).toBe('uk');
+      expect(result.lang).toBe('en-gb');
+      expect(result.num).toBe(100);
+      expect(result.page).toBe(DEFAULTS.page);
     });
 
     it('should accept custom defaults', () => {
@@ -79,9 +79,9 @@ describe('Parameter Utilities', () => {
 
       const result = applyDefaults(opts, customDefaults);
 
-      expect(result.country).to.equal('fr');
-      expect(result.lang).to.equal('fr-fr');
-      expect(result.limit).to.equal(10);
+      expect(result.country).toBe('fr');
+      expect(result.lang).toBe('fr-fr');
+      expect(result.limit).toBe(10);
     });
   });
 
@@ -102,24 +102,24 @@ describe('Parameter Utilities', () => {
       const opts = {};
       const result = testGetStoreHeader(opts);
 
-      expect(result).to.have.property('X-Apple-Store-Front');
-      expect(result['X-Apple-Store-Front']).to.include('143441,32');
+      expect(result).toHaveProperty('X-Apple-Store-Front');
+      expect(result['X-Apple-Store-Front']).toContain('143441,32');
     });
 
     it('should use provided country', () => {
       const opts = { country: 'gb' };
       const result = testGetStoreHeader(opts);
 
-      expect(result).to.have.property('X-Apple-Store-Front');
-      expect(result['X-Apple-Store-Front']).to.include('143444,32');
+      expect(result).toHaveProperty('X-Apple-Store-Front');
+      expect(result['X-Apple-Store-Front']).toContain('143444,32');
     });
 
     it('should use provided store type', () => {
       const opts = { country: 'fr' };
       const result = testGetStoreHeader(opts, 24);
 
-      expect(result).to.have.property('X-Apple-Store-Front');
-      expect(result['X-Apple-Store-Front']).to.include('143442,24');
+      expect(result).toHaveProperty('X-Apple-Store-Front');
+      expect(result['X-Apple-Store-Front']).toContain('143442,24');
     });
   });
 
@@ -130,7 +130,7 @@ describe('Parameter Utilities', () => {
 
       const result = addLanguageHeader(headers, opts);
 
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         'X-Test': 'value',
         'Accept-Language': 'en-gb'
       });
@@ -142,7 +142,7 @@ describe('Parameter Utilities', () => {
 
       const result = addLanguageHeader(headers, opts);
 
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         'X-Test': 'value'
       });
     });
@@ -167,13 +167,13 @@ describe('Parameter Utilities', () => {
       const result = testGetHeaders(opts, storeType);
 
       // Verify spies were called with correct arguments
-      expect(storeHeaderSpy.calledWith(opts, storeType)).to.be.true;
-      expect(addLangHeaderSpy.calledWith(sinon.match.object, opts)).to.be.true;
+      expect(storeHeaderSpy.calledWith(opts, storeType)).toBe(true);
+      expect(addLangHeaderSpy.calledWith(sinon.match.object, opts)).toBe(true);
 
       // Check that we have the expected headers
-      expect(result).to.have.property('X-Apple-Store-Front');
+      expect(result).toHaveProperty('X-Apple-Store-Front');
       if (opts.lang) {
-        expect(result).to.have.property('Accept-Language', opts.lang);
+        expect(result).toHaveProperty('Accept-Language', opts.lang);
       }
     });
   });
@@ -191,7 +191,7 @@ describe('Parameter Utilities', () => {
 
       const result = getUrlParams(opts, paramNames);
 
-      expect(result).to.equal('term=test%20app&country=us&limit=50');
+      expect(result).toBe('term=test%20app&country=us&limit=50');
     });
 
     it('should skip undefined parameters', () => {
@@ -205,7 +205,7 @@ describe('Parameter Utilities', () => {
 
       const result = getUrlParams(opts, paramNames);
 
-      expect(result).to.equal('term=test&page=1');
+      expect(result).toBe('term=test&page=1');
     });
 
     it('should handle empty options', () => {
@@ -214,7 +214,7 @@ describe('Parameter Utilities', () => {
 
       const result = getUrlParams(opts, paramNames);
 
-      expect(result).to.equal('');
+      expect(result).toBe('');
     });
   });
 
@@ -233,86 +233,92 @@ describe('Parameter Utilities', () => {
       };
 
       const result = processParams(params, rules);
-      expect(result.name).to.equal('TEST NAME');
-      expect(result.age).to.equal(50);
-      expect(result.active).to.equal(true); // unchanged
+      expect(result.name).toBe('TEST NAME');
+      expect(result.age).toBe(50);
+      expect(result.active).toBe(true); // unchanged
     });
 
     it('should handle empty parameters', () => {
-      expect(processParams({}, {})).to.deep.equal({});
+      expect(processParams({}, {})).toEqual({});
     });
 
     it('should handle null parameters', () => {
-      expect(processParams(null, {})).to.deep.equal({});
+      expect(processParams(null, {})).toEqual({});
     });
 
     it('should ignore rules for missing parameters', () => {
       const rules = {
-        name: value => value.toUpperCase(),
-        age: value => value * 2
+        name: value => value.toUpperCase()
       };
 
-      expect(processParams({}, rules)).to.deep.equal({});
+      const result = processParams({ age: 30 }, rules);
+      expect(result).toEqual({ age: 30 });
     });
 
     it('should call transformation functions with correct parameters', () => {
-      const params = { value: 5 };
-      const spy = sinon.spy();
+      const params = { value: 10 };
+      const transformSpy = sinon.spy(x => x * 2);
+      const rules = { value: transformSpy };
 
-      processParams(params, { value: spy });
-
-      expect(spy.calledOnce).to.be.true;
-      expect(spy.calledWith(5)).to.be.true;
+      processParams(params, rules);
+      expect(transformSpy.calledOnce).toBe(true);
+      expect(transformSpy.calledWith(10)).toBe(true);
     });
   });
 
   describe('isValid', () => {
     it('should validate parameters against rules', () => {
-      const validParams = {
-        name: 'test',
+      const params = {
+        name: 'Test',
         age: 25
-      };
-
-      const invalidParams = {
-        name: '',
-        age: -1
       };
 
       const rules = {
         name: value => value.length > 0,
-        age: value => value > 0
+        age: value => value > 18
       };
 
-      expect(isValid(validParams, rules)).to.be.true;
-      expect(isValid(invalidParams, rules)).to.be.false;
+      expect(isValid(params, rules)).toBe(true);
+
+      const invalidParams = {
+        name: '',
+        age: 15
+      };
+
+      expect(isValid(invalidParams, rules)).toBe(false);
     });
 
     it('should handle missing parameters as invalid', () => {
       const params = {
-        name: 'test'
-        // missing age
+        name: 'Test'
+        // Missing age
       };
 
       const rules = {
         name: value => value.length > 0,
-        age: value => value > 0
+        age: value => value > 18
       };
 
-      expect(isValid(params, rules)).to.be.false;
+      expect(isValid(params, rules)).toBe(false);
     });
 
     it('should handle empty rule sets', () => {
-      expect(isValid({ name: 'test' }, {})).to.be.true;
+      const params = {
+        name: 'Test',
+        age: 25
+      };
+
+      expect(isValid(params, {})).toBe(true);
     });
 
     it('should call validation functions with correct parameters', () => {
-      const params = { value: 5 };
-      const spy = sinon.spy(() => true);
+      const params = { value: 10 };
+      const validateSpy = sinon.spy(x => x > 5);
+      const rules = { value: validateSpy };
 
-      isValid(params, { value: spy });
-
-      expect(spy.calledOnce).to.be.true;
-      expect(spy.calledWith(5)).to.be.true;
+      isValid(params, rules);
+      expect(validateSpy.calledOnce).toBe(true);
+      expect(validateSpy.calledWith(10)).toBe(true);
     });
   });
 });

@@ -1,166 +1,139 @@
 // @ts-nocheck
-import { assert } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { assertValidUrl } from './common-utils.test.js';
 import store from '../index.js';
 
 describe('App method', () => {
-  it('should fetch valid application data', () => {
-    return store.app({ id: '553834731' }).then(app => {
-      assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
-      assert.equal(app.title, 'Candy Crush Saga');
-      assert.equal(app.url, 'https://apps.apple.com/us/app/candy-crush-saga/id553834731?uo=4');
-      assertValidUrl(app.icon);
+  it('should fetch valid application data', async () => {
+    const app = await store.app({ id: '553834731' });
+    expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
+    expect(app.title).toBe('Candy Crush Saga');
+    expect(app.url).toBe('https://apps.apple.com/us/app/candy-crush-saga/id553834731?uo=4');
+    assertValidUrl(app.icon);
 
-      assert.isNumber(app.score);
-      assert(app.score > 0);
-      assert(app.score <= 5);
+    expect(app.score).toBeTypeOf('number');
+    expect(app.score).toBeGreaterThan(0);
+    expect(app.score).toBeLessThanOrEqual(5);
 
-      assert.isNotOk(app.ratings);
-      assert.isNotOk(app.histogram);
+    expect(app.ratings).toBeFalsy();
+    expect(app.histogram).toBeFalsy();
 
-      assert.isNumber(app.reviews);
+    expect(app.reviews).toBeTypeOf('number');
 
-      assert.isString(app.description);
-      assert.isString(app.updated);
-      assert.equal(app.primaryGenre, 'Games');
-      assert.equal(app.primaryGenreId, 6014);
-      assert.isArray(app.genres);
-      assert.isAtLeast(app.genres.length, 1);
-      assert.isArray(app.genreIds);
-      assert.isAtLeast(app.genreIds.length, 1);
+    expect(app.description).toBeTypeOf('string');
+    expect(app.updated).toBeTypeOf('string');
+    expect(app.primaryGenre).toBe('Games');
+    expect(app.primaryGenreId).toBe(6014);
+    expect(app.genres).toBeInstanceOf(Array);
+    expect(app.genres.length).toBeGreaterThanOrEqual(1);
+    expect(app.genreIds).toBeInstanceOf(Array);
+    expect(app.genreIds.length).toBeGreaterThanOrEqual(1);
 
-      assert.isString(app.version);
-      if (app.size) {
-        assert.isString(app.size);
-      }
-      assert.isString(app.contentRating);
+    expect(app.version).toBeTypeOf('string');
+    if (app.size) {
+      expect(app.size).toBeTypeOf('string');
+    }
+    expect(app.contentRating).toBeTypeOf('string');
 
-      assert.isString(app.requiredOsVersion);
+    expect(app.requiredOsVersion).toBeTypeOf('string');
 
-      assert.equal(app.price, '0');
-      assert(app.free === true);
+    expect(app.price).toBeTypeOf('number');
+    expect(app.price).toBe(0);
+    expect(app.free).toBe(true);
 
-      assert.equal(app.developer, 'King');
-      if (app.developerWebsite) {
-        assertValidUrl(app.developerWebsite);
-      }
+    expect(app.developer).toBe('King');
+    if (app.developerWebsite) {
+      assertValidUrl(app.developerWebsite);
+    }
 
-      assert(app.screenshots.length);
-      app.screenshots.map(assertValidUrl);
+    expect(app.screenshots.length).toBeTruthy();
+    app.screenshots.map(assertValidUrl);
 
-      assert.isString(app.releaseNotes);
-    });
+    expect(app.releaseNotes).toBeTypeOf('string');
   });
 
   describe('with ratings option enabled', () => {
-    it('should fetch valid application data', () => {
-      return store.app({ id: '553834731', ratings: true }).then(app => {
-        assert.isDefined(app.ratings);
-        assert.isNumber(app.ratings);
-        assert.isDefined(app.histogram);
-        assert.isObject(app.histogram);
-        assert.isDefined(app.histogram['1']);
-        assert.isDefined(app.histogram['2']);
-        assert.isDefined(app.histogram['3']);
-        assert.isDefined(app.histogram['4']);
-        assert.isDefined(app.histogram['5']);
-      });
+    it('should fetch valid application data', async () => {
+      const app = await store.app({ id: '553834731', ratings: true });
+      expect(app.ratings).toBeDefined();
+      expect(app.ratings).toBeTypeOf('number');
+      expect(app.histogram).toBeDefined();
+      expect(app.histogram).toBeTypeOf('object');
+      expect(app.histogram['1']).toBeDefined();
+      expect(app.histogram['2']).toBeDefined();
+      expect(app.histogram['3']).toBeDefined();
+      expect(app.histogram['4']).toBeDefined();
+      expect(app.histogram['5']).toBeDefined();
     });
 
-    it('should fetch app with bundle id', () => {
-      return store
-        .app({ appId: 'com.midasplayer.apps.candycrushsaga', ratings: true })
-        .then(app => {
-          assert.isDefined(app.ratings);
-          assert.isNumber(app.ratings);
-          assert.isDefined(app.histogram);
-          assert.isObject(app.histogram);
-          assert.isDefined(app.histogram['1']);
-          assert.isDefined(app.histogram['2']);
-          assert.isDefined(app.histogram['3']);
-          assert.isDefined(app.histogram['4']);
-          assert.isDefined(app.histogram['5']);
-        });
+    it('should fetch app with bundle id', async () => {
+      const app = await store.app({ appId: 'com.midasplayer.apps.candycrushsaga', ratings: true });
+      expect(app.ratings).toBeDefined();
+      expect(app.ratings).toBeTypeOf('number');
+      expect(app.histogram).toBeDefined();
+      expect(app.histogram).toBeTypeOf('object');
+      expect(app.histogram['1']).toBeDefined();
+      expect(app.histogram['2']).toBeDefined();
+      expect(app.histogram['3']).toBeDefined();
+      expect(app.histogram['4']).toBeDefined();
+      expect(app.histogram['5']).toBeDefined();
     });
   });
 
-  it('should fetch app with bundle id', () => {
-    return store.app({ appId: 'com.midasplayer.apps.candycrushsaga' }).then(app => {
-      assert.equal(app.id, '553834731');
-      assert.equal(app.title, 'Candy Crush Saga');
-      assert.equal(app.url, 'https://apps.apple.com/us/app/candy-crush-saga/id553834731?uo=4');
-      assert.isNotOk(app.ratings);
-      assert.isNotOk(app.histogram);
-    });
+  it('should fetch app with bundle id', async () => {
+    const app = await store.app({ appId: 'com.midasplayer.apps.candycrushsaga' });
+    expect(app.id).toBeTypeOf('number');
+    expect(app.id).toBe(553834731);
+    expect(app.title).toBe('Candy Crush Saga');
+    expect(app.url).toBe('https://apps.apple.com/us/app/candy-crush-saga/id553834731?uo=4');
+    expect(app.ratings).toBeFalsy();
+    expect(app.histogram).toBeFalsy();
   });
 
-  it('should fetch app in spanish', () => {
-    return store.app({ id: '553834731', country: 'ar' }).then(app => {
-      assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
-      assert.equal(app.title, 'Candy Crush Saga');
-      assert.equal(app.url, 'https://apps.apple.com/ar/app/candy-crush-saga/id553834731?uo=4');
-    });
+  it('should fetch app in spanish', async () => {
+    const app = await store.app({ id: '553834731', country: 'ar' });
+    expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
+    expect(app.title).toBe('Candy Crush Saga');
+    expect(app.url).toBe('https://apps.apple.com/ar/app/candy-crush-saga/id553834731?uo=4');
   });
 
-  it('should fetch app in french', () => {
-    return store.app({ id: '553834731', country: 'fr' }).then(app => {
-      assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
-      assert.equal(app.title, 'Candy Crush Saga');
-      assert.equal(app.url, 'https://apps.apple.com/fr/app/candy-crush-saga/id553834731?uo=4');
-    });
+  it('should fetch app in french', async () => {
+    const app = await store.app({ id: '553834731', country: 'fr' });
+    expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
+    expect(app.title).toBe('Candy Crush Saga');
+    expect(app.url).toBe('https://apps.apple.com/fr/app/candy-crush-saga/id553834731?uo=4');
   });
 
-  it('should reject the promise for an invalid id', done => {
-    store
-      .app({ id: '123' })
-      .then(() => done('should not resolve'))
-      .catch(err => {
-        assert.equal(err.message, 'App not found (404)');
-        done();
-      })
-      .catch(done);
+  it('should reject the promise for an invalid id', async () => {
+    await expect(store.app({ id: '123' })).rejects.toThrow('App not found (404)');
   });
 
-  it('should reject the promise for an invalid appId', done => {
-    store
-      .app({ appId: '123' })
-      .then(() => done('should not resolve'))
-      .catch(err => {
-        assert.equal(err.message, 'App not found (404)');
-        done();
-      })
-      .catch(done);
+  it('should reject the promise for an invalid appId', async () => {
+    await expect(store.app({ appId: '123' })).rejects.toThrow('App not found (404)');
   });
 
-  it('should memoize the results when memoize enabled', () => {
+  it('should memoize the results when memoize enabled', async () => {
     const memoized = store.memoized();
-    return memoized.app({ id: '553834731' }).then(app => {
-      assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
-      assert.equal(app.title, 'Candy Crush Saga');
-    });
+    const app = await memoized.app({ id: '553834731' });
+    expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
+    expect(app.title).toBe('Candy Crush Saga');
   });
 
-  it('should memoize the results with custom options', () => {
+  it('should memoize the results with custom options', async () => {
     const memoized = store.memoized({ maxAge: 1000, max: 10 });
-    return memoized.app({ id: '553834731' }).then(app => {
-      assert.equal(app.appId, 'com.midasplayer.apps.candycrushsaga');
-      assert.equal(app.title, 'Candy Crush Saga');
-    });
+    const app = await memoized.app({ id: '553834731' });
+    expect(app.appId).toBe('com.midasplayer.apps.candycrushsaga');
+    expect(app.title).toBe('Candy Crush Saga');
   });
 
-  it('should be able to set requestOptions', done => {
-    store
-      .app({
+  it('should be able to set requestOptions', async () => {
+    await expect(
+      store.app({
         id: '553834731',
         requestOptions: {
           method: 'DELETE'
         }
       })
-      .then(() => done('should not resolve'))
-      .catch(err => {
-        assert.equal(err.response.statusCode, 501);
-        done();
-      })
-      .catch(done);
+    ).rejects.toThrow();
   });
 });

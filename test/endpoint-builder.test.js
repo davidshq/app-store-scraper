@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import sinon from 'sinon';
 import createEndpoint from '../dist/lib/endpoint-builder.js';
 import { createTestFn } from './helpers/test-utils.js';
@@ -41,7 +41,7 @@ describe('Endpoint Builder', () => {
     const result = await fn(opts);
 
     // Verify fetch was called with the right parameters
-    expect(fetchSpy.calledOnce).to.be.true;
+    expect(fetchSpy.calledOnce).toBe(true);
     expect(fetchSpy.firstCall.args[0]).to.deep.equal(opts);
     expect(result).to.deep.equal({ data: 'test' });
   });
@@ -61,7 +61,7 @@ describe('Endpoint Builder', () => {
 
     await fn(opts);
 
-    expect(validateSpy.calledWith(opts)).to.be.true;
+    expect(validateSpy.calledWith(opts)).toBe(true);
   });
 
   it('should transform response data when transform provided', async () => {
@@ -73,7 +73,7 @@ describe('Endpoint Builder', () => {
 
     const result = await fn({});
 
-    expect(transformSpy.calledWith({ original: true })).to.be.true;
+    expect(transformSpy.calledWith({ original: true })).toBe(true);
     expect(result).to.deep.equal({ transformed: true });
   });
 });
@@ -90,6 +90,6 @@ function parseString(template) {
 describe('String Parsing', () => {
   it('should parse strings correctly', () => {
     const parsed = parseString('Test {TEST} String');
-    expect(parsed({ TEST: 'replacement' })).to.equal('Test replacement String');
+    expect(parsed({ TEST: 'replacement' })).toBe('Test replacement String');
   });
 });
