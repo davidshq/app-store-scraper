@@ -55,6 +55,129 @@ The type definitions include:
 - Constant values (categories, collections, etc.)
 - Caching configuration
 
+#### Type System Overview
+
+The type system provides comprehensive type safety for all API interactions:
+
+```typescript
+// Using strongly-typed constants
+import appStore, { ListOptions } from 'app-store-scraper';
+
+const options: ListOptions = {
+  collection: appStore.collection.TOP_FREE_GAMES_IOS,
+  category: appStore.category.GAMES_ACTION,
+  country: 'us',
+  num: 10
+};
+
+// The return type is Promise<App[]>
+appStore.list(options).then(apps => {
+  // apps is strongly typed as App[]
+  apps.forEach(app => {
+    console.log(`${app.title} (${app.price > 0 ? `$${app.price}` : 'Free'})`);
+
+    // TypeScript provides autocompletion for all app properties
+    if (app.free) {
+      console.log('This app is free!');
+    }
+  });
+});
+```
+
+#### Working with Interface Types
+
+The library exports interfaces for all parameter and return types:
+
+```typescript
+import appStore, {
+  App,
+  AppOptions,
+  SearchOptions,
+  ListOptions,
+  ReviewsOptions,
+  Review,
+  ReviewsResult
+} from 'app-store-scraper';
+
+// Get reviews with typed options and response
+const reviewOptions: ReviewsOptions = {
+  appId: 'com.example.app',
+  sort: appStore.sort.HELPFUL,
+  page: 1
+};
+
+// The function returns a Promise<ReviewsResult>
+appStore.reviews(reviewOptions).then((result: ReviewsResult) => {
+  // Access typed reviews array
+  result.reviews.forEach((review: Review) => {
+    console.log(`${review.userName} - ${review.score}/5 stars`);
+    console.log(review.title);
+    console.log(review.text);
+  });
+
+  // TypeScript knows that nextPage might be undefined
+  if (result.nextPage) {
+    console.log(`More reviews available on page ${result.nextPage}`);
+  }
+});
+```
+
+#### Using the Caching API with TypeScript
+
+The caching API is also fully typed:
+
+```typescript
+import appStore, { CacheOptions } from 'app-store-scraper';
+
+// Create custom cache options
+const cacheOptions: CacheOptions = {
+  maxAge: 1000 * 60 * 30, // 30 minutes
+  max: 100,
+  promise: true
+};
+
+// Create a memoized API instance with typed options
+const memoizedApi = appStore.memoized(cacheOptions);
+
+// Use the typed API
+memoizedApi
+  .app({ id: 553834731 })
+  .then(app => console.log(app.title))
+  .catch(err => console.error(err));
+```
+
+#### Advanced Example: Custom Type Guards
+
+You can create custom type guards for more specific type checking:
+
+```typescript
+import appStore, { App } from 'app-store-scraper';
+
+// Type guard to check if an app is free
+function isFreeApp(app: App): app is App & { free: true } {
+  return app.free === true;
+}
+
+// Type guard to check if an app has ratings information
+function hasRatings(app: App): app is App & { ratings: number; histogram: Record<string, number> } {
+  return app.ratings !== undefined && app.histogram !== undefined;
+}
+
+// Using the type guards
+appStore.app({ id: 553834731, ratings: true }).then(app => {
+  if (isFreeApp(app)) {
+    // TypeScript knows app.free is true in this block
+    console.log('This app is free!');
+  }
+
+  if (hasRatings(app)) {
+    // TypeScript knows app.ratings and app.histogram exist in this block
+    console.log(`App has ${app.ratings} ratings`);
+    console.log(`5-star ratings: ${app.histogram['5']}`);
+  }
+});
+```
+
 ### app
 
 Retrieves the full details of an application. Options:

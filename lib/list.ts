@@ -5,40 +5,68 @@ import { BaseRequestOptions, DetailOptions, PaginationOptions } from './param-ty
 
 /**
  * Options for list lookup
+ * @interface ListOptions
+ * @extends {BaseRequestOptions} - Common request options
+ * @extends {DetailOptions} - Options for controlling detail level
+ * @extends {Pick<PaginationOptions, 'num'>} - Only using 'num' from pagination options
  */
 export interface ListOptions
   extends BaseRequestOptions,
     DetailOptions,
     Pick<PaginationOptions, 'num'> {
-  /** The collection to fetch */
+  /**
+   * The collection to fetch (e.g., 'topfreeapplications', 'toppaidapplications')
+   * @type {string}
+   */
   collection?: string;
-  /** The category to fetch */
+  /**
+   * The category to fetch apps from (numeric ID)
+   * @type {number}
+   */
   category?: number;
 }
 
 /**
  * Basic app data returned from the list API
+ * @interface ListApp
  */
 export interface ListApp {
+  /** The app's iTunes ID */
   id: string;
+  /** The app's bundle identifier */
   appId: string;
+  /** The app's title */
   title: string;
+  /** URL to the app's icon image */
   icon: string;
+  /** URL to the app's page on the App Store */
   url?: string;
+  /** The app's price */
   price: number;
+  /** The currency code for the price */
   currency: string;
+  /** Whether the app is free */
   free: boolean;
+  /** Short description of the app */
   description?: string;
+  /** The developer's name */
   developer: string;
+  /** URL to the developer's page */
   developerUrl?: string;
+  /** The developer's ID */
   developerId?: string;
+  /** The app's primary genre/category name */
   genre: string;
+  /** The app's primary genre/category ID */
   genreId: string;
+  /** The release date of the app */
   released: string;
 }
 
 /**
- * Internal list API response format
+ * Internal list API response format from iTunes
+ * @interface ListApiResponse
+ * @private
  */
 interface ListApiResponse {
   feed: {
@@ -100,6 +128,7 @@ interface ListApiResponse {
  * Extracts the app URL from the link attributes
  * @param {Object} app - App data from iTunes API
  * @returns {string|undefined} The app's URL or undefined if not found
+ * @private
  */
 function parseLink(app: ListApiResponse['feed']['entry'][0]): string | undefined {
   if (app.link) {
@@ -113,7 +142,8 @@ function parseLink(app: ListApiResponse['feed']['entry'][0]): string | undefined
 /**
  * Normalizes app data from the list API format to the common app format
  * @param {Object} app - Raw app data from iTunes list API
- * @returns {Object} Normalized app data ready for common cleaning
+ * @returns {ListApp} Normalized app data
+ * @private
  */
 function normalizeListApp(app: ListApiResponse['feed']['entry'][0]): ListApp {
   let developerUrl: string | undefined;
@@ -151,8 +181,19 @@ function normalizeListApp(app: ListApiResponse['feed']['entry'][0]): ListApp {
 
 /**
  * Fetches a list of apps from the App Store
- * @param {ListOptions} opts - The options object
- * @returns {Promise<App[] | ListApp[]>} Promise resolving to an array of apps
+ *
+ * @param {ListOptions} opts - The options object for list request
+ * @param {string} [opts.collection] - The collection to fetch (e.g., 'topfreeapplications')
+ * @param {number} [opts.category] - The category to fetch apps from (numeric ID)
+ * @param {string} [opts.country='us'] - The two-letter country code to get app data from
+ * @param {string} [opts.lang] - The language code for localized data
+ * @param {number} [opts.num=50] - Number of results to return
+ * @param {boolean} [opts.fullDetail=false] - If true, returns full app details instead of list data
+ * @param {Object} [opts.requestOptions] - Options for the underlying HTTP request
+ * @param {number} [opts.throttle] - Rate limit for requests in requests per second
+ * @returns {Promise<App[] | ListApp[]>} Promise resolving to an array of apps (full details if fullDetail is true)
+ * @throws {Error} If collection is not provided or list request fails
+ * @template T - Type extending ListOptions to handle fullDetail typing
  */
 function list<T extends ListOptions = ListOptions>(
   opts: T = {} as T

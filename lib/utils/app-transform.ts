@@ -5,8 +5,16 @@ import { RawAppData, App } from '../types/app-types.js';
 
 /**
  * Normalizes and cleans app data returned from the iTunes API
+ *
+ * This function transforms raw API response data into the standardized App format
+ * used throughout the library. It handles field mapping, renames fields for clarity,
+ * and computes derived properties.
+ *
  * @param {RawAppData} app - Raw app data from iTunes API
- * @returns {App} Cleaned and normalized app data
+ * @returns {App} Cleaned and normalized app data with consistent structure
+ * @example
+ * const rawData = await itunesApiCall();
+ * const cleanedApp = cleanApp(rawData.results[0]);
  */
 export function cleanApp(app: RawAppData): App {
   return {

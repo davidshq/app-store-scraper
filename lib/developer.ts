@@ -6,21 +6,62 @@ import { validateDeveloper } from './validators.js';
 
 /**
  * Options for developer data lookup
+ * @interface DeveloperOptions
+ * @extends {ApiRequestOptions} - Common API request options
  */
 export interface DeveloperOptions extends ApiRequestOptions {
+  /**
+   * The developer/artist ID to look up
+   * @type {string|number}
+   */
   devId: string | number;
+  /**
+   * The two-letter country code to get data from
+   * @type {string}
+   * @default 'us'
+   */
   country?: string;
+  /**
+   * The language code for localized data
+   * @type {string}
+   */
   lang?: string;
+  /**
+   * Options for the underlying HTTP request
+   * @type {RequestOptions}
+   */
   requestOptions?: RequestOptions;
+  /**
+   * Rate limit for requests in requests per second
+   * @type {number}
+   */
   throttle?: number;
+  /**
+   * Number of results to return
+   * @type {number}
+   * @default 50
+   */
   num?: number;
+  /**
+   * Whether to fetch full app details
+   * @type {boolean}
+   * @default false
+   */
   fullDetail?: boolean;
 }
 
 /**
  * Fetches information about a developer and their apps
- * @param {DeveloperOptions} opts - The options object
- * @returns {Promise<App[]>} Promise resolving to developer information and their apps
+ *
+ * @param {DeveloperOptions} opts - The options object for developer lookup
+ * @param {string|number} opts.devId - The developer ID to look up
+ * @param {string} [opts.country='us'] - The two-letter country code to get data from
+ * @param {string} [opts.lang] - The language code for localized data
+ * @param {Object} [opts.requestOptions] - Options for the underlying HTTP request
+ * @param {number} [opts.throttle] - Rate limit for requests in requests per second
+ * @param {number} [opts.num=50] - Number of results to return
+ * @param {boolean} [opts.fullDetail=false] - Whether to fetch full app details
+ * @returns {Promise<App[]>} Promise resolving to an array of the developer's apps
  * @throws {Error} If devId is not provided or developer is not found
  */
 function developer(opts: DeveloperOptions): Promise<App[]> {

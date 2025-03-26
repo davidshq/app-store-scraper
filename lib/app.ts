@@ -6,17 +6,30 @@ import { AppIdentifierOptions, BaseRequestOptions, normalizeAppIdentifier } from
 
 /**
  * Options for app lookup
+ * @interface AppOptions
+ * @extends {AppIdentifierOptions} - Common options for identifying an app
+ * @extends {BaseRequestOptions} - Common request options
  */
 export interface AppOptions extends AppIdentifierOptions, BaseRequestOptions {
-  /** Whether to include ratings data with the response */
+  /**
+   * Whether to include ratings data with the response
+   * @type {boolean}
+   */
   ratings?: boolean;
 }
 
 /**
- * Fetches detailed information about an app
+ * Fetches detailed information about an app from the App Store
  *
- * @param {AppOptions} opts - The options object
- * @returns {Promise<App>} Promise resolving to the app information
+ * @param {AppOptions} opts - The options object for app lookup
+ * @param {number} [opts.id] - The iTunes app ID (numeric)
+ * @param {string} [opts.appId] - The App Store ID (bundle identifier)
+ * @param {string} [opts.country='us'] - The two-letter country code to get app data from
+ * @param {string} [opts.lang] - The language code for localized data
+ * @param {boolean} [opts.ratings] - Whether to include ratings data with the app information
+ * @param {Object} [opts.requestOptions] - Options for the underlying HTTP request
+ * @param {number} [opts.throttle] - Rate limit for requests in requests per second
+ * @returns {Promise<App>} Promise resolving to the complete app information
  * @throws {Error} If neither id nor appId is provided or app is not found
  */
 function app(opts: AppOptions): Promise<App> {

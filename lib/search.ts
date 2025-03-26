@@ -8,16 +8,27 @@ import { validateSearch } from './validators.js';
 
 /**
  * Options for app search
+ * @interface SearchOptions
+ * @extends {BaseRequestOptions} - Common request options
+ * @extends {PaginationOptions} - Options for paginating results
  */
 export interface SearchOptions extends BaseRequestOptions, PaginationOptions {
-  /** The search term to query for */
+  /**
+   * The search term to query for
+   * @type {string}
+   */
   term: string;
-  /** If true, returns only the app IDs instead of the full app details */
+  /**
+   * If true, returns only the app IDs instead of the full app details
+   * @type {boolean}
+   */
   idsOnly?: boolean;
 }
 
 /**
- * Internal search response format
+ * Internal search response format from iTunes API
+ * @interface SearchApiResponse
+ * @private
  */
 interface SearchApiResponse {
   bubbles: Array<{
@@ -58,9 +69,17 @@ function paginate(num?: number, page?: number): <T>(list: T[]) => T[] {
 /**
  * Searches for apps in the App Store
  *
- * @param {SearchOptions} opts - The options object
+ * @param {SearchOptions} opts - The options object for search
+ * @param {string} opts.term - The search term to query for
+ * @param {string} [opts.country='us'] - The two-letter country code to search in
+ * @param {string} [opts.lang] - The language code for localized data
+ * @param {number} [opts.num=50] - Number of results to return per page
+ * @param {number} [opts.page=1] - Page number to return (starting from 1)
+ * @param {boolean} [opts.idsOnly=false] - If true, returns only the app IDs instead of full app details
+ * @param {Object} [opts.requestOptions] - Options for the underlying HTTP request
+ * @param {number} [opts.throttle] - Rate limit for requests in requests per second
  * @returns {Promise<App[] | number[]>} Promise resolving to an array of apps or app IDs (if idsOnly is true)
- * @throws {Error} If term is not provided
+ * @throws {Error} If term is not provided or search fails
  */
 function search(opts: SearchOptions): Promise<App[] | number[]> {
   return new Promise(function (resolve, reject) {
