@@ -33,6 +33,28 @@ The module now includes enhanced caching capabilities:
 - [configureCaching](#configureCaching): Configures custom caching per endpoint.
 - [clearCache](#clearCache): Clears cache entries.
 
+### TypeScript Support
+
+The module includes TypeScript type definitions, making it easier to integrate in TypeScript projects:
+
+```typescript
+import appStore, { App, AppOptions } from 'app-store-scraper';
+
+// All method parameters and return types are properly typed
+const options: AppOptions = { id: 553834731 };
+appStore.app(options).then((app: App) => {
+  console.log(app.title);
+  console.log(app.price);
+});
+```
+
+The type definitions include:
+
+- All API method parameter options
+- Return types for all API responses
+- Constant values (categories, collections, etc.)
+- Caching configuration
+
 ### app
 
 Retrieves the full details of an application. Options:

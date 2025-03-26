@@ -1,0 +1,134 @@
+/**
+ * TypeScript type definitions for the parameter utilities
+ */
+
+import { RequestOptions } from './common.ts.types';
+
+/**
+ * Base parameter options
+ */
+export interface BaseParams {
+  country?: string;
+  lang?: string;
+  requestOptions?: RequestOptions;
+  throttle?: number;
+}
+
+/**
+ * App identifier parameters
+ */
+export interface AppIdParams {
+  id?: number | string;
+  appId?: string;
+}
+
+/**
+ * Developer parameters
+ */
+export interface DeveloperParams extends BaseParams {
+  devId: number | string;
+  num?: number;
+}
+
+/**
+ * List parameters
+ */
+export interface ListParams extends BaseParams {
+  collection?: string;
+  category?: number;
+  num?: number;
+}
+
+/**
+ * Pagination parameters
+ */
+export interface PaginationParams {
+  page?: number;
+  limit?: number;
+}
+
+/**
+ * Search parameters
+ */
+export interface SearchParams extends BaseParams, PaginationParams {
+  term: string;
+  num?: number;
+}
+
+/**
+ * Reviews parameters
+ */
+export interface ReviewsParams extends BaseParams, AppIdParams, PaginationParams {
+  sort?: string;
+}
+
+/**
+ * Suggests parameters
+ */
+export interface SuggestParams extends BaseParams {
+  term: string;
+  limit?: number;
+}
+
+/**
+ * Utility for ensuring parameters meet requirements
+ */
+export interface ParamUtils {
+  /**
+   * Ensures all required parameters are present
+   * 
+   * @param opts - Options to validate
+   * @param requiredParams - Array of required parameter names
+   * @param defaultValues - Optional default values to apply if parameter missing
+   * @returns Validated options with defaults applied
+   */
+  assertRequired: <T extends Record<string, any>>(
+    opts: T, 
+    requiredParams: string[],
+    defaultValues?: Partial<Record<string, any>>
+  ) => T;
+
+  /**
+   * Ensures that either of two parameters is present
+   * 
+   * @param opts - Options to validate
+   * @param param1 - First parameter name
+   * @param param2 - Second parameter name
+   * @returns Input options if valid
+   */
+  assertEither: <T extends Record<string, any>>(
+    opts: T,
+    param1: string,
+    param2: string
+  ) => T;
+  
+  /**
+   * Validates that a numeric value is within a range
+   * 
+   * @param value - Value to check
+   * @param min - Minimum allowed value
+   * @param max - Maximum allowed value
+   * @param defaultValue - Default to use if value is undefined
+   * @returns Validated value
+   */
+  validateInRange: (
+    value: number | undefined,
+    min: number,
+    max: number,
+    defaultValue?: number
+  ) => number;
+  
+  /**
+   * Validates that a value is within an enum of valid values
+   * 
+   * @param value - Value to check
+   * @param validValues - Array of valid options
+   * @param defaultValue - Default to use if value is undefined
+   * @returns Validated value
+   */
+  validateEnum: <T>(
+    value: T | undefined,
+    validValues: T[],
+    defaultValue?: T
+  ) => T;
+} 

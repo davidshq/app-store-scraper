@@ -1,0 +1,132 @@
+/**
+ * TypeScript type definitions for the common.js utilities
+ */
+
+import Bottleneck from 'bottleneck';
+import { Got } from 'got';
+import { App } from '../index.d';
+
+/**
+ * Raw app data from iTunes API
+ */
+export interface RawAppData {
+  trackId: number;
+  bundleId: string;
+  trackName: string;
+  trackViewUrl: string;
+  description: string;
+  artworkUrl512?: string;
+  artworkUrl100?: string;
+  artworkUrl60?: string;
+  genres: string[];
+  genreIds: string[];
+  primaryGenreName: string;
+  primaryGenreId: number;
+  contentAdvisoryRating: string;
+  languageCodesISO2A: string[];
+  fileSizeBytes: string;
+  minimumOsVersion: string;
+  releaseDate: string;
+  currentVersionReleaseDate?: string;
+  releaseNotes?: string;
+  version: string;
+  price: number;
+  currency: string;
+  artistId: number;
+  artistName: string;
+  artistViewUrl: string;
+  sellerUrl?: string;
+  averageUserRating: number;
+  userRatingCount: number;
+  averageUserRatingForCurrentVersion?: number;
+  userRatingCountForCurrentVersion?: number;
+  screenshotUrls: string[];
+  ipadScreenshotUrls: string[];
+  appletvScreenshotUrls: string[];
+  supportedDevices: string[];
+  wrapperType?: string;
+  [key: string]: any;
+}
+
+/**
+ * iTunes API response format
+ */
+export interface ITunesApiResponse {
+  resultCount: number;
+  results: RawAppData[];
+}
+
+/**
+ * Options for the request function
+ */
+export interface RequestOptions {
+  headers?: Record<string, string>;
+  retry?: {
+    limit: number;
+    methods: string[];
+  };
+  timeout?: {
+    request: number;
+  };
+  [key: string]: any;
+}
+
+/**
+ * Function type for the rate limiter factory
+ */
+export type LimiterFactory = (limit?: number) => Bottleneck;
+
+/**
+ * Function type for the HTTP client
+ */
+export type HttpClient = typeof import('got').default;
+
+/**
+ * Function type for the request function
+ */
+export type RequestFunction = (
+  url: string,
+  headers?: Record<string, string>,
+  requestOptions?: RequestOptions,
+  limit?: number
+) => Promise<string>;
+
+/**
+ * Options for lookup function
+ */
+export interface LookupOptions {
+  ids: (string | number)[];
+  idField?: 'id' | 'bundleId';
+  country?: string;
+  lang?: string;
+  requestOptions?: RequestOptions;
+  limit?: number;
+}
+
+/**
+ * Function that creates a request function with configurable dependencies
+ */
+export type RequesterFactory = (
+  httpClient?: HttpClient,
+  limiterFactory?: LimiterFactory
+) => RequestFunction;
+
+/**
+ * Common utilities exported from common.js
+ */
+export interface CommonUtils {
+  cleanApp: (app: RawAppData) => App;
+  getLimiter: LimiterFactory;
+  createRequestOptions: (headers?: Record<string, string>, customOptions?: RequestOptions) => RequestOptions;
+  createRequester: RequesterFactory;
+  doRequest: RequestFunction;
+  lookup: (
+    ids: (string | number)[],
+    idField?: 'id' | 'bundleId',
+    country?: string, 
+    lang?: string,
+    requestOptions?: RequestOptions,
+    limit?: number
+  ) => Promise<App[]>;
+  storeId: (countryCode: string) => string;
+} 
