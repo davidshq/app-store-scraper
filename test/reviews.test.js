@@ -34,7 +34,8 @@ describe('Reviews method', () => {
       throw new Error('Function did not throw expected validation error');
     } catch (e) {
       expect(e).to.be.an('error');
-      expect(e.message).to.equal('Invalid sort invalid');
+      expect(e.message).to.include('Invalid value "invalid" for "sort"');
+      expect(e.code).to.equal('VALIDATION_ERROR');
     }
   });
 
@@ -59,7 +60,8 @@ describe('Reviews method', () => {
       throw new Error('Function did not throw expected validation error');
     } catch (e) {
       expect(e).to.be.an('error');
-      expect(e.message).to.equal('Page cannot be greater than 10');
+      expect(e.message).to.include('must be at most 10');
+      expect(e.code).to.equal('VALIDATION_ERROR');
     }
   });
 

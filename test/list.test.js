@@ -25,7 +25,8 @@ describe('List method', () => {
       throw new Error('Function did not throw expected validation error');
     } catch (e) {
       expect(e).to.be.an('error');
-      expect(e.message).to.equal('Invalid category wrong');
+      expect(e.message).to.include('Invalid value "wrong" for "category"');
+      expect(e.code).to.equal('VALIDATION_ERROR');
     }
   });
 
@@ -38,7 +39,8 @@ describe('List method', () => {
       throw new Error('Function did not throw expected validation error');
     } catch (e) {
       expect(e).to.be.an('error');
-      expect(e.message).to.equal('Invalid collection wrong');
+      expect(e.message).to.include('Invalid value "wrong" for "collection"');
+      expect(e.code).to.equal('VALIDATION_ERROR');
     }
   });
 
@@ -52,7 +54,8 @@ describe('List method', () => {
       throw new Error('Function did not throw expected validation error');
     } catch (e) {
       expect(e).to.be.an('error');
-      expect(e.message).to.equal('Cannot retrieve more than 200 apps');
+      expect(e.message).to.include('must be at most 200');
+      expect(e.code).to.equal('VALIDATION_ERROR');
     }
   });
 
