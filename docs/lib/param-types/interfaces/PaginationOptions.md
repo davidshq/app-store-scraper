@@ -6,7 +6,7 @@
 
 # Interface: PaginationOptions
 
-Defined in: [lib/param-types.ts:23](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L23)
+Defined in: [lib/param-types.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L23)
 
 Options for methods that support pagination
 
@@ -22,7 +22,7 @@ Options for methods that support pagination
 
 > `optional` **num**: `number`
 
-Defined in: [lib/param-types.ts:25](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L25)
+Defined in: [lib/param-types.ts:25](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L25)
 
 Number of results to retrieve (per page)
 
@@ -32,6 +32,6 @@ Number of results to retrieve (per page)
 
 > `optional` **page**: `number`
 
-Defined in: [lib/param-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L27)
+Defined in: [lib/param-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L27)
 
 Page number to retrieve (starting from 1)

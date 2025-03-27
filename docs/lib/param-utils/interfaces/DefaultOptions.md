@@ -6,7 +6,7 @@
 
 # Interface: DefaultOptions
 
-Defined in: [lib/param-utils.ts:9](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L9)
+Defined in: [lib/param-utils.ts:9](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L9)
 
 Interface for API request default options
 
@@ -20,7 +20,7 @@ Interface for API request default options
 
 > **country**: `string`
 
-Defined in: [lib/param-utils.ts:10](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L10)
+Defined in: [lib/param-utils.ts:10](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L10)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [lib/param-utils.ts:10](https://github.com/facundoolano/app-store-sc
 
 > **lang**: `string`
 
-Defined in: [lib/param-utils.ts:11](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L11)
+Defined in: [lib/param-utils.ts:11](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L11)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [lib/param-utils.ts:11](https://github.com/facundoolano/app-store-sc
 
 > **limit**: `number`
 
-Defined in: [lib/param-utils.ts:12](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L12)
+Defined in: [lib/param-utils.ts:12](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L12)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [lib/param-utils.ts:12](https://github.com/facundoolano/app-store-sc
 
 > **num**: `number`
 
-Defined in: [lib/param-utils.ts:15](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L15)
+Defined in: [lib/param-utils.ts:15](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L15)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [lib/param-utils.ts:15](https://github.com/facundoolano/app-store-sc
 
 > **offset**: `number`
 
-Defined in: [lib/param-utils.ts:13](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L13)
+Defined in: [lib/param-utils.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L13)
 
 ***
 
@@ -60,4 +60,4 @@ Defined in: [lib/param-utils.ts:13](https://github.com/facundoolano/app-store-sc
 
 > **page**: `number`
 
-Defined in: [lib/param-utils.ts:14](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L14)
+Defined in: [lib/param-utils.ts:14](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L14)

@@ -12,8 +12,18 @@
 
 ## Classes
 
+- [AppLookupError](classes/AppLookupError.md)
 - [AppStoreScraperError](classes/AppStoreScraperError.md)
+- [DeveloperError](classes/DeveloperError.md)
+- [RatingsError](classes/RatingsError.md)
+- [ReviewsError](classes/ReviewsError.md)
+- [SearchError](classes/SearchError.md)
+
+## Interfaces
+
+- [IAppStoreScraperError](interfaces/IAppStoreScraperError.md)
 
 ## Variables
 
+- [errorCategories](variables/errorCategories.md)
 - [errors](variables/errors.md)

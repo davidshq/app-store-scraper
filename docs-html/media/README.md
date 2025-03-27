@@ -14,21 +14,24 @@ npm install app-store-scraper
 import appStore from 'app-store-scraper';
 
 // Get an app by ID
-appStore.app({ id: 553834731 })
+appStore
+  .app({ id: 553834731 })
   .then(app => console.log(`${app.title} by ${app.developer}`))
   .catch(console.error);
 
 // Search for apps
-appStore.search({ term: 'puzzle games', num: 5 })
+appStore
+  .search({ term: 'puzzle games', num: 5 })
   .then(apps => console.log(`Found ${apps.length} apps`))
   .catch(console.error);
 
 // Get app reviews
-appStore.reviews({
-  appId: 'com.midasplayer.apps.candycrushsaga',
-  sort: appStore.sort.RECENT,
-  page: 1
-})
+appStore
+  .reviews({
+    appId: 'com.midasplayer.apps.candycrushsaga',
+    sort: appStore.sort.RECENT,
+    page: 1
+  })
   .then(result => console.log(`Found ${result.reviews.length} reviews`))
   .catch(console.error);
 ```
@@ -48,7 +51,7 @@ const memoizedApi = appStore.memoized({
 const customCachedApi = appStore.configureCaching({
   app: { maxAge: 1000 * 60 * 60 }, // 1 hour for app details
   search: { maxAge: 1000 * 60 * 10 }, // 10 minutes for search results
-  reviews: { maxAge: 1000 * 60 * 5 }  // 5 minutes for reviews
+  reviews: { maxAge: 1000 * 60 * 5 } // 5 minutes for reviews
 });
 
 // Clear cache when needed
@@ -73,4 +76,4 @@ The app-store-scraper provides the following methods:
 
 ## API Reference
 
-The complete API reference is available in the generated documentation. 
+The complete API reference is available in the generated documentation.

@@ -6,7 +6,7 @@
 
 # Class: AppStoreScraperError
 
-Defined in: [lib/error-types.ts:21](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/error-types.ts#L21)
+Defined in: [lib/error-types.ts:77](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L77)
 
 Custom error class for app-store-scraper errors
 
@@ -14,13 +14,25 @@ Custom error class for app-store-scraper errors
 
 - `Error`
 
+## Extended by
+
+- [`AppLookupError`](AppLookupError.md)
+- [`DeveloperError`](DeveloperError.md)
+- [`RatingsError`](RatingsError.md)
+- [`ReviewsError`](ReviewsError.md)
+- [`SearchError`](SearchError.md)
+
+## Implements
+
+- [`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md)
+
 ## Constructors
 
 ### Constructor
 
-> **new AppStoreScraperError**(`message`, `code`, `originalError`?): `AppStoreScraperError`
+> **new AppStoreScraperError**(`message`, `code`, `originalError`?, `endpoint`?, `params`?): `AppStoreScraperError`
 
-Defined in: [lib/error-types.ts:44](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/error-types.ts#L44)
+Defined in: [lib/error-types.ts:112](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L112)
 
 Creates a new AppStoreScraperError
 
@@ -44,6 +56,18 @@ Error code from ErrorCode enum
 
 The original error object (optional)
 
+##### endpoint?
+
+`string`
+
+The API endpoint involved (optional)
+
+##### params?
+
+`Record`\<`string`, `any`\>
+
+Parameters used in the API call (optional)
+
 #### Returns
 
 `AppStoreScraperError`
@@ -58,9 +82,27 @@ The original error object (optional)
 
 > **code**: [`ErrorCode`](../enumerations/ErrorCode.md)
 
-Defined in: [lib/error-types.ts:25](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/error-types.ts#L25)
+Defined in: [lib/error-types.ts:81](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L81)
 
 Error code from ErrorCode enum
+
+#### Implementation of
+
+[`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md).[`code`](../interfaces/IAppStoreScraperError.md#code)
+
+***
+
+### endpoint?
+
+> `optional` **endpoint**: `string`
+
+Defined in: [lib/error-types.ts:96](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L96)
+
+API endpoint that caused the error (if applicable)
+
+#### Implementation of
+
+[`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md).[`endpoint`](../interfaces/IAppStoreScraperError.md#endpoint)
 
 ***
 
@@ -68,9 +110,27 @@ Error code from ErrorCode enum
 
 > `optional` **originalError**: `Error`
 
-Defined in: [lib/error-types.ts:30](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/error-types.ts#L30)
+Defined in: [lib/error-types.ts:86](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L86)
 
 Original error that caused this error (if any)
+
+#### Implementation of
+
+[`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md).[`originalError`](../interfaces/IAppStoreScraperError.md#originalerror)
+
+***
+
+### params?
+
+> `optional` **params**: `Record`\<`string`, `any`\>
+
+Defined in: [lib/error-types.ts:101](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L101)
+
+Parameters used in the API call (if applicable)
+
+#### Implementation of
+
+[`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md).[`params`](../interfaces/IAppStoreScraperError.md#params)
 
 ***
 
@@ -78,6 +138,66 @@ Original error that caused this error (if any)
 
 > `optional` **statusCode**: `number`
 
-Defined in: [lib/error-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/error-types.ts#L35)
+Defined in: [lib/error-types.ts:91](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L91)
 
 HTTP status code (if applicable)
+
+#### Implementation of
+
+[`IAppStoreScraperError`](../interfaces/IAppStoreScraperError.md).[`statusCode`](../interfaces/IAppStoreScraperError.md#statuscode)
+
+## Methods
+
+### isCategory()
+
+> **isCategory**(`category`): `boolean`
+
+Defined in: [lib/error-types.ts:155](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L155)
+
+Gets whether this error belongs to a specific category
+
+#### Parameters
+
+##### category
+
+[`ErrorCode`](../enumerations/ErrorCode.md)
+
+The category to check against
+
+#### Returns
+
+`boolean`
+
+True if the error is in the specified category
+
+***
+
+### isRecoverable()
+
+> **isRecoverable**(): `boolean`
+
+Defined in: [lib/error-types.ts:163](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L163)
+
+Indicates if this error is recoverable
+
+#### Returns
+
+`boolean`
+
+True if the error might be recoverable (e.g., retrying)
+
+***
+
+### toJSON()
+
+> **toJSON**(): `Record`\<`string`, `any`\>
+
+Defined in: [lib/error-types.ts:176](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L176)
+
+Returns a plain object representation of the error
+
+#### Returns
+
+`Record`\<`string`, `any`\>
+
+Plain object with error details

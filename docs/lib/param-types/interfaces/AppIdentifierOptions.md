@@ -6,7 +6,7 @@
 
 # Interface: AppIdentifierOptions
 
-Defined in: [lib/param-types.ts:33](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L33)
+Defined in: [lib/param-types.ts:33](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L33)
 
 Options for methods that require an app identifier
 
@@ -23,7 +23,7 @@ Options for methods that require an app identifier
 
 > `optional` **appId**: `string`
 
-Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L37)
+Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L37)
 
 The app bundle ID (e.g., 'com.example.app')
 
@@ -33,6 +33,6 @@ The app bundle ID (e.g., 'com.example.app')
 
 > `optional` **id**: `string` \| `number`
 
-Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L35)
+Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L35)
 
 The iTunes app ID (numeric)

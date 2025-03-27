@@ -6,7 +6,7 @@
 
 # Interface: AppOptions
 
-Defined in: [lib/app.ts:13](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/app.ts#L13)
+Defined in: [lib/app.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/app.ts#L13)
 
 Options for app lookup
  AppOptions
@@ -21,7 +21,7 @@ Options for app lookup
 
 > `optional` **appId**: `string`
 
-Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L37)
+Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L37)
 
 The app bundle ID (e.g., 'com.example.app')
 
@@ -35,7 +35,7 @@ The app bundle ID (e.g., 'com.example.app')
 
 > `optional` **country**: `string`
 
-Defined in: [lib/param-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L11)
+Defined in: [lib/param-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L11)
 
 The country code for the App Store (ISO 3166-1 alpha-2)
 
@@ -49,7 +49,7 @@ The country code for the App Store (ISO 3166-1 alpha-2)
 
 > `optional` **id**: `string` \| `number`
 
-Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L35)
+Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L35)
 
 The iTunes app ID (numeric)
 
@@ -63,7 +63,7 @@ The iTunes app ID (numeric)
 
 > `optional` **lang**: `string`
 
-Defined in: [lib/param-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L13)
+Defined in: [lib/param-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L13)
 
 The language code for localized data (e.g., 'en-us')
 
@@ -77,7 +77,7 @@ The language code for localized data (e.g., 'en-us')
 
 > `optional` **ratings**: `boolean`
 
-Defined in: [lib/app.ts:18](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/app.ts#L18)
+Defined in: [lib/app.ts:18](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/app.ts#L18)
 
 Whether to include ratings data with the response
 
@@ -87,7 +87,7 @@ Whether to include ratings data with the response
 
 > `optional` **requestOptions**: [`RequestOptions`](../../utils/http-client/interfaces/RequestOptions.md)
 
-Defined in: [lib/param-types.ts:17](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L17)
+Defined in: [lib/param-types.ts:17](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L17)
 
 Additional options passed to the network request function
 
@@ -101,7 +101,7 @@ Additional options passed to the network request function
 
 > `optional` **throttle**: `number`
 
-Defined in: [lib/param-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L15)
+Defined in: [lib/param-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L15)
 
 Maximum number of requests per second
 

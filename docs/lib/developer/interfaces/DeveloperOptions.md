@@ -6,7 +6,7 @@
 
 # Interface: DeveloperOptions
 
-Defined in: [lib/developer.ts:12](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L12)
+Defined in: [lib/developer.ts:12](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L12)
 
 Options for developer data lookup
  DeveloperOptions
@@ -25,7 +25,7 @@ Options for developer data lookup
 
 > `optional` **country**: `string`
 
-Defined in: [lib/developer.ts:23](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L23)
+Defined in: [lib/developer.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L23)
 
 The two-letter country code to get data from
 
@@ -45,7 +45,7 @@ The two-letter country code to get data from
 
 > **devId**: `string` \| `number`
 
-Defined in: [lib/developer.ts:17](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L17)
+Defined in: [lib/developer.ts:17](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L17)
 
 The developer/artist ID to look up
 
@@ -55,7 +55,7 @@ The developer/artist ID to look up
 
 > `optional` **fullDetail**: `boolean`
 
-Defined in: [lib/developer.ts:50](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L50)
+Defined in: [lib/developer.ts:50](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L50)
 
 Whether to fetch full app details
 
@@ -71,7 +71,7 @@ false
 
 > `optional` **lang**: `string`
 
-Defined in: [lib/developer.ts:28](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L28)
+Defined in: [lib/developer.ts:28](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L28)
 
 The language code for localized data
 
@@ -85,7 +85,7 @@ The language code for localized data
 
 > `optional` **num**: `number`
 
-Defined in: [lib/developer.ts:44](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L44)
+Defined in: [lib/developer.ts:44](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L44)
 
 Number of results to return
 
@@ -101,7 +101,7 @@ Number of results to return
 
 > `optional` **requestOptions**: [`RequestOptions`](../../utils/http-client/interfaces/RequestOptions.md)
 
-Defined in: [lib/developer.ts:33](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L33)
+Defined in: [lib/developer.ts:33](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L33)
 
 Options for the underlying HTTP request
 
@@ -111,6 +111,6 @@ Options for the underlying HTTP request
 
 > `optional` **throttle**: `number`
 
-Defined in: [lib/developer.ts:38](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/developer.ts#L38)
+Defined in: [lib/developer.ts:38](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/developer.ts#L38)
 
 Rate limit for requests in requests per second

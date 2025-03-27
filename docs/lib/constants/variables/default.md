@@ -8,7 +8,7 @@
 
 > **default**: `object`
 
-Defined in: [lib/constants.ts:243](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/constants.ts#L243)
+Defined in: [lib/constants.ts:243](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/constants.ts#L243)
 
 ## Type declaration
 

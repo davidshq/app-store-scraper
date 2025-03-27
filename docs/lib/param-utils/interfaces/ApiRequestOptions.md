@@ -6,7 +6,7 @@
 
 # Interface: ApiRequestOptions
 
-Defined in: [lib/param-utils.ts:22](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L22)
+Defined in: [lib/param-utils.ts:22](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L22)
 
 Interface for API request options
 
@@ -27,7 +27,7 @@ Interface for API request options
 
 > `optional` **country**: `string`
 
-Defined in: [lib/param-utils.ts:23](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L23)
+Defined in: [lib/param-utils.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L23)
 
 ***
 
@@ -35,4 +35,4 @@ Defined in: [lib/param-utils.ts:23](https://github.com/facundoolano/app-store-sc
 
 > `optional` **lang**: `string`
 
-Defined in: [lib/param-utils.ts:24](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-utils.ts#L24)
+Defined in: [lib/param-utils.ts:24](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L24)

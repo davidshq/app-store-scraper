@@ -6,7 +6,7 @@
 
 # Interface: ReviewsOptions
 
-Defined in: [lib/reviews.ts:10](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/reviews.ts#L10)
+Defined in: [lib/reviews.ts:10](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L10)
 
 Options for reviews lookup
 
@@ -20,7 +20,7 @@ Options for reviews lookup
 
 > `optional` **appId**: `string`
 
-Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L37)
+Defined in: [lib/param-types.ts:37](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L37)
 
 The app bundle ID (e.g., 'com.example.app')
 
@@ -34,7 +34,7 @@ The app bundle ID (e.g., 'com.example.app')
 
 > `optional` **country**: `string`
 
-Defined in: [lib/param-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L11)
+Defined in: [lib/param-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L11)
 
 The country code for the App Store (ISO 3166-1 alpha-2)
 
@@ -48,7 +48,7 @@ The country code for the App Store (ISO 3166-1 alpha-2)
 
 > `optional` **id**: `string` \| `number`
 
-Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L35)
+Defined in: [lib/param-types.ts:35](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L35)
 
 The iTunes app ID (numeric)
 
@@ -62,7 +62,7 @@ The iTunes app ID (numeric)
 
 > `optional` **lang**: `string`
 
-Defined in: [lib/param-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L13)
+Defined in: [lib/param-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L13)
 
 The language code for localized data (e.g., 'en-us')
 
@@ -76,7 +76,7 @@ The language code for localized data (e.g., 'en-us')
 
 > `optional` **page**: `number`
 
-Defined in: [lib/param-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L27)
+Defined in: [lib/param-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L27)
 
 Page number to retrieve (starting from 1)
 
@@ -90,7 +90,7 @@ Page number to retrieve (starting from 1)
 
 > `optional` **requestOptions**: [`RequestOptions`](../../utils/http-client/interfaces/RequestOptions.md)
 
-Defined in: [lib/param-types.ts:17](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L17)
+Defined in: [lib/param-types.ts:17](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L17)
 
 Additional options passed to the network request function
 
@@ -104,7 +104,7 @@ Additional options passed to the network request function
 
 > `optional` **sort**: `string`
 
-Defined in: [lib/reviews.ts:15](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/reviews.ts#L15)
+Defined in: [lib/reviews.ts:15](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L15)
 
 The sort order (see constants.sort)
 
@@ -114,7 +114,7 @@ The sort order (see constants.sort)
 
 > `optional` **throttle**: `number`
 
-Defined in: [lib/param-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/param-types.ts#L15)
+Defined in: [lib/param-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L15)
 
 Maximum number of requests per second
 

@@ -6,7 +6,7 @@
 
 # Interface: EndpointConfig\<T, R\>
 
-Defined in: [lib/endpoint-builder.ts:13](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L13)
+Defined in: [lib/endpoint-builder.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L13)
 
 Interface for endpoint configuration
 
@@ -26,7 +26,7 @@ Interface for endpoint configuration
 
 > **fetch**: (`opts`, `dependencies`?) => `Promise`\<`R`\>
 
-Defined in: [lib/endpoint-builder.ts:17](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L17)
+Defined in: [lib/endpoint-builder.ts:17](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L17)
 
 Function that performs the actual API request
 
@@ -52,7 +52,7 @@ Function that performs the actual API request
 
 > `optional` **resolveId**: `boolean`
 
-Defined in: [lib/endpoint-builder.ts:32](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L32)
+Defined in: [lib/endpoint-builder.ts:32](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L32)
 
 Whether to resolve id/appId to numeric id if needed
 
@@ -62,7 +62,7 @@ Whether to resolve id/appId to numeric id if needed
 
 > `optional` **transform**: (`data`) => `R`
 
-Defined in: [lib/endpoint-builder.ts:27](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L27)
+Defined in: [lib/endpoint-builder.ts:27](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L27)
 
 Function to transform the response data
 
@@ -82,7 +82,7 @@ Function to transform the response data
 
 > `optional` **validate**: (`opts`) => `void`
 
-Defined in: [lib/endpoint-builder.ts:22](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L22)
+Defined in: [lib/endpoint-builder.ts:22](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L22)
 
 Function to validate the options
 

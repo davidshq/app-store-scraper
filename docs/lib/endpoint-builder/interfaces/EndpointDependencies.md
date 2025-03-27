@@ -6,7 +6,7 @@
 
 # Interface: EndpointDependencies
 
-Defined in: [lib/endpoint-builder.ts:38](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L38)
+Defined in: [lib/endpoint-builder.ts:38](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L38)
 
 Interface for endpoint dependencies
 
@@ -16,7 +16,7 @@ Interface for endpoint dependencies
 
 > `optional` **appFunction**: (`opts`) => `Promise`\<`any`\>
 
-Defined in: [lib/endpoint-builder.ts:42](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L42)
+Defined in: [lib/endpoint-builder.ts:42](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L42)
 
 App function to use (defaults to app import)
 
@@ -36,7 +36,7 @@ App function to use (defaults to app import)
 
 > `optional` **requestFunction**: (`url`, `headers`?, `requestOptions`?, `limit`?) => `Promise`\<`string`\>
 
-Defined in: [lib/endpoint-builder.ts:47](https://github.com/facundoolano/app-store-scraper/blob/113d925388ad33c5af9077ca637c241f2bf7e574/lib/endpoint-builder.ts#L47)
+Defined in: [lib/endpoint-builder.ts:47](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/endpoint-builder.ts#L47)
 
 Request function to use (defaults to request)
 
