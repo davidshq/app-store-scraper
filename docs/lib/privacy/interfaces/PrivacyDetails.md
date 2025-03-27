@@ -6,7 +6,7 @@
 
 # Interface: PrivacyDetails
 
-Defined in: [lib/privacy.ts:40](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L40)
+Defined in: [lib/privacy.ts:40](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L40)
 
 Privacy details response
 
@@ -16,7 +16,7 @@ Privacy details response
 
 > `optional` **managePrivacyChoicesUrl**: `string`
 
-Defined in: [lib/privacy.ts:41](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L41)
+Defined in: [lib/privacy.ts:41](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L41)
 
 ***
 
@@ -24,4 +24,4 @@ Defined in: [lib/privacy.ts:41](https://github.com/facundoolano/app-store-scrape
 
 > **privacyTypes**: [`PrivacyDetailType`](PrivacyDetailType.md)[]
 
-Defined in: [lib/privacy.ts:42](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L42)
+Defined in: [lib/privacy.ts:42](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L42)

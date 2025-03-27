@@ -6,7 +6,7 @@
 
 # Class: RatingsError
 
-Defined in: [lib/error-types.ts:228](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L228)
+Defined in: [lib/error-types.ts:228](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L228)
 
 Error for ratings endpoint
 
@@ -20,7 +20,7 @@ Error for ratings endpoint
 
 > **new RatingsError**(`message`, `code`, `originalError`?, `params`?): `RatingsError`
 
-Defined in: [lib/error-types.ts:229](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L229)
+Defined in: [lib/error-types.ts:229](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L229)
 
 #### Parameters
 
@@ -54,7 +54,7 @@ Defined in: [lib/error-types.ts:229](https://github.com/facundoolano/app-store-s
 
 > **code**: [`ErrorCode`](../enumerations/ErrorCode.md)
 
-Defined in: [lib/error-types.ts:81](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L81)
+Defined in: [lib/error-types.ts:81](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L81)
 
 Error code from ErrorCode enum
 
@@ -68,7 +68,7 @@ Error code from ErrorCode enum
 
 > `optional` **endpoint**: `string`
 
-Defined in: [lib/error-types.ts:96](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L96)
+Defined in: [lib/error-types.ts:96](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L96)
 
 API endpoint that caused the error (if applicable)
 
@@ -82,7 +82,7 @@ API endpoint that caused the error (if applicable)
 
 > `optional` **originalError**: `Error`
 
-Defined in: [lib/error-types.ts:86](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L86)
+Defined in: [lib/error-types.ts:86](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L86)
 
 Original error that caused this error (if any)
 
@@ -96,7 +96,7 @@ Original error that caused this error (if any)
 
 > `optional` **params**: `Record`\<`string`, `any`\>
 
-Defined in: [lib/error-types.ts:101](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L101)
+Defined in: [lib/error-types.ts:101](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L101)
 
 Parameters used in the API call (if applicable)
 
@@ -110,7 +110,7 @@ Parameters used in the API call (if applicable)
 
 > `optional` **statusCode**: `number`
 
-Defined in: [lib/error-types.ts:91](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L91)
+Defined in: [lib/error-types.ts:91](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L91)
 
 HTTP status code (if applicable)
 
@@ -124,7 +124,7 @@ HTTP status code (if applicable)
 
 > **isCategory**(`category`): `boolean`
 
-Defined in: [lib/error-types.ts:155](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L155)
+Defined in: [lib/error-types.ts:155](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L155)
 
 Gets whether this error belongs to a specific category
 
@@ -152,7 +152,7 @@ True if the error is in the specified category
 
 > **isRecoverable**(): `boolean`
 
-Defined in: [lib/error-types.ts:163](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L163)
+Defined in: [lib/error-types.ts:163](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L163)
 
 Indicates if this error is recoverable
 
@@ -172,7 +172,7 @@ True if the error might be recoverable (e.g., retrying)
 
 > **toJSON**(): `Record`\<`string`, `any`\>
 
-Defined in: [lib/error-types.ts:176](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L176)
+Defined in: [lib/error-types.ts:176](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L176)
 
 Returns a plain object representation of the error
 

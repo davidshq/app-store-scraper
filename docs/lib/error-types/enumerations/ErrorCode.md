@@ -6,7 +6,7 @@
 
 # Enumeration: ErrorCode
 
-Defined in: [lib/error-types.ts:8](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L8)
+Defined in: [lib/error-types.ts:8](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L8)
 
 Standard error codes for common API errors
 
@@ -16,7 +16,7 @@ Standard error codes for common API errors
 
 > **API\_VERSION\_ERROR**: `"API_VERSION_ERROR"`
 
-Defined in: [lib/error-types.ts:30](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L30)
+Defined in: [lib/error-types.ts:30](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L30)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [lib/error-types.ts:30](https://github.com/facundoolano/app-store-sc
 
 > **APP\_NOT\_FOUND**: `"APP_NOT_FOUND"`
 
-Defined in: [lib/error-types.ts:19](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L19)
+Defined in: [lib/error-types.ts:19](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L19)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [lib/error-types.ts:19](https://github.com/facundoolano/app-store-sc
 
 > **DEVELOPER\_NOT\_FOUND**: `"DEVELOPER_NOT_FOUND"`
 
-Defined in: [lib/error-types.ts:20](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L20)
+Defined in: [lib/error-types.ts:20](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L20)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [lib/error-types.ts:20](https://github.com/facundoolano/app-store-sc
 
 > **INVALID\_PARAMETER**: `"INVALID_PARAMETER"`
 
-Defined in: [lib/error-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L27)
+Defined in: [lib/error-types.ts:27](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L27)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [lib/error-types.ts:27](https://github.com/facundoolano/app-store-sc
 
 > **LIST\_FAILED**: `"LIST_FAILED"`
 
-Defined in: [lib/error-types.ts:24](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L24)
+Defined in: [lib/error-types.ts:24](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L24)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [lib/error-types.ts:24](https://github.com/facundoolano/app-store-sc
 
 > **MALFORMED\_RESPONSE**: `"MALFORMED_RESPONSE"`
 
-Defined in: [lib/error-types.ts:28](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L28)
+Defined in: [lib/error-types.ts:28](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L28)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [lib/error-types.ts:28](https://github.com/facundoolano/app-store-sc
 
 > **NETWORK\_ERROR**: `"NETWORK_ERROR"`
 
-Defined in: [lib/error-types.ts:12](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L12)
+Defined in: [lib/error-types.ts:12](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L12)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [lib/error-types.ts:12](https://github.com/facundoolano/app-store-sc
 
 > **NOT\_FOUND**: `"NOT_FOUND"`
 
-Defined in: [lib/error-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L11)
+Defined in: [lib/error-types.ts:11](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L11)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [lib/error-types.ts:11](https://github.com/facundoolano/app-store-sc
 
 > **PARSING\_ERROR**: `"PARSING_ERROR"`
 
-Defined in: [lib/error-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L13)
+Defined in: [lib/error-types.ts:13](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L13)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [lib/error-types.ts:13](https://github.com/facundoolano/app-store-sc
 
 > **RATE\_LIMIT**: `"RATE_LIMIT"`
 
-Defined in: [lib/error-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L15)
+Defined in: [lib/error-types.ts:15](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L15)
 
 ***
 
@@ -96,7 +96,7 @@ Defined in: [lib/error-types.ts:15](https://github.com/facundoolano/app-store-sc
 
 > **RATINGS\_UNAVAILABLE**: `"RATINGS_UNAVAILABLE"`
 
-Defined in: [lib/error-types.ts:22](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L22)
+Defined in: [lib/error-types.ts:22](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L22)
 
 ***
 
@@ -104,7 +104,7 @@ Defined in: [lib/error-types.ts:22](https://github.com/facundoolano/app-store-sc
 
 > **REGION\_RESTRICTION**: `"REGION_RESTRICTION"`
 
-Defined in: [lib/error-types.ts:31](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L31)
+Defined in: [lib/error-types.ts:31](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L31)
 
 ***
 
@@ -112,7 +112,7 @@ Defined in: [lib/error-types.ts:31](https://github.com/facundoolano/app-store-sc
 
 > **REVIEW\_NOT\_FOUND**: `"REVIEW_NOT_FOUND"`
 
-Defined in: [lib/error-types.ts:21](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L21)
+Defined in: [lib/error-types.ts:21](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L21)
 
 ***
 
@@ -120,7 +120,7 @@ Defined in: [lib/error-types.ts:21](https://github.com/facundoolano/app-store-sc
 
 > **SEARCH\_FAILED**: `"SEARCH_FAILED"`
 
-Defined in: [lib/error-types.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L23)
+Defined in: [lib/error-types.ts:23](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L23)
 
 ***
 
@@ -128,7 +128,7 @@ Defined in: [lib/error-types.ts:23](https://github.com/facundoolano/app-store-sc
 
 > **SERVER\_ERROR**: `"SERVER_ERROR"`
 
-Defined in: [lib/error-types.ts:14](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L14)
+Defined in: [lib/error-types.ts:14](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L14)
 
 ***
 
@@ -136,7 +136,7 @@ Defined in: [lib/error-types.ts:14](https://github.com/facundoolano/app-store-sc
 
 > **SIMILAR\_NOT\_AVAILABLE**: `"SIMILAR_NOT_AVAILABLE"`
 
-Defined in: [lib/error-types.ts:25](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L25)
+Defined in: [lib/error-types.ts:25](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L25)
 
 ***
 
@@ -144,7 +144,7 @@ Defined in: [lib/error-types.ts:25](https://github.com/facundoolano/app-store-sc
 
 > **THROTTLING\_ERROR**: `"THROTTLING_ERROR"`
 
-Defined in: [lib/error-types.ts:29](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L29)
+Defined in: [lib/error-types.ts:29](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L29)
 
 ***
 
@@ -152,7 +152,7 @@ Defined in: [lib/error-types.ts:29](https://github.com/facundoolano/app-store-sc
 
 > **UNKNOWN\_ERROR**: `"UNKNOWN_ERROR"`
 
-Defined in: [lib/error-types.ts:16](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L16)
+Defined in: [lib/error-types.ts:16](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L16)
 
 ***
 
@@ -160,7 +160,7 @@ Defined in: [lib/error-types.ts:16](https://github.com/facundoolano/app-store-sc
 
 > **VALIDATION\_ERROR**: `"VALIDATION_ERROR"`
 
-Defined in: [lib/error-types.ts:10](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L10)
+Defined in: [lib/error-types.ts:10](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L10)
 
 ***
 
@@ -168,4 +168,4 @@ Defined in: [lib/error-types.ts:10](https://github.com/facundoolano/app-store-sc
 
 > **VERSION\_HISTORY\_UNAVAILABLE**: `"VERSION_HISTORY_UNAVAILABLE"`
 
-Defined in: [lib/error-types.ts:26](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L26)
+Defined in: [lib/error-types.ts:26](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L26)

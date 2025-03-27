@@ -1,5 +1,4 @@
-import { describe, it, expect } from 'vitest';
-import sinon from 'sinon';
+import { describe, it, expect, vi } from 'vitest';
 import {
   DEFAULTS,
   applyDefaults,
@@ -180,24 +179,24 @@ describe('Parameter Utilities', () => {
       const opts = { country: 'fr', lang: 'fr-fr' };
       const storeType = 24;
 
-      // Spy on sub-functions
-      const storeHeaderSpy = sinon.spy(getStoreHeader);
-      const addLangHeaderSpy = sinon.spy(addLanguageHeader);
+      // Create mock functions instead of spies
+      const storeHeaderMock = vi.fn().mockImplementation(getStoreHeader);
+      const addLangHeaderMock = vi.fn().mockImplementation(addLanguageHeader);
 
-      // Create a custom getHeaders function that uses our spies
+      // Create a custom getHeaders function that uses our mocks
       const testGetHeaders = (
         testOpts: Record<string, any>,
         testStoreType?: number
       ): Record<string, string> => {
-        const baseHeaders = storeHeaderSpy(testOpts, testStoreType);
-        return addLangHeaderSpy(baseHeaders, testOpts);
+        const baseHeaders = storeHeaderMock(testOpts, testStoreType);
+        return addLangHeaderMock(baseHeaders, testOpts);
       };
 
       const result = testGetHeaders(opts, storeType);
 
-      // Verify spies were called with correct arguments
-      expect(storeHeaderSpy.calledWith(opts, storeType)).toBe(true);
-      expect(addLangHeaderSpy.calledWith(sinon.match.object, opts)).toBe(true);
+      // Verify mocks were called with correct arguments
+      expect(storeHeaderMock).toHaveBeenCalledWith(opts, storeType);
+      expect(addLangHeaderMock).toHaveBeenCalledWith(expect.any(Object), opts);
 
       // Check that we have the expected headers
       expect(result).toHaveProperty('X-Apple-Store-Front');
@@ -286,12 +285,13 @@ describe('Parameter Utilities', () => {
 
     it('should call transformation functions with correct parameters', () => {
       const params = { value: 10 };
-      const transformSpy = sinon.spy(x => x * 2);
-      const rules = { value: transformSpy };
+      const transformFn = (x: number) => x * 2;
+      const transformMock = vi.fn().mockImplementation(transformFn);
+      const rules = { value: transformMock };
 
       processParams(params, rules);
-      expect(transformSpy.calledOnce).toBe(true);
-      expect(transformSpy.calledWith(10)).toBe(true);
+      expect(transformMock).toHaveBeenCalledOnce();
+      expect(transformMock).toHaveBeenCalledWith(10);
     });
   });
 
@@ -348,12 +348,13 @@ describe('Parameter Utilities', () => {
 
     it('should call validation functions with correct parameters', () => {
       const params = { value: 10 };
-      const validateSpy = sinon.spy(x => x > 5);
-      const rules = { value: validateSpy };
+      const validateFn = (x: number) => x > 5;
+      const validateMock = vi.fn().mockImplementation(validateFn);
+      const rules = { value: validateMock };
 
       isValid(params, rules);
-      expect(validateSpy.calledOnce).toBe(true);
-      expect(validateSpy.calledWith(10)).toBe(true);
+      expect(validateMock).toHaveBeenCalledOnce();
+      expect(validateMock).toHaveBeenCalledWith(10);
     });
   });
 });

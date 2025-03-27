@@ -6,7 +6,7 @@
 
 # Interface: Review
 
-Defined in: [lib/reviews.ts:21](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L21)
+Defined in: [lib/reviews.ts:21](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L21)
 
 Review object returned by the API
 
@@ -16,7 +16,7 @@ Review object returned by the API
 
 > **id**: `string`
 
-Defined in: [lib/reviews.ts:22](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L22)
+Defined in: [lib/reviews.ts:22](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L22)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [lib/reviews.ts:22](https://github.com/facundoolano/app-store-scrape
 
 > **score**: `number`
 
-Defined in: [lib/reviews.ts:26](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L26)
+Defined in: [lib/reviews.ts:26](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L26)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [lib/reviews.ts:26](https://github.com/facundoolano/app-store-scrape
 
 > **text**: `string`
 
-Defined in: [lib/reviews.ts:28](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L28)
+Defined in: [lib/reviews.ts:28](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L28)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [lib/reviews.ts:28](https://github.com/facundoolano/app-store-scrape
 
 > **title**: `string`
 
-Defined in: [lib/reviews.ts:27](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L27)
+Defined in: [lib/reviews.ts:27](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L27)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [lib/reviews.ts:27](https://github.com/facundoolano/app-store-scrape
 
 > **updated**: `string`
 
-Defined in: [lib/reviews.ts:30](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L30)
+Defined in: [lib/reviews.ts:30](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L30)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [lib/reviews.ts:30](https://github.com/facundoolano/app-store-scrape
 
 > **url**: `string`
 
-Defined in: [lib/reviews.ts:29](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L29)
+Defined in: [lib/reviews.ts:29](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L29)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [lib/reviews.ts:29](https://github.com/facundoolano/app-store-scrape
 
 > **userName**: `string`
 
-Defined in: [lib/reviews.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L23)
+Defined in: [lib/reviews.ts:23](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L23)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [lib/reviews.ts:23](https://github.com/facundoolano/app-store-scrape
 
 > **userUrl**: `string`
 
-Defined in: [lib/reviews.ts:24](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L24)
+Defined in: [lib/reviews.ts:24](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L24)
 
 ***
 
@@ -80,4 +80,4 @@ Defined in: [lib/reviews.ts:24](https://github.com/facundoolano/app-store-scrape
 
 > **version**: `string`
 
-Defined in: [lib/reviews.ts:25](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/reviews.ts#L25)
+Defined in: [lib/reviews.ts:25](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/reviews.ts#L25)

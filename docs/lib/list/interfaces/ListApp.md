@@ -6,7 +6,7 @@
 
 # Interface: ListApp
 
-Defined in: [lib/list.ts:33](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L33)
+Defined in: [lib/list.ts:33](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L33)
 
 Basic app data returned from the list API
  ListApp
@@ -17,7 +17,7 @@ Basic app data returned from the list API
 
 > **appId**: `string`
 
-Defined in: [lib/list.ts:37](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L37)
+Defined in: [lib/list.ts:37](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L37)
 
 The app's bundle identifier
 
@@ -27,7 +27,7 @@ The app's bundle identifier
 
 > **currency**: `string`
 
-Defined in: [lib/list.ts:47](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L47)
+Defined in: [lib/list.ts:47](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L47)
 
 The currency code for the price
 
@@ -37,7 +37,7 @@ The currency code for the price
 
 > `optional` **description**: `string`
 
-Defined in: [lib/list.ts:51](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L51)
+Defined in: [lib/list.ts:51](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L51)
 
 Short description of the app
 
@@ -47,7 +47,7 @@ Short description of the app
 
 > **developer**: `string`
 
-Defined in: [lib/list.ts:53](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L53)
+Defined in: [lib/list.ts:53](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L53)
 
 The developer's name
 
@@ -57,7 +57,7 @@ The developer's name
 
 > `optional` **developerId**: `string`
 
-Defined in: [lib/list.ts:57](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L57)
+Defined in: [lib/list.ts:57](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L57)
 
 The developer's ID
 
@@ -67,7 +67,7 @@ The developer's ID
 
 > `optional` **developerUrl**: `string`
 
-Defined in: [lib/list.ts:55](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L55)
+Defined in: [lib/list.ts:55](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L55)
 
 URL to the developer's page
 
@@ -77,7 +77,7 @@ URL to the developer's page
 
 > **free**: `boolean`
 
-Defined in: [lib/list.ts:49](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L49)
+Defined in: [lib/list.ts:49](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L49)
 
 Whether the app is free
 
@@ -87,7 +87,7 @@ Whether the app is free
 
 > **genre**: `string`
 
-Defined in: [lib/list.ts:59](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L59)
+Defined in: [lib/list.ts:59](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L59)
 
 The app's primary genre/category name
 
@@ -97,7 +97,7 @@ The app's primary genre/category name
 
 > **genreId**: `string`
 
-Defined in: [lib/list.ts:61](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L61)
+Defined in: [lib/list.ts:61](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L61)
 
 The app's primary genre/category ID
 
@@ -107,7 +107,7 @@ The app's primary genre/category ID
 
 > **icon**: `string`
 
-Defined in: [lib/list.ts:41](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L41)
+Defined in: [lib/list.ts:41](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L41)
 
 URL to the app's icon image
 
@@ -117,7 +117,7 @@ URL to the app's icon image
 
 > **id**: `string`
 
-Defined in: [lib/list.ts:35](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L35)
+Defined in: [lib/list.ts:35](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L35)
 
 The app's iTunes ID
 
@@ -127,7 +127,7 @@ The app's iTunes ID
 
 > **price**: `number`
 
-Defined in: [lib/list.ts:45](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L45)
+Defined in: [lib/list.ts:45](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L45)
 
 The app's price
 
@@ -137,7 +137,7 @@ The app's price
 
 > **released**: `string`
 
-Defined in: [lib/list.ts:63](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L63)
+Defined in: [lib/list.ts:63](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L63)
 
 The release date of the app
 
@@ -147,7 +147,7 @@ The release date of the app
 
 > **title**: `string`
 
-Defined in: [lib/list.ts:39](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L39)
+Defined in: [lib/list.ts:39](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L39)
 
 The app's title
 
@@ -157,6 +157,6 @@ The app's title
 
 > `optional` **url**: `string`
 
-Defined in: [lib/list.ts:43](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L43)
+Defined in: [lib/list.ts:43](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L43)
 
 URL to the app's page on the App Store

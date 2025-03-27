@@ -6,7 +6,7 @@
 
 # Interface: CacheOptions
 
-Defined in: [index.ts:54](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L54)
+Defined in: [index.ts:54](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L54)
 
 Interface for cache options
 
@@ -16,7 +16,7 @@ Interface for cache options
 
 > `optional` **max**: `number`
 
-Defined in: [index.ts:62](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L62)
+Defined in: [index.ts:62](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L62)
 
 Maximum cache size to prevent memory issues
 
@@ -26,7 +26,7 @@ Maximum cache size to prevent memory issues
 
 > `optional` **maxAge**: `number`
 
-Defined in: [index.ts:60](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L60)
+Defined in: [index.ts:60](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L60)
 
 Cache TTL in milliseconds
 
@@ -36,7 +36,7 @@ Cache TTL in milliseconds
 
 > `optional` **normalizer**: (`args`) => `string`
 
-Defined in: [index.ts:58](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L58)
+Defined in: [index.ts:58](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L58)
 
 Function to create cache keys from arguments
 
@@ -56,7 +56,7 @@ Function to create cache keys from arguments
 
 > `optional` **primitive**: `boolean`
 
-Defined in: [index.ts:56](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L56)
+Defined in: [index.ts:56](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L56)
 
 Whether to consider arguments as primitives
 
@@ -66,7 +66,7 @@ Whether to consider arguments as primitives
 
 > `optional` **profileName**: `string`
 
-Defined in: [index.ts:66](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L66)
+Defined in: [index.ts:66](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L66)
 
 Name of cache profile for debugging
 
@@ -76,6 +76,6 @@ Name of cache profile for debugging
 
 > `optional` **promise**: `boolean`
 
-Defined in: [index.ts:64](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/index.ts#L64)
+Defined in: [index.ts:64](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/index.ts#L64)
 
 Whether to cache promise rejections

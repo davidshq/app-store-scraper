@@ -12,10 +12,15 @@ The app-store-scraper project follows these testing principles:
 
 ## Test Framework
 
-We use Vitest as our test runner with these supporting libraries:
+We use Vitest as our test runner and mocking framework. Vitest provides:
 
-- **Chai**: For assertions and expectations (via Vitest's built-in expect)
-- **Sinon**: For mocks, stubs, and spies
+- **Test Running**: Fast and efficient test execution
+- **Assertions**: Built-in expect API for assertions
+- **Mocking**: Built-in mocking capabilities through the `vi` object
+  - `vi.spyOn()`: For spying on function calls
+  - `vi.fn()`: For creating mock functions
+  - `vi.mock()`: For mocking modules
+  - `vi.stubGlobal()`: For mocking global objects
 
 ## Writing Tests
 
@@ -36,26 +41,58 @@ function createEndpoint<T>({ fetch, validate, transform }: EndpointDeps, depende
 }
 ```
 
-### Test Helpers
+### Mocking Example
 
-We provide test helpers in `test/helpers/` to create mock functions:
+Here's how to use Vitest's mocking capabilities:
 
 ```typescript
-// Example usage
-import { createMockAppFunction } from './helpers/test-utils.js';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// In your test
-const mockAppFn = createMockAppFunction();
-const endpoint = createEndpoint<App>({...}, { appFunction: mockAppFn });
+describe('Example with mocks', () => {
+  let mockFunction: ReturnType<typeof vi.fn>;
+
+  beforeEach(() => {
+    // Create a mock function
+    mockFunction = vi.fn().mockResolvedValue({ data: 'test' });
+  });
+
+  it('should call mock function with correct arguments', async () => {
+    const result = await someFunction(mockFunction);
+
+    // Verify the mock was called
+    expect(mockFunction).toHaveBeenCalled();
+    // Verify call arguments
+    expect(mockFunction).toHaveBeenCalledWith(expectedArgs);
+    // Verify return value
+    expect(result).toEqual({ data: 'test' });
+  });
+});
 ```
 
-### ESM Module Testing
+### Test Structure
 
-Testing ES Modules presents challenges for mocking. We use these approaches:
+The test directory contains the following test files:
 
-1. **Dependency Injection**: Pass mocks as arguments instead of trying to mock imports
-2. **Dynamic Imports**: Use dynamic imports to avoid circular dependencies
-3. **Function Spies**: Test behavior by spying on functions rather than mocking modules
+- `app.test.ts`: Tests for app details fetching
+- `app-transform.test.ts`: Tests for app data transformation
+- `common.test.ts`: Common utility tests
+- `common-utils.test.ts`: Additional common utility tests
+- `developer.test.ts`: Developer-related functionality tests
+- `endpoint-builder.test.ts`: Endpoint construction tests
+- `error-types.test.ts`: Error handling tests
+- `http-client.test.ts`: HTTP client functionality tests
+- `list.test.ts`: App listing functionality tests
+- `memoization.test.ts`: Caching and memoization tests
+- `param-utils.test.ts`: Parameter validation and processing tests
+- `privacy.test.ts`: Privacy-related functionality tests
+- `rate-limiter.test.ts`: Rate limiting functionality tests
+- `ratings.test.ts`: App ratings functionality tests
+- `reviews.test.ts`: App reviews functionality tests
+- `search.test.ts`: Search functionality tests
+- `similar.test.ts`: Similar apps functionality tests
+- `suggest.test.ts`: App suggestions functionality tests
+- `validators.test.ts`: Input validation tests
+- `version-history.test.ts`: Version history functionality tests
 
 ### Test Examples
 
@@ -111,8 +148,11 @@ We aim for high test coverage, focusing on critical paths and edge cases:
 - Error handling
 - Parameter validation
 - Cache behavior
+- Rate limiting
+- Data transformation
+- HTTP client functionality
 
-Coverage reports are generated in HTML, JSON, and text formats using the V8 provider. You can view detailed coverage reports in the `coverage` directory after running the coverage command.
+Coverage reports are generated using the V8 provider. You can view detailed coverage reports after running the coverage command.
 
 ## Test Configuration
 
@@ -145,3 +185,6 @@ When adding new features, please:
 3. Follow the dependency injection pattern
 4. Use TypeScript types for better code quality and autocompletion
 5. Name test files with the `.test.ts` suffix
+6. Ensure all tests pass before submitting changes
+7. Run the full test suite with `npm test`
+8. Check test coverage with `npm run test:coverage`

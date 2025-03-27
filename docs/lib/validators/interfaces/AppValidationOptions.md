@@ -6,7 +6,7 @@
 
 # Interface: AppValidationOptions
 
-Defined in: [lib/validators.ts:184](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/validators.ts#L184)
+Defined in: [lib/validators.ts:184](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/validators.ts#L184)
 
 App options interface
 
@@ -24,7 +24,7 @@ App options interface
 
 > `optional` **appId**: `string`
 
-Defined in: [lib/validators.ts:186](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/validators.ts#L186)
+Defined in: [lib/validators.ts:186](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/validators.ts#L186)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [lib/validators.ts:186](https://github.com/facundoolano/app-store-sc
 
 > `optional` **id**: `string` \| `number`
 
-Defined in: [lib/validators.ts:185](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/validators.ts#L185)
+Defined in: [lib/validators.ts:185](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/validators.ts#L185)

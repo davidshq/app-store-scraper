@@ -1,22 +1,21 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import sinon from 'sinon';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import createEndpoint from '../lib/endpoint-builder.js';
 import { createTestFn } from './helpers/test-utils.js';
 
 describe('Endpoint Builder', () => {
   let mockCommon: {
-    storeId: sinon.SinonStub;
-    request: sinon.SinonStub;
+    storeId: ReturnType<typeof vi.fn>;
+    request: ReturnType<typeof vi.fn>;
   };
-  let mockApp: sinon.SinonStub;
+  let mockApp: ReturnType<typeof vi.fn>;
   let createEndpointWithMocks: any;
 
   beforeEach(() => {
     mockCommon = {
-      storeId: sinon.stub().returns('123'),
-      request: sinon.stub().resolves('{"results": []}')
+      storeId: vi.fn().mockReturnValue('123'),
+      request: vi.fn().mockResolvedValue('{"results": []}')
     };
-    mockApp = sinon.stub().resolves({ id: 123 });
+    mockApp = vi.fn().mockResolvedValue({ id: 123 });
 
     createEndpointWithMocks = createTestFn(createEndpoint, {
       '../lib/common.js': mockCommon,
@@ -26,14 +25,12 @@ describe('Endpoint Builder', () => {
   });
 
   afterEach(() => {
-    sinon.restore();
+    vi.clearAllMocks();
   });
 
   it('should build endpoint correctly for id', async () => {
     // Don't use any dependencies, test simply that our fetch function gets called
-    const fetchSpy = sinon.spy<(opts: Record<string, any>) => Promise<{ data: string }>>(() =>
-      Promise.resolve({ data: 'test' })
-    );
+    const fetchSpy = vi.fn().mockResolvedValue({ data: 'test' });
 
     // Create endpoint with minimal configuration
     const fn = createEndpointWithMocks({
@@ -45,15 +42,8 @@ describe('Endpoint Builder', () => {
     const result = await fn(opts);
 
     // Verify fetch was called with the right parameters
-    expect(fetchSpy.calledOnce).toBe(true);
-
-    // Fix the type error by checking if the spy was called and then accessing the args
-    if (fetchSpy.firstCall && fetchSpy.firstCall.args) {
-      expect(fetchSpy.firstCall.args[0]).toEqual(opts);
-    } else {
-      expect.fail('fetchSpy.firstCall.args should be defined');
-    }
-
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(fetchSpy).toHaveBeenCalledWith(opts, expect.any(Object));
     expect(result).toEqual({ data: 'test' });
   });
 
@@ -63,7 +53,7 @@ describe('Endpoint Builder', () => {
   });
 
   it('should call validate function when provided', async () => {
-    const validateSpy = sinon.spy<(opts: Record<string, any>) => void>(() => {});
+    const validateSpy = vi.fn();
     const fn = createEndpointWithMocks({
       fetch: () => Promise.resolve({}),
       validate: validateSpy
@@ -72,11 +62,11 @@ describe('Endpoint Builder', () => {
 
     await fn(opts);
 
-    expect(validateSpy.calledWith(opts)).toBe(true);
+    expect(validateSpy).toHaveBeenCalledWith(opts);
   });
 
   it('should transform response data when transform provided', async () => {
-    const transformSpy = sinon.stub<[(data: any) => any]>().returns({ transformed: true });
+    const transformSpy = vi.fn().mockReturnValue({ transformed: true });
     const fn = createEndpointWithMocks({
       fetch: () => Promise.resolve({ original: true }),
       transform: transformSpy
@@ -84,7 +74,7 @@ describe('Endpoint Builder', () => {
 
     const result = await fn({});
 
-    expect(transformSpy.calledWith({ original: true })).toBe(true);
+    expect(transformSpy).toHaveBeenCalledWith({ original: true });
     expect(result).toEqual({ transformed: true });
   });
 });

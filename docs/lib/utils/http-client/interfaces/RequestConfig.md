@@ -6,7 +6,7 @@
 
 # Interface: RequestConfig
 
-Defined in: [lib/utils/http-client.ts:157](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L157)
+Defined in: [lib/utils/http-client.ts:157](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L157)
 
 Request configuration object
 
@@ -16,7 +16,7 @@ Request configuration object
 
 > `optional` **headers**: `Record`\<`string`, `string`\>
 
-Defined in: [lib/utils/http-client.ts:159](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L159)
+Defined in: [lib/utils/http-client.ts:159](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L159)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [lib/utils/http-client.ts:159](https://github.com/facundoolano/app-s
 
 > `optional` **limit**: `number`
 
-Defined in: [lib/utils/http-client.ts:161](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L161)
+Defined in: [lib/utils/http-client.ts:161](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L161)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [lib/utils/http-client.ts:161](https://github.com/facundoolano/app-s
 
 > `optional` **parseJson**: `boolean`
 
-Defined in: [lib/utils/http-client.ts:162](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L162)
+Defined in: [lib/utils/http-client.ts:162](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L162)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [lib/utils/http-client.ts:162](https://github.com/facundoolano/app-s
 
 > `optional` **requestOptions**: [`RequestOptions`](RequestOptions.md)
 
-Defined in: [lib/utils/http-client.ts:160](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L160)
+Defined in: [lib/utils/http-client.ts:160](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L160)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [lib/utils/http-client.ts:160](https://github.com/facundoolano/app-s
 
 > **url**: `string`
 
-Defined in: [lib/utils/http-client.ts:158](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/utils/http-client.ts#L158)
+Defined in: [lib/utils/http-client.ts:158](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/utils/http-client.ts#L158)

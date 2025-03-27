@@ -6,7 +6,7 @@
 
 # Interface: PrivacyDetailCategory
 
-Defined in: [lib/privacy.ts:22](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L22)
+Defined in: [lib/privacy.ts:22](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L22)
 
 Privacy detail category
 
@@ -16,7 +16,7 @@ Privacy detail category
 
 > **dataTypes**: `string`[]
 
-Defined in: [lib/privacy.ts:24](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L24)
+Defined in: [lib/privacy.ts:24](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L24)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [lib/privacy.ts:24](https://github.com/facundoolano/app-store-scrape
 
 > **identifier**: `string`
 
-Defined in: [lib/privacy.ts:23](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L23)
+Defined in: [lib/privacy.ts:23](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L23)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [lib/privacy.ts:23](https://github.com/facundoolano/app-store-scrape
 
 > `optional` **purposes**: `string`[]
 
-Defined in: [lib/privacy.ts:25](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/privacy.ts#L25)
+Defined in: [lib/privacy.ts:25](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/privacy.ts#L25)

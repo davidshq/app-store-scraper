@@ -6,7 +6,7 @@
 
 # Interface: IAppStoreScraperError
 
-Defined in: [lib/error-types.ts:66](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L66)
+Defined in: [lib/error-types.ts:66](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L66)
 
 Base error interface for all app-store-scraper errors
 
@@ -16,7 +16,7 @@ Base error interface for all app-store-scraper errors
 
 > **code**: [`ErrorCode`](../enumerations/ErrorCode.md)
 
-Defined in: [lib/error-types.ts:67](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L67)
+Defined in: [lib/error-types.ts:67](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L67)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [lib/error-types.ts:67](https://github.com/facundoolano/app-store-sc
 
 > `optional` **endpoint**: `string`
 
-Defined in: [lib/error-types.ts:70](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L70)
+Defined in: [lib/error-types.ts:70](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L70)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [lib/error-types.ts:70](https://github.com/facundoolano/app-store-sc
 
 > `optional` **originalError**: `Error`
 
-Defined in: [lib/error-types.ts:68](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L68)
+Defined in: [lib/error-types.ts:68](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L68)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [lib/error-types.ts:68](https://github.com/facundoolano/app-store-sc
 
 > `optional` **params**: `Record`\<`string`, `any`\>
 
-Defined in: [lib/error-types.ts:71](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L71)
+Defined in: [lib/error-types.ts:71](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L71)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [lib/error-types.ts:71](https://github.com/facundoolano/app-store-sc
 
 > `optional` **statusCode**: `number`
 
-Defined in: [lib/error-types.ts:69](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/error-types.ts#L69)
+Defined in: [lib/error-types.ts:69](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/error-types.ts#L69)

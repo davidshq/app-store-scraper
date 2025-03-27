@@ -6,7 +6,7 @@
 
 # Interface: DetailOptions
 
-Defined in: [lib/param-types.ts:43](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L43)
+Defined in: [lib/param-types.ts:43](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/param-types.ts#L43)
 
 Options for methods that support detailed results
 
@@ -20,6 +20,6 @@ Options for methods that support detailed results
 
 > `optional` **fullDetail**: `boolean`
 
-Defined in: [lib/param-types.ts:45](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-types.ts#L45)
+Defined in: [lib/param-types.ts:45](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/param-types.ts#L45)
 
 Whether to fetch full app details

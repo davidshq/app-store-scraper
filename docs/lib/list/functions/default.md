@@ -8,7 +8,7 @@
 
 > **default**\<`T`\>(`opts`): `Promise`\<`T`\[`"fullDetail"`\] *extends* `true` ? [`App`](../../../app-types/interfaces/App.md)[] : [`ListApp`](../interfaces/ListApp.md)[]\>
 
-Defined in: [lib/list.ts:198](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/list.ts#L198)
+Defined in: [lib/list.ts:198](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/list.ts#L198)
 
 Fetches a list of apps from the App Store
 

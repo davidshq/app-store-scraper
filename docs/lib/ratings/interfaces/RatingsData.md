@@ -6,7 +6,7 @@
 
 # Interface: RatingsData
 
-Defined in: [lib/ratings.ts:32](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/ratings.ts#L32)
+Defined in: [lib/ratings.ts:32](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/ratings.ts#L32)
 
 Ratings data returned by the API
 
@@ -16,7 +16,7 @@ Ratings data returned by the API
 
 > **histogram**: [`RatingsHistogram`](RatingsHistogram.md)
 
-Defined in: [lib/ratings.ts:34](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/ratings.ts#L34)
+Defined in: [lib/ratings.ts:34](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/ratings.ts#L34)
 
 ***
 
@@ -24,4 +24,4 @@ Defined in: [lib/ratings.ts:34](https://github.com/facundoolano/app-store-scrape
 
 > **ratings**: `number`
 
-Defined in: [lib/ratings.ts:33](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/ratings.ts#L33)
+Defined in: [lib/ratings.ts:33](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/ratings.ts#L33)

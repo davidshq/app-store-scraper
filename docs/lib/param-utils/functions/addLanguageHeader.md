@@ -8,7 +8,7 @@
 
 > **addLanguageHeader**(`headers`, `opts`): `Record`\<`string`, `string`\>
 
-Defined in: [lib/param-utils.ts:78](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/param-utils.ts#L78)
+Defined in: [lib/param-utils.ts:78](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/param-utils.ts#L78)
 
 Adds language headers if specified
 

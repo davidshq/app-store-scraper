@@ -1,3 +1,18 @@
+# 2025-03-27:
+
+- Replaced Sinon with Vitest's built-in mocking capabilities for better test consistency
+- Fixed TypeScript errors in test files related to mock typing
+- Improved test assertions to match actual function behavior
+- Enhanced caching system with method-specific cache configurations
+- Added comprehensive TypeScript documentation and examples
+- Improved error handling and validation across all modules
+- Added new versionHistory endpoint for retrieving app version history
+- Enhanced app data transformation with better type safety
+- Updated ESLint configuration for better code quality
+- Added support for custom request options across all endpoints
+- Enhanced developer experience with better TypeScript support
+- Improved documentation with detailed API examples
+
 # 2025-03-26:
 
 - Improved error types for better error handling

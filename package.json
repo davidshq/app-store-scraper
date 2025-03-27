@@ -5,11 +5,13 @@
   "main": "dist/index.js",
   "type": "module",
   "types": "index.d.ts",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "test": "npm run build && vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:mocha": "npm run build && cross-env NODE_PATH=./dist node --experimental-vm-modules --experimental-specifier-resolution=node node_modules/mocha/bin/mocha",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "format:check": "prettier --check \"**/*.{js,json,md,ts}\"",
@@ -23,7 +25,8 @@
     "docs": "typedoc --options typedoc.config.json",
     "docs:html": "typedoc --options typedoc.html.json",
     "generate-docs": "node --experimental-vm-modules scripts/generate-docs.js",
-    "generate-docs:html": "node --experimental-vm-modules scripts/generate-html-docs.js"
+    "generate-docs:html": "node --experimental-vm-modules scripts/generate-html-docs.js",
+    "validate": "npm run lint && npm run check-types && npm run test"
   },
   "repository": {
     "type": "git",
@@ -49,40 +52,29 @@
     "limiter": "^3.0.0",
     "memoizee": "^0.4.17",
     "ramda": "^0.30.1",
+    "validator": "^13.15.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@types/chai": "^5.2.1",
     "@types/debug": "^4.1.12",
     "@types/memoizee": "^0.4.12",
-    "@types/mocha": "^10.0.10",
     "@types/ramda": "^0.30.2",
-    "@types/sinon": "^17.0.4",
     "@types/validator": "^13.12.3",
     "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "@vitest/coverage-v8": "^3.0.9",
-    "c8": "^10.1.3",
-    "chai": "^5.2.0",
-    "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-promise": "^7.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
-    "mocha": "^11.1.0",
-    "mock-require": "^3.0.3",
     "prettier": "^3.5.3",
-    "proxyquire": "^2.1.3",
     "rimraf": "^6.0.1",
-    "sinon": "^20.0.0",
-    "ts-node": "^10.9.2",
     "typedoc": "^0.28.1",
     "typedoc-plugin-markdown": "^4.6.0",
     "typescript": "^5.8.2",
-    "validator": "^13.15.0",
     "vitest": "^3.0.9"
   },
   "lint-staged": {

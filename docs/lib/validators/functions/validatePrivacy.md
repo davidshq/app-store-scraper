@@ -8,7 +8,7 @@
 
 > **validatePrivacy**(`opts`): `void`
 
-Defined in: [lib/validators.ts:301](https://github.com/facundoolano/app-store-scraper/blob/1e0c65b171e0bad4a38692c4616a992bb494cdd4/lib/validators.ts#L301)
+Defined in: [lib/validators.ts:301](https://github.com/facundoolano/app-store-scraper/blob/7e1baf8350e9d5936df88e03bdbb2e2ecea26d48/lib/validators.ts#L301)
 
 Validates options for privacy requests
 
