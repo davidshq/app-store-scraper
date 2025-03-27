@@ -1,3 +1,27 @@
+# 2025-03-26:
+
+- Improved error types for better error handling
+- Fixed tests and removed problematic ESLint plugins
+- Replaced bottleneck with limiter for rate limiting
+- Generated updated documentation
+- Refactored JavaScript tests to TypeScript
+- Deleted obsolete tests and added new ones
+- Fixed rate-limiter and http-client test implementations
+- Completed migration of tests to Vitest
+- Standardized validators across the codebase
+- Updated dependencies and improved error messaging for validators
+- Refactored common.ts into specialized utility modules:
+  - types/app-types.ts: Type definitions
+  - utils/app-transform.ts: Data transformations
+  - utils/rate-limiter.ts: Request throttling
+  - utils/http-client.ts: HTTP requests
+  - utils/store-utils.ts: Store utilities
+  - api/itunes-api.ts: API interactions
+- Maintained backward compatibility via common.ts facade
+- Fixed developer.ts module to properly handle developer metadata
+- Enhanced iTunes API lookup with proper entity filtering
+- Completed migration to TypeScript
+
 # 2025-03-25:
 
 - Fixed circular dependency issues in endpoint-builder with dynamic imports
@@ -17,14 +41,24 @@
 
 # 2025-03-24:
 
+- Migrated codebase from CommonJS to ESM modules
 - Refactored HTTP request handling in `lib/common.js` to use dependency injection
 - Added unit tests for rate limiting, error handling, request functionality
 - Exposed internal functions for testing
 - Added better documentation for the throttle parameter to control rate limiting
+- Fixed dependency issues and extracted validators to separate modules
+- Added `.test` suffix to test files for better differentiation from app code
+- Fixed npm audit security vulnerabilities
+- Updated GitHub Actions workflows and added TODOs for future improvements
+- Added support for Node.js 20+
+- Replaced deprecated `request` library with `got` and `throttled-request` with `bottleneck`
+- Fixed failing tests and skipped unnecessary ones
+- Updated code comments for better documentation
+- Fixed linting errors across the codebase
 - Updated dependencies to latest compatible versions:
   - debug: 2.2.0 → 4.4.0
   - cheerio: 1.0.0-rc.2 → 1.0.0
   - memoizee: 0.4.15 → 0.4.17
   - ramda: 0.29.0 → 0.29.1
   - Multiple dev dependencies updated
-- The app-store-scraper library is now using ESM modules instead of CommonJS. All the API functionality remains the same, but the module system has been updated to use modern JavaScript module syntax.
+- The app-store-scraper library now uses ESM modules instead of CommonJS while maintaining the same API functionality

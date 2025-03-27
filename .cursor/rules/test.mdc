@@ -1,2 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 - Check what operating system you are on before writing terminal commands
     - If you are on Windows, use PowerShell

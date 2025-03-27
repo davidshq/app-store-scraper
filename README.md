@@ -652,29 +652,9 @@ Returns:
 ];
 ```
 
-### Memoization
+### Advanced Usage
 
-Since every library call performs one or multiple requests to
-an iTunes API or web page, sometimes it can be useful to cache the results
-to avoid requesting the same data twice. The `memoized` function returns the
-store object that caches its results:
-
-```javascript
-import appStore from 'app-store-scraper'; // regular non caching version
-var memoized = appStore.memoized(); // cache with default options
-var memoizedCustom = appStore.memoized({ maxAge: 1000 * 60 }); // cache with default options
-
-memoized
-  .app({ id: 553834731 }) // will make a request
-  .then(() => memoized.app({ id: 553834731 })); // will resolve to the cached value without requesting
-```
-
-The options available are those supported by the [memoizee](https://github.com/medikoo/memoizee) module.
-By default up to 1000 values are cached by each method and they expire after 5 minutes.
-
-## Advanced Usage
-
-### memoized
+#### memoized
 
 Creates a memoized version of the API with configurable cache settings:
 
@@ -691,7 +671,7 @@ const memoizedApi = appStore.memoized({
 memoizedApi.app({ id: 553834731 }).then(console.log).catch(console.log);
 ```
 
-### configureCaching
+#### configureCaching
 
 Configures different cache settings for specific endpoints:
 
@@ -718,7 +698,7 @@ const customCachedApi = appStore.configureCaching(
 );
 ```
 
-### clearCache
+#### clearCache
 
 Clears the cache for a memoized API instance:
 
@@ -738,10 +718,16 @@ memoizedApi.clearCache(memoizedApi);
 
 ### Testing
 
-The project uses Mocha for testing. Run tests with:
+The project uses Vitest for testing. Run tests with:
 
 ```bash
 npm test
+```
+
+For test coverage:
+
+```bash
+npm run test:coverage
 ```
 
 For more information about the testing approach, see [TESTING.md](TESTING.md).
