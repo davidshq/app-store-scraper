@@ -1,11 +1,5 @@
 # App Store Scraper: Progress and Improvements
 
-### Error Handling
-
-- 🟡 Improve error type definitions in error-types.ts
-  - Basic types implemented with ErrorCode enum and AppStoreScraperError class
-  - Could use more specialized error types for different API endpoints
-
 ### Performance Optimization
 
 - 🟡 Optimize request flows to reduce API call frequency
